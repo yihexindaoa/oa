@@ -1,5 +1,7 @@
 package
 {
+	import com.greensock.TweenLite;
+	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -61,10 +63,15 @@ package
 			welcomeText.y = (this.stage.stageHeight - welcomeText.height) / 2;
 			
 			this.addChild(welcomeText);
-			
+			TweenLite.to(welcomeText,2,{x:0,onComplete:oncompletehandler});
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
 			loader.load(new URLRequest("laya.png"));
+		}
+		
+		private function oncompletehandler():void
+		{
+			trace(8);
 		}
 		
 		private function loadComplete(event:Event):void
