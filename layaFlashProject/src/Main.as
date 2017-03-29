@@ -21,6 +21,9 @@ package
 	
 	import Chapter3.Ceshi01;
 	import Chapter3.Physic;
+	import Chapter3.RequestMessage;
+	
+	import iflash.utils.describeType;
 	
 	import morn.core.handlers.Handler;
 	
@@ -67,6 +70,20 @@ package
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
 			loader.load(new URLRequest("laya.png"));
+			
+			
+			var req:RequestMessage = new RequestMessage();
+//			var xml:XML = describeType(req);
+			var obj:Object = {adlinf:"12",age:18};
+			for(var m:String in obj){
+				if(req.hasOwnProperty(m)){
+					req[m] = obj[m];
+					
+				}
+				
+			}
+			trace("req.adlinf="+req.adlinf,"req.age="+req.age);
+//			trace(xml);
 		}
 		
 		private function oncompletehandler():void
