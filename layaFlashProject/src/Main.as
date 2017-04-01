@@ -23,6 +23,10 @@ package
 	import Chapter3.Physic;
 	import Chapter3.RequestMessage;
 	
+	import game.ui.LoginUI;
+	import game.ui.NavigationMenuUI;
+	import game.ui.RoleManagementUI;
+	
 	import iflash.utils.describeType;
 	
 	import morn.core.handlers.Handler;
@@ -120,7 +124,15 @@ package
 		private function loadCompleteMornUI():void {
 			//实例化场景
 			addChild(new GameStage());
+			var login:LoginUI = new LoginUI();
+			addChild(login);
+			var menue:NavigationMenuUI = new NavigationMenuUI();
 			
+			addChild(menue);
+			var role:RoleManagementUI = new RoleManagementUI();
+			role.y = 100;
+			role.x = 200;
+			addChild(role);
 			var rect:Sprite = new Sprite();
 			rect.graphics.beginFill(0xffcc00);
 			rect.graphics.drawCircle(0,0,20);
