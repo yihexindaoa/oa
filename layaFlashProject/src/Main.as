@@ -126,13 +126,13 @@ package
 			addChild(new GameStage());
 			var login:LoginUI = new LoginUI();
 			addChild(login);
-			var menue:NavigationMenuUI = new NavigationMenuUI();
+			/*var menue:NavigationMenuUI = new NavigationMenuUI();
 			
-			addChild(menue);
-			var role:RoleManagementUI = new RoleManagementUI();
+			addChild(menue);*/
+			/*var role:RoleManagementUI = new RoleManagementUI();
 			role.y = 100;
 			role.x = 200;
-			addChild(role);
+			addChild(role);*/
 			var rect:Sprite = new Sprite();
 			rect.graphics.beginFill(0xffcc00);
 			rect.graphics.drawCircle(0,0,20);
