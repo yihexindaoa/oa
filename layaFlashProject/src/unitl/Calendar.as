@@ -3,8 +3,13 @@ package unitl
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import flash.text.TextFieldType;
 	
 	import game.ui.date.CalendarUI;
+	
+	import morn.core.components.Button;
+	import morn.core.components.Label;
+	import morn.core.components.TextInput;
 
 	/**
 	 * 日历控件
@@ -35,9 +40,11 @@ package unitl
 			calendarMonth = currentDate.getMonth();
 			calendarDay = currentDate.getDate();
 			calendarYear = currentDate.getFullYear();
+			
 			date = new Date();
 			drawCalendar();
 			renderCalendar(date);
+			calendar.dateTxt.text = calendarYear+"年"+(calendarMonth+1)+"月"+calendarDay+"日";
 			calendar.prevBtn.addEventListener(MouseEvent.CLICK, onLastHandler);
 			calendar.nextBtn.addEventListener(MouseEvent.CLICK, onNextHandler);
 		}
@@ -52,7 +59,6 @@ package unitl
 			calendarMonth++;
 			if(calendarMonth == 12){calendarMonth=0;date.setFullYear(++calendarYear)}
 			date.setMonth(calendarMonth);
-			trace(date.getFullYear(),date.getMonth(),date.getDate(),"+",calendarMonth,calendarYear);
 			renderCalendar(date);
 			
 		}
@@ -68,7 +74,6 @@ package unitl
 			if(calendarMonth == -1){calendarMonth=11;date.setFullYear(--calendarYear)}
 			date.setFullYear(calendarYear);//在年份递减时要重新设置下否则不会
 			date.setMonth(calendarMonth);
-			trace(date.getFullYear(),date.getMonth(),date.getDate(),"-",calendarMonth,calendarYear);
 			renderCalendar(date);
 			
 		}
@@ -110,17 +115,52 @@ package unitl
 					calendar.graphics.moveTo(10+i*25,46);
 					calendar.graphics.lineTo(10+i*25,196); 
 				}
-				var t:TextField = new TextField();
+				var t:Button = new Button()//TextField = new TextField();
 				t.width = t.height = 25;
+//				t.editable = false;
 //				t.border = false;
 				t.x = 10 + (i-1)%7*25;
 				t.y = 46 + Math.floor((i-1)/7)*25;
+//				t.type = TextFieldType.DYNAMIC;
 //				t.text = i+"";
 				calendar.addChild(t);
 				labList.push(t);
+//				t.mouseEnabled = true;
+				t.useHandCursor = true;
+				
+				t.addEventListener(MouseEvent.CLICK, onSelectHandler);
 			}
 		}
-		
+		/**
+		 *日历选择事件 
+		 * @param e
+		 * 
+		 */		
+		protected function onSelectHandler(e:MouseEvent):void
+		{
+			var t:Button = e.target as Button;
+			if(t && t.label !=""){
+				
+				calendar.dateTxt.text = calendarYear+"年"+(calendarMonth+1)+"月"+t.label+"日";
+//				t.background = true;
+//				t.backgroundColor = 0x00ff00;
+				t.graphics.clear();
+				t.graphics.beginFill(0x00ff00,0.7);
+				t.graphics.drawRect(0,0,25,25);
+				for( var i:int = 0;i<42;i++ ){
+					var ts:Button = labList[i];
+					if(ts==t)continue;
+//					ts.background = true;
+//					ts.backgroundColor = 0x666666;
+					ts.graphics.clear();
+					ts.graphics.beginFill(0x666666,0.7);
+					ts.graphics.drawRect(0,0,25,25);
+				}
+//				trace(t.label);
+			}
+			
+			
+		}		
 			
 		
 		
@@ -139,19 +179,42 @@ package unitl
 			var week:Number = d.getDay();//获取当月星期几
 			
 			for( var i:int = 0;i<42;i++ ){
-				var t:TextField = labList[i];
+				var t:Button = labList[i];
 				if(i >=week  ){
 					if(d.getMonth()==calendarMonth)
 					d.setDate(index++);
 					if(d.getMonth()==calendarMonth){
-						t.text = d.getDate()+"";
+						t.label = d.getDate()+"";trace( currentDate.getTime(),d.getTime() );
+						if(currentDate.getDate() == d.getDate() && currentDate.getMonth() == d.getMonth() && currentDate.getFullYear() == d.getFullYear() ){
+//							t.background = true;
+//							t.backgroundColor = 0xff0000;
+							t.graphics.clear();
+							t.graphics.beginFill(0xff0000,0.8);
+							t.graphics.drawRect(0,0,25,25);
+						}else{
+//							t.background = true;
+//							t.backgroundColor = 0x666666;
+							t.graphics.clear();
+							t.graphics.beginFill(0x666666,0.8);
+							t.graphics.drawRect(0,0,25,25);
+						}
 					}else{
-						t.text = "";
+						t.label = "";
+//						t.background = true;
+//						t.backgroundColor = 0x666666
+						t.graphics.clear();
+						t.graphics.beginFill(0x666666,0.8);
+						t.graphics.drawRect(0,0,25,25);
 					}
 					
 					
 				}else{
-					t.text = "";
+					t.label = "";
+//					t.background = true;
+//					t.backgroundColor = 0x666666
+					t.graphics.clear();
+					t.graphics.beginFill(0x666666,0.8);
+					t.graphics.drawRect(0,0,25,25);
 				}
 				
 			}
