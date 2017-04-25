@@ -1,0 +1,87 @@
+package login
+{
+	import com.greensock.TweenLite;
+	
+	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
+	import flash.net.URLLoader;
+	
+	import game.ui.login.LoginUI;
+	
+	import navigation.Navigation;
+	
+	import trade.Trade;
+
+	public class Login extends Trade
+	{
+		protected var _container:Sprite;
+		protected var loginUI:LoginUI
+		public function Login( container:Sprite  )
+		{
+			_container = container;
+			initLogin();
+			super.initPopu(container,loginUI);
+			
+		}
+		
+		protected function initLogin():void
+		{
+			createEffect();
+			loginUI = new LoginUI();
+			_container.addChild(loginUI);
+			loginUI.x = 300;
+			loginUI.y = 100;
+//			loginUI.account.filters=[new BevelFilter()];
+			loginUI.graphics.beginFill(0x66cccc,0.3);
+			loginUI.graphics.drawRoundRect(0,0,600,400,50,50);
+			loginUI.loginBtn.addEventListener(MouseEvent.CLICK, onClickHandler);
+			/*loginUI.rotation=30;
+			var lx:Number = loginUI.x;
+			var ly:Number = loginUI.y;
+			TweenLite.to(loginUI, 0.6,{y:200,onComplete:function():void{
+				TweenLite.to(loginUI, 0.3,{rotation:-30,x:lx+300,y:ly+200,onComplete:function():void{
+					TweenLite.to(loginUI, 0.2,{rotation:0,x:lx,y:ly});
+					
+				}});
+				
+			}});*/
+			TweenLite.to(loginUI, 0.6,{y:200});
+		}
+		
+		protected function onClickHandler(event:MouseEvent):void
+		{
+			/*send(function(e:Event):void{
+				trace((e.target as URLLoader).data);
+			},function(e:IOErrorEvent):void{
+				trace("=======",e.text);
+				popu("登陆出错!");
+			});*/
+			_container.removeChild(loginUI);
+			loginUI = null;
+			var nav:Navigation = new Navigation(_container);
+		}
+		
+		
+		
+		protected function createEffect():void
+		{
+			for(var i:int = 0;i<20;i++){
+				var shape:Shape = new Shape();
+				shape.graphics.beginFill(0xff0000,0.5);
+				shape.graphics.drawCircle(0,0,i);
+				shape.x = Math.random()*300+300;
+				shape.y=Math.random()*300+300;
+				_container.addChild(shape);
+				var c:Number = Math.random();
+				var err:Array = [1,-1];
+				TweenLite.to(shape,1*c+1,{x:c*1000*err[Math.floor(Math.random()*2)]+200,y:(c*200+1000)*err[Math.floor(Math.random()*2)],onComplete:function():void{
+					//TweenLite.to(shape, 1,{y:1000});
+				
+				}});
+			}
+		}
+	}
+}
