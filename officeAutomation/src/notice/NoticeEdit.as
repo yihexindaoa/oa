@@ -47,7 +47,10 @@ package notice
 			/*[IF-SCRIPT-BEGIN]
 			
 			_edit.upLoadBtn.visible = false;
+			_edit.content.visible = false;
 			[IF-SCRIPT-END]*/ 
+			initForm();
+			initFullEdit();
 		}
 		
 		protected function onDragHandler(e:DragEvent):void
@@ -72,7 +75,7 @@ package notice
 					var request:Object = new Object();
 					request.signType = _edit.signType.selectedIndex;//告示类型
 					request.title = _edit.title.text;//标题
-					request.content = _edit.content.text;//内容
+					request.content = getLayaText();//_edit.content.text;//内容
 					
 					
 //					request.file = "";//trace("request=",request);
@@ -80,11 +83,7 @@ package notice
 					/*[IF-FLASH-BEGIN]*/
 						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
 					/*[IF-FLASH-END]*/ 
-					/*[IF-SCRIPT-BEGIN]
-					__JS__('$("#signType").val(this._edit.signType.selectedIndex);$("#title").val(this._edit.title.text);
-						$("#content").val(this._edit.content.text);
-						$("#userForm2").submit()');
-					[IF-SCRIPT-END]*/ 
+					sendFormFile(request);
 					/*
 					 * $.ajax({type:"POST",
 						url:this.path+"notice/saveNotice",
@@ -114,23 +113,25 @@ package notice
 		protected function onError(msg:String):void{
 			
 		}
+		
+		
 		/**
 		 * 显示新增页面
 		 * 
 		 */		
 		public function showAdd():void{
 			_edit.operTxt.text = "新增";
-			_edit.show();
-			var lx:Number = _edit.x+142;
-			var ly:Number = _edit.y+383;
-			trace(lx,ly);
-			__JS__('$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})')
 			
+			_edit.show();
+			showForm(_edit);
+			showFullEdit(_edit);
 		}
 		
 		/**edit关闭的回调函数**/
 		protected function editCloseHandler():void{
-			__JS__('$("#newUpload2").hide();');
+			
+			hideForm();
+			hideFullEdit();
 		}
 		
 		/**
