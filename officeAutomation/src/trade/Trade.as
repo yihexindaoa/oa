@@ -93,7 +93,7 @@ package trade
 			startMask();
 			/*[IF-FLASH-BEGIN]*/
 			var loader:URLLoader = new URLLoader();  
-			var request:URLRequest = new URLRequest("http://192.168.1.122:8080/oa_system/"+url);  
+			var request:URLRequest = new URLRequest("http://192.168.1.118:8080/oa_system/"+url);  
 						
 			request.method = method;  
 			var frm:MsMultiPartFormData = new MsMultiPartFormData();
@@ -286,7 +286,103 @@ package trade
 		{
 			return _path;
 		}
-
-
+		//--------------------------------------form----------------------------------------------
+		/**
+		 * 
+		 * 
+		 */
+		protected function initForm():void{
+			var f:String = "<input type=\"file\" name=\"file\">";
+			__JS__('$("#newUpload2").empty();$("#newUpload2").append(f)');
+		}
+		/**
+		 * 
+		 * @param req
+		 * 
+		 */		
+		protected function sendFormFile(req:Object):void{
+			
+			/*[IF-SCRIPT-BEGIN]
+			var f:String = "";
+			for(var key:String in req){
+			f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
+			}
+			__JS__('$("#newUpload2").append(f);
+			$("#userForm2").submit();');
+			[IF-SCRIPT-END]*/ 
+			
+		}
+		
+		protected var form_s:Sprite;
+		protected var t:uint;
+		/**
+		 * 
+		 * @param s
+		 * 
+		 */		
+		protected function showForm(s:Sprite):void{
+			form_s = s;
+			var lx:Number = s.x+142;
+			var ly:Number = s.y+383;
+			trace(lx,ly);
+			__JS__('$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
+			t = setInterval(posForm,30);
+		}
+		
+		
+		protected function posForm():void{
+			var lx:Number = form_s.x+142;
+			var ly:Number = form_s.y+383;
+//			trace(lx,ly);
+			__JS__('$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
+		}
+		
+		protected function hideForm():void{
+			__JS__('$("#newUpload2").hide();');
+			if(t)clearInterval(t);
+		}
+		//--------------------------------------form----------------------------------------------
+		//-----------------------------------富文本编辑器--------------------------------------------
+		protected var layaIndex:int ;
+		protected function initFullEdit():void{
+			/*[IF-SCRIPT-BEGIN]
+			
+			__JS__(" layui.use('layedit', function(){
+			var layedit = layui.layedit;
+			layaIndex = layedit.build('demo'); });");
+			[IF-SCRIPT-END]*/ 
+		}
+		protected var fullEdit_s:Sprite;
+		protected var ft:uint;
+		protected function showFullEdit(s:Sprite):void{
+			fullEdit_s = s;
+			var lx:Number = fullEdit_s.x+142;
+			var ly:Number = fullEdit_s.y+122;
+			trace(lx,ly);
+			__JS__('$(".layui-layedit").show();$(".layui-layedit").css({"position":"absolute","left":lx+"px","top":ly+"px","z-index":999,"width":"447px","height":"235px"})');
+			ft = setInterval(posFullEdit,30);
+		}
+		protected function posFullEdit():void{
+			var lx:Number = fullEdit_s.x+142;
+			var ly:Number = fullEdit_s.y+122;
+			//			trace(lx,ly);
+			__JS__('$(".layui-layedit").css({"left":lx+"px","top":ly+"px"})');
+		}
+		protected function hideFullEdit():void{
+			__JS__('$(".layui-layedit").hide();');
+			if(ft)clearInterval(ft);
+		}
+		
+		protected var layaText:String="";
+		/**
+		 * 获得编辑器文本的类容 
+		 * @return 
+		 * 
+		 */			
+		protected function getLayaText():String{
+			__JS__('layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)})');
+			return layaText;
+		}
+		//-----------------------------------富文本编辑器--------------------------------------------
 	}
 }
