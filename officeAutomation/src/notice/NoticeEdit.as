@@ -1,12 +1,17 @@
 package notice
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequestMethod;
 	
 	import game.ui.notice.NoticeEditUI;
 	
+	import morn.core.events.DragEvent;
+	import morn.core.handlers.Handler;
+	
 	import trade.Trade;
+
 	/**
 	 * 通告编辑
 	 * @author QS
@@ -32,8 +37,22 @@ package notice
 		{
 			_edit = new NoticeEditUI();
 			_edit.sendBtn.addEventListener(MouseEvent.CLICK, onSendHandler);
+			/*[IF-FLASH-BEGIN]*/
 			_edit.sendBtn.mouseEnabled = false;
 			_edit.upLoadBtn.addEventListener(MouseEvent.CLICK, onSelectFileHandler);
+			/*[IF-FLASH-END]*/ 
+			_edit.closeHandler = new Handler(editCloseHandler);
+			_edit.addEventListener(DragEvent.DRAG_START, onDragHandler);
+			//在js中隐藏掉上传按钮
+			/*[IF-SCRIPT-BEGIN]
+			
+			_edit.upLoadBtn.visible = false;
+			[IF-SCRIPT-END]*/ 
+		}
+		
+		protected function onDragHandler(e:DragEvent):void
+		{
+			trace("移动",_edit.x,_edit.y);
 		}
 		
 		protected function onSelectFileHandler(e:MouseEvent):void
@@ -55,17 +74,24 @@ package notice
 					request.title = _edit.title.text;//标题
 					request.content = _edit.content.text;//内容
 					
+					
 //					request.file = "";//trace("request=",request);
 //					send("notice/saveNotice",request,onComplete, onError,URLRequestMethod.POST);
 					/*[IF-FLASH-BEGIN]*/
 						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
 					/*[IF-FLASH-END]*/ 
 					/*[IF-SCRIPT-BEGIN]
-					var lx:Number = e.stageX;
-					var ly:Number = e.stageY;
-					trace(lx,ly);__JS__('$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
+					__JS__('$("#signType").val(this._edit.signType.selectedIndex);$("#title").val(this._edit.title.text);
+						$("#content").val(this._edit.content.text);
+						$("#userForm2").submit()');
 					[IF-SCRIPT-END]*/ 
-						
+					/*
+					 * $.ajax({type:"POST",
+						url:this.path+"notice/saveNotice",
+						contentType: false,
+						data:new FormData($("#userForm2")[0]),
+						success:function(data){console.log(data)}})
+						*/
 						
 					break;
 				case "编辑":
@@ -95,6 +121,16 @@ package notice
 		public function showAdd():void{
 			_edit.operTxt.text = "新增";
 			_edit.show();
+			var lx:Number = _edit.x+142;
+			var ly:Number = _edit.y+383;
+			trace(lx,ly);
+			__JS__('$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})')
+			
+		}
+		
+		/**edit关闭的回调函数**/
+		protected function editCloseHandler():void{
+			__JS__('$("#newUpload2").hide();');
 		}
 		
 		/**
