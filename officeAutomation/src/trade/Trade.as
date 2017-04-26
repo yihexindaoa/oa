@@ -31,6 +31,7 @@ package trade
 		protected var _mask:Sprite;//遮罩
 		protected var _maskList:Array;
 		protected var _byteArray:ByteArray;
+		protected var _path:String = "http://192.168.1.122:8080/oa_system/";
 		/**
 		 *加载完二进制的回调 
 		 */		
@@ -54,7 +55,7 @@ package trade
 			
 			startMask();
 			var loader:URLLoader = new URLLoader();  
-			var request:URLRequest = new URLRequest("http://192.168.1.122:8080/oa_system/"+url);  
+			var request:URLRequest = new URLRequest(_path+url);  
 //			var request:URLRequest = new URLRequest("http://www.lifememorial.cn/community/mubei/memoTW");
 			
 			request.method = method;  
@@ -277,6 +278,15 @@ package trade
 		{
 			return _byteArray;
 		}
+
+		/**
+		 *路径 
+		 */
+		public function get path():String
+		{
+			return _path;
+		}
+
 
 	}
 }
