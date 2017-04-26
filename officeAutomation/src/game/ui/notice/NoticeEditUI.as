@@ -25,18 +25,18 @@ package game.ui.notice {
 			  <TextInput skin="png.comp.textinput" x="142" y="82" width="145" height="22" var="title" name="title"/>
 			  <TextArea text="&lt;font  face=&quot;微软雅黑&quot; size=&quot;30&quot;>黑体&lt;/font>&lt;font   size=&quot;30&quot;>大幅度&lt;/font>" skin="png.comp.textarea" x="142" y="148" width="447" height="195" isHtml="true" align="left" var="content" name="content"/>
 			  <Label text="内容：" x="25" y="224" width="107" height="21" align="right"/>
-			  <Button label="B" skin="png.comp.button" x="278" y="122" width="26" height="23" labelBold="true" toolTip="变粗" var="bBtn"/>
-			  <ComboBox labels="arial,宋体,黑体" skin="png.comp.combobox" x="143" y="122" width="75" height="23" selectedIndex="0" var="fontBtn"/>
-			  <ComboBox labels="10,11,12,14,16,20,36" skin="png.comp.combobox" x="223" y="122" width="52" height="23" toolTip="尺寸" selectedIndex="0" var="sizeBtn"/>
-			  <Button skin="png.comp.button" x="310" y="122" width="26" height="23" labelBold="true"/>
-			  <TextInput text="&lt;i>I&lt;/i>" x="310" y="122" width="22" height="22" isHtml="true" align="center" bold="true" size="15" editable="false" mouseChildren="false" mouseEnabled="false" var="iBtn"/>
-			  <Button skin="png.comp.button" x="344" y="122" width="26" height="23"/>
-			  <Label text="&lt;u>U&lt;/u>" x="346" y="124" mouseEnabled="false" width="22" height="22" isHtml="true" align="center" var="uBtn"/>
+			  <Button label="B" skin="png.comp.button" x="278" y="122" width="26" height="23" labelBold="true" toolTip="变粗" var="bBtn" visible="false"/>
+			  <ComboBox labels="arial,宋体,黑体" skin="png.comp.combobox" x="143" y="122" width="75" height="23" selectedIndex="0" var="fontBtn" visible="false"/>
+			  <ComboBox labels="10,11,12,14,16,20,36" skin="png.comp.combobox" x="223" y="122" width="52" height="23" toolTip="尺寸" selectedIndex="0" var="sizeBtn" visible="false"/>
+			  <Button skin="png.comp.button" x="310" y="122" width="26" height="23" labelBold="true" visible="false"/>
+			  <TextInput text="&lt;i>I&lt;/i>" x="310" y="122" width="22" height="22" isHtml="true" align="center" bold="true" size="15" editable="false" mouseChildren="false" mouseEnabled="false" var="iBtn" visible="false"/>
+			  <Button skin="png.comp.button" x="344" y="122" width="26" height="23" visible="false"/>
+			  <Label text="&lt;u>U&lt;/u>" x="346" y="124" mouseEnabled="false" width="22" height="22" isHtml="true" align="center" var="uBtn" visible="false"/>
 			  <Label text="上传附件:" x="25" y="385" align="right" width="107" height="21"/>
 			  <Button label="点击上传" skin="png.comp.button" x="142" y="383" width="112" height="23" var="upLoadBtn"/>
 			  <Label text="支持doc,pdf,xls,jpg类型文件，20M以内" x="146" y="416" width="221" height="18" color="0xff0000"/>
 			  <ProgressBar skin="png.comp.progress" x="284" y="387" var="progress" visible="false"/>
-			  <Button label="发送" skin="png.comp.button" x="142" y="464" var="sendBtn"/>
+			  <Button label="发送" skin="png.comp.button" x="142" y="532" var="sendBtn"/>
 			  <Label text="新增" x="14" y="4" width="48" height="18" var="operTxt"/>
 			</Dialog>;
 		public function NoticeEditUI(){}
