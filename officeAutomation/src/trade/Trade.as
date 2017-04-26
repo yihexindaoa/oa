@@ -373,13 +373,14 @@ package trade
 			if(ft)clearInterval(ft);
 		}
 		
-		protected var layaText:String="";
+//		protected var layaText:String="";
 		/**
 		 * 获得编辑器文本的类容 
 		 * @return 
 		 * 
 		 */			
 		protected function getLayaText():String{
+			var layaText:String="";
 			__JS__('layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)})');
 			return layaText;
 		}
