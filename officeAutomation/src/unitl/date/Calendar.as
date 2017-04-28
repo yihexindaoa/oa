@@ -26,6 +26,7 @@ package unitl.date
 		protected var calendarYear:Number;//日历的年份
 		protected var labList:Array;
 		protected var _millisecondsNumber:Number;//毫秒数
+		protected var _yearAndMonth:Number;
 		public function Calendar(container:Sprite)
 		{
 			_container = container;
@@ -153,6 +154,7 @@ package unitl.date
 				t.graphics.beginFill(0x00ff00,0.7);
 				t.graphics.drawRect(0,0,25,25);
 				var d:Date = new Date(calendarYear,calendarMonth,parseInt(t.label));
+				_yearAndMonth = calendarYear + (calendarMonth<9?"0"+(calendarMonth+1):(calendarMonth+1));
 				dispatchEvent(new CalendarEvent(CalendarEvent.DATE,calendarYear+"/"+(calendarMonth+1)+"/"+t.label , d.getTime()));
 				for( var i:int = 0;i<42;i++ ){
 					var ts:Button = labList[i];
@@ -225,6 +227,15 @@ package unitl.date
 		{
 			return _millisecondsNumber;
 		}
+
+		/**
+		 *年月 
+		 */
+		public function get yearAndMonth():Number
+		{
+			return _yearAndMonth;
+		}
+
 
 	}
 }
