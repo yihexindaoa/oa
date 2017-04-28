@@ -33,7 +33,7 @@ package trade
 		protected var _mask:Sprite;//遮罩
 		protected var _maskList:Array;
 		protected var _byteArray:ByteArray;
-		protected var _path:String = "http://192.168.1.122:8080/oa_system/";
+		protected var _path:String = "http://192.168.1.127:8080/oa_system/";
 		/**
 		 *加载完二进制的回调 
 		 */		
@@ -304,7 +304,7 @@ package trade
 		 * @param req
 		 * 
 		 */		
-		protected function sendFormFile(req:Object):void{
+		protected function sendFormFile(req:Object , url:String):void{
 			
 			///*[IF-SCRIPT-BEGIN]
 			var f:String = "";
@@ -312,8 +312,8 @@ package trade
 				f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
 				_JS__AS_("as_createInput",key,req[key]);
 			}
-			__JS__('$("#newUpload2").append(f);$("#userForm2").submit();');
-			_JS__AS_("as_sendFromFile",layaIndex);
+			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);$("#userForm2").submit();');
+			_JS__AS_("as_sendFromFile",layaIndex,_path+url);
 			//[IF-SCRIPT-END]*/ 
 			
 		}
