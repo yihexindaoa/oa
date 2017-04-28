@@ -14,6 +14,7 @@
         <title>${title}</title>
         <meta name="google" value="notranslate" />         
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="h5/layer/layui/css/layui.css?t=1492579944915"  media="all">
         <!-- Include CSS to eliminate any default margins/padding and set the height of the html element and 
              the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as 
              the percentage of the height of its parent container, which has to be set explicitly.  Fix for
@@ -32,9 +33,28 @@
         <!-- BEGIN Browser History required section ${useBrowserHistory}>
         <link rel="stylesheet" type="text/css" href="history/history.css" />
         <script type="text/javascript" src="history/history.js"></script>
+       
         <!${useBrowserHistory} END Browser History required section -->  
             
         <script type="text/javascript" src="swfobject.js"></script>
+         <script src='h5/jquery-1.11.1.min.js' ></script>
+<script src="h5/layer/layer.js"></script>
+<script src="h5/layer/layui/layui.js"></script>
+ <script type="text/javascript" src="history/oa.js"></script>
+<textarea id="demo" style="display: none;"></textarea>
+<form id="userForm2" action="http://192.168.1.122:8080/oa_system/notice/saveNotice" enctype="multipart/form-data" method="post"" target="id_iframe">
+		<div id="newUpload2" style="z-index:9999;position: absolute;left:272px;top:664px;display:none">
+		    <input type="file" name="file">
+		   
+		</div>
+		</form>
+<iframe id="id_iframe"name="id_iframe"style="display:none"></iframe>
+
+
+<script>//Laya.config.showInfo=false;
+console.log($('#userForm2'));
+$("#newUpload2")//.css("left","200px");
+</script>
         <script type="text/javascript">
             // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
             var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
@@ -105,24 +125,6 @@
             </object>
         </noscript>    
        
-        <form id="userForm2" action="notice/saveNotice" enctype="multipart/form-data" method="post"">
-		<div id="newUpload2">
-		    <input type="file" name="file">
-		    <input type="hidden" name="signType" value="1">
-		    <input type="hidden" name="title" value="哈哈大大">
-		    <input type="hidden" name="content" value="内容">
-		    <!-- <input type="radio" name="leaveType" value="1">
-		      <input type="radio" name="leaveType" value="2">
-		      <input type="radio" name="leaveType" value="3">
-		      <input type="radio" name="leaveType" value="4">
-		      <input type="radio" name="leaveType" value="5">
-		      <input type="radio" name="leaveType" value="6">
-		      <input type="radio" name="leaveType" value="7">
-		      <input type="hidden" name="leaveDays" value="50">-->
-		    <input type="hidden" name="approver" value="1">
-		    <input type="hidden" name="remarks" value="备注啊ss啊啊报销">
-		</div>
-		</form>
- <script type="text/javascript" src="history/jquery-1.11.1.min.js"></script>
+       
    </body>
 </html>
