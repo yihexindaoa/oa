@@ -7,6 +7,7 @@ package trade
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
+	import flash.geom.Point;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.net.FileReferenceList;
@@ -312,22 +313,26 @@ package trade
 				_JS__AS_("as_createInput",key,req[key]);
 			}
 			__JS__('$("#newUpload2").append(f);$("#userForm2").submit();');
-			_JS__AS_("as_sendFromFile");
+			_JS__AS_("as_sendFromFile",layaIndex);
 			//[IF-SCRIPT-END]*/ 
 			
 		}
 		
-		protected var form_s:Sprite;
+//		protected var form_s:Sprite;
+		protected var  form_s:Point;
+		protected var  form_p:Sprite;
 		protected var t:uint;
 		/**
 		 * 
+		 * @param p 父容器
 		 * @param s
 		 * 
-		 */		
-		protected function showForm(s:Sprite):void{
+		 */			
+		protected function showForm(p:Sprite,s:Point):void{
 			form_s = s;
-			var lx:Number = s.x+142;
-			var ly:Number = s.y+383;
+			form_p = p;
+			var lx:Number = form_p.x + s.x;
+			var ly:Number = form_p.y + s.y;
 			trace(lx,ly);
 			__JS__('$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
 			_JS__AS_("as_showForm",lx,ly);
@@ -338,8 +343,8 @@ package trade
 		
 		
 		protected function posForm():void{
-			var lx:Number = form_s.x+142;
-			var ly:Number = form_s.y+383;
+			var lx:Number = form_p.x + form_s.x;
+			var ly:Number = form_p.y + form_s.y;
 //			trace(lx,ly);
 			__JS__('$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
 			_JS__AS_('as_posForm',lx,ly);
@@ -365,12 +370,14 @@ package trade
 			layaIndex = _JS__AS_("as_initFullEdit");
 			/*[IF-FLASH-END]*/ 
 		}
-		protected var fullEdit_s:Sprite;
+		protected var fullEdit_s:Point;
+		protected var fullEdit_p:Sprite;
 		protected var ft:uint;
-		protected function showFullEdit(s:Sprite):void{
+		protected function showFullEdit(p:Sprite,s:Point):void{
 			fullEdit_s = s;
-			var lx:Number = fullEdit_s.x+142;
-			var ly:Number = fullEdit_s.y+122;
+			fullEdit_p = p;
+			var lx:Number = fullEdit_p.x+fullEdit_s.x;
+			var ly:Number = fullEdit_p.y+fullEdit_s.y;
 			trace(lx,ly);
 			__JS__('$(".layui-layedit").show();$(".layui-layedit").css({"position":"absolute","left":lx+"px","top":ly+"px","z-index":999,"width":"447px","height":"235px"})');
 			_JS__AS_('as_showFullEdit',lx,ly);
@@ -379,8 +386,8 @@ package trade
 			//[IF-SCRIPT-END]*/ 
 		}
 		protected function posFullEdit():void{
-			var lx:Number = fullEdit_s.x+142;
-			var ly:Number = fullEdit_s.y+122;
+			var lx:Number = fullEdit_p.x+fullEdit_s.x;
+			var ly:Number = fullEdit_p.y+fullEdit_s.y;
 			//			trace(lx,ly);
 			__JS__('$(".layui-layedit").css({"left":lx+"px","top":ly+"px"})');
 			_JS__AS_('as_posFullEdit',lx,ly);
