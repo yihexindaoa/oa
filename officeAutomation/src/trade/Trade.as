@@ -334,7 +334,8 @@ package trade
 			var lx:Number = form_p.x + s.x;
 			var ly:Number = form_p.y + s.y;
 			trace(lx,ly);
-			__JS__('$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
+			var f:String = "<input type=\"file\" name=\"file\">";
+			__JS__('$("#newUpload2").empty();$("#newUpload2").append(f);$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
 			_JS__AS_("as_showForm",lx,ly);
 			///*[IF-SCRIPT-BEGIN]
 			t = setInterval(posForm,30);
