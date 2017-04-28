@@ -5,12 +5,6 @@ package game.ui.role {
 		public var addBtn:Button = null;
 		public var queryTxt:TextInput = null;
 		public var table:List = null;
-		public var editBtn:Button = null;
-		public var deleteBtn:Button = null;
-		public var setBtn:Button = null;
-		public var roleId:Label = null;
-		public var roleCode:Label = null;
-		public var roleNme:Label = null;
 		public var queryBtn:Clip = null;
 		protected static var uiXML:XML =
 			<View width="800" height="900" buttonMode="true">
@@ -23,9 +17,9 @@ package game.ui.role {
 			      <Button label="编辑" skin="png.comp.button" x="348" y="3" width="30" height="23" labelColors="0x0000ff" name="editBtn"/>
 			      <Button label="删除" skin="png.comp.button" x="395" y="3" width="34" height="23" labelColors="0x0000ff" name="deleteBtn"/>
 			      <Button label="权限设置" skin="png.comp.button" x="436" y="3" width="56" height="23" labelColors="0x0000ff" name="setBtn"/>
-			      <Label text="01" x="-1" y="0" width="111" height="34" align="center" size="15" background="true" backgroundColor="0x6699cc" name="roleId"/>
-			      <Label text="label" x="112" y="0" width="99" height="34" size="15" align="center" background="true" backgroundColor="0x6699cc" name="roleCode"/>
-			      <Label text="label" x="214" y="0" height="34" align="center" size="15" width="102" background="true" backgroundColor="0x6699cc" name="roleNme"/>
+			      <Label text="01" x="-1" y="0" width="111" height="34" align="center" size="15" background="true" backgroundColor="0x6699cc" name="id"/>
+			      <Label text="label" x="112" y="0" width="99" height="34" size="15" align="center" background="true" backgroundColor="0x6699cc" name="roleNumber"/>
+			      <Label text="label" x="214" y="0" height="34" align="center" size="15" width="102" background="true" backgroundColor="0x6699cc" name="rolename"/>
 			    </Box>
 			  </List>
 			  <Clip skin="png.comp.clip_timg" x="443" y="85" clipX="4" clipY="4" index="2" width="29" height="23" var="queryBtn"/>
