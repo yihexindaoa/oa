@@ -15,7 +15,8 @@ function as_createInput(key,value){
 
 }
 
-function as_sendFromFile(layaIndex){
+function as_sendFromFile(layaIndex ,url){
+	$("#userForm2").attr("action", url);
 	if(isNull){
 			var layaText;layui.use("layedit", function(){
 				var layedit = layui.layedit;layaText = layedit.getText(layaIndexH);
