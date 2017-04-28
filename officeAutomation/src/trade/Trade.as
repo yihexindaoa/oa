@@ -6,6 +6,7 @@ package trade
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.net.FileReferenceList;
@@ -239,13 +240,14 @@ package trade
 		public function selectFileRefrence(fileDownLoadFunc:Function):void
 		{
 			_fileDownLoadFunc = fileDownLoadFunc;
-			/*[IF-FLASH-BEGIN]*/
+			/*[IF-FLASH-BEGIN]
 			filee=new FileReferenceList();
 			filee.browse();//浏览
 			
 			filee.addEventListener(Event.SELECT,selected);//添加“选择文件”事件
-			/*[IF-FLASH-END]*/ 
-			/*[IF-SCRIPT-BEGIN]_fileDownLoadFunc();[IF-SCRIPT-END]*/ 
+			[IF-FLASH-END]*/ 
+			///*[IF-SCRIPT-BEGIN]
+			_fileDownLoadFunc();//[IF-SCRIPT-END]*/ 
 		}
 		private function selected(e:Event):void
 		{
@@ -294,6 +296,7 @@ package trade
 		protected function initForm():void{
 			var f:String = "<input type=\"file\" name=\"file\">";
 			__JS__('$("#newUpload2").empty();$("#newUpload2").append(f)');
+			_JS__AS_("as_initForm");
 		}
 		/**
 		 * 
@@ -302,14 +305,15 @@ package trade
 		 */		
 		protected function sendFormFile(req:Object):void{
 			
-			/*[IF-SCRIPT-BEGIN]
+			///*[IF-SCRIPT-BEGIN]
 			var f:String = "";
 			for(var key:String in req){
-			f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
+				f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
+				_JS__AS_("as_createInput",key,req[key]);
 			}
-			__JS__('$("#newUpload2").append(f);
-			$("#userForm2").submit();');
-			[IF-SCRIPT-END]*/ 
+			__JS__('$("#newUpload2").append(f);$("#userForm2").submit();');
+			_JS__AS_("as_sendFromFile");
+			//[IF-SCRIPT-END]*/ 
 			
 		}
 		
@@ -326,7 +330,10 @@ package trade
 			var ly:Number = s.y+383;
 			trace(lx,ly);
 			__JS__('$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
+			_JS__AS_("as_showForm",lx,ly);
+			///*[IF-SCRIPT-BEGIN]
 			t = setInterval(posForm,30);
+			//[IF-SCRIPT-END]*/ 
 		}
 		
 		
@@ -335,11 +342,15 @@ package trade
 			var ly:Number = form_s.y+383;
 //			trace(lx,ly);
 			__JS__('$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
+			_JS__AS_('as_posForm',lx,ly);
 		}
 		
 		protected function hideForm():void{
 			__JS__('$("#newUpload2").hide();');
+			_JS__AS_('as_hideForm');
+			//*[IF-SCRIPT-BEGIN]
 			if(t)clearInterval(t);
+			//[IF-SCRIPT-END]*/ 
 		}
 		//--------------------------------------form----------------------------------------------
 		//-----------------------------------富文本编辑器--------------------------------------------
@@ -347,10 +358,12 @@ package trade
 		protected function initFullEdit():void{
 			/*[IF-SCRIPT-BEGIN]
 			
-			__JS__(" layui.use('layedit', function(){
-			var layedit = layui.layedit;
-			layaIndex = layedit.build('demo'); });");
+			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layaIndex = layedit.build('demo'); });");
+			
 			[IF-SCRIPT-END]*/ 
+			/*[IF-FLASH-BEGIN]*/
+			layaIndex = _JS__AS_("as_initFullEdit");
+			/*[IF-FLASH-END]*/ 
 		}
 		protected var fullEdit_s:Sprite;
 		protected var ft:uint;
@@ -360,17 +373,24 @@ package trade
 			var ly:Number = fullEdit_s.y+122;
 			trace(lx,ly);
 			__JS__('$(".layui-layedit").show();$(".layui-layedit").css({"position":"absolute","left":lx+"px","top":ly+"px","z-index":999,"width":"447px","height":"235px"})');
+			_JS__AS_('as_showFullEdit',lx,ly);
+			///*[IF-SCRIPT-BEGIN]
 			ft = setInterval(posFullEdit,30);
+			//[IF-SCRIPT-END]*/ 
 		}
 		protected function posFullEdit():void{
 			var lx:Number = fullEdit_s.x+142;
 			var ly:Number = fullEdit_s.y+122;
 			//			trace(lx,ly);
 			__JS__('$(".layui-layedit").css({"left":lx+"px","top":ly+"px"})');
+			_JS__AS_('as_posFullEdit',lx,ly);
 		}
 		protected function hideFullEdit():void{
 			__JS__('$(".layui-layedit").hide();');
+			_JS__AS_('as_hideFullEdit');
+			///*[IF-SCRIPT-BEGIN]
 			if(ft)clearInterval(ft);
+			//[IF-SCRIPT-END]*/ 
 		}
 		
 //		protected var layaText:String="";
@@ -382,8 +402,34 @@ package trade
 		protected function getLayaText():String{
 			var layaText:String="";
 			__JS__('layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)})');
+			/*[IF-FLASH-BEGIN]*/
+			layaText = _JS__AS_('as_getLayaText',layaIndex);
+			/*[IF-FLASH-END]*/ 
 			return layaText;
 		}
 		//-----------------------------------富文本编辑器--------------------------------------------
+		
+		
+		//-------------------------------------------as3调用js------------------------------------------------------------
+		/**
+		 *AS3执行js代码 
+		 * @param value
+		 * 
+		 */		
+		protected function _JS__AS_(func:String,...args):*{
+			//eval是js的一个“古老”的函数，目前所有知名的浏览器都支持，在AS3中可以放心使用。
+			//参数js eval详细资料：http://www.w3schools.com/jsref/jsref_eval.ASP
+			/*[IF-FLASH-BEGIN]*/
+			if(args.length <1)
+				return ExternalInterface.call(func,args);
+			else if(args.length == 1)
+				return ExternalInterface.call(func,args[0]);
+			else if(args.length == 2)
+				return ExternalInterface.call(func,args[0],args[1]);
+			/*[IF-FLASH-END]*/ 
+			
+		}
+		
+		
 	}
 }
