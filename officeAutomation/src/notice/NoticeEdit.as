@@ -3,6 +3,7 @@ package notice
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.net.URLRequestMethod;
 	
 	import game.ui.notice.NoticeEditUI;
@@ -38,17 +39,17 @@ package notice
 			_edit = new NoticeEditUI();
 			_edit.sendBtn.addEventListener(MouseEvent.CLICK, onSendHandler);
 			/*[IF-FLASH-BEGIN]*/
-			_edit.sendBtn.mouseEnabled = false;
+			//edit.sendBtn.mouseEnabled = false;
 			_edit.upLoadBtn.addEventListener(MouseEvent.CLICK, onSelectFileHandler);
 			/*[IF-FLASH-END]*/ 
 			_edit.closeHandler = new Handler(editCloseHandler);
 			_edit.addEventListener(DragEvent.DRAG_START, onDragHandler);
 			//在js中隐藏掉上传按钮
-			/*[IF-SCRIPT-BEGIN]
+			///*[IF-SCRIPT-BEGIN]
 			
 			_edit.upLoadBtn.visible = false;
 			_edit.content.visible = false;
-			[IF-SCRIPT-END]*/ 
+			//[IF-SCRIPT-END]*/ 
 			initForm();
 			initFullEdit();
 		}
@@ -81,7 +82,7 @@ package notice
 //					request.file = "";//trace("request=",request);
 //					send("notice/saveNotice",request,onComplete, onError,URLRequestMethod.POST);
 					/*[IF-FLASH-BEGIN]*/
-						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
+//						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
 					/*[IF-FLASH-END]*/ 
 					sendFormFile(request);
 					/*
@@ -123,12 +124,12 @@ package notice
 			_edit.operTxt.text = "新增";
 			
 			_edit.show();
-			showForm(_edit);
-			showFullEdit(_edit);
+			showForm(_edit,new Point(142,383));
+			showFullEdit(_edit,new Point(142,122));
 		}
 		
 		/**edit关闭的回调函数**/
-		protected function editCloseHandler():void{
+		protected function editCloseHandler(type:String):void{
 			
 			hideForm();
 			hideFullEdit();

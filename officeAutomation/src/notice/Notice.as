@@ -42,7 +42,7 @@ package notice
 			_container = container;
 			initNotice();
 			super.initPopu(container,_notice);
-			queryNotice();
+//			queryNotice();
 		}
 		
 		private function initNotice():void
@@ -72,7 +72,7 @@ package notice
 		/*日历选择事件*/
 		protected function onCalendarHandler(e:CalendarEvent):void
 		{
-			_notice.dateTxt.text = e.date;
+			_notice.dateTxt.text = e.date;trace(e.millisecondsNumber);
 			calendar.hide();
 		}
 		
