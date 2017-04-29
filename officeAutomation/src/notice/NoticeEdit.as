@@ -84,7 +84,7 @@ package notice
 					/*[IF-FLASH-BEGIN]*/
 //						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
 					/*[IF-FLASH-END]*/ 
-					sendFormFile(request);
+					sendFormFile(request, "notice/saveNotice");
 					/*
 					 * $.ajax({type:"POST",
 						url:this.path+"notice/saveNotice",

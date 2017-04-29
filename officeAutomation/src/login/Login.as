@@ -53,15 +53,15 @@ package login
 		
 		protected function onClickHandler(event:MouseEvent):void
 		{
-			send("login/userLogin",function(data:Object):void{
-				trace(data);
+//			send("login/userLogin",function(data:Object):void{
+//				trace(data);
 				_container.removeChild(loginUI);
 				loginUI = null;
 				var nav:Navigation = new Navigation(_container);
-			},function(v:String):void{
-				trace("=======",v);
-				popu("登陆出错!");
-			},"POST");
+//			},function(v:String):void{
+//				trace("=======",v);
+//				popu("登陆出错!");
+//			},"POST");
 			
 		}
 		

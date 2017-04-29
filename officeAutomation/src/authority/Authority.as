@@ -3,9 +3,8 @@ package authority
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import trade.Trade;
-	
 	import game.ui.role.RoleControlUI;
+	import game.ui.role.RoleEditUI;
 	import game.ui.role.RoleManagementUI;
 	
 	import morn.core.components.Box;
@@ -13,16 +12,19 @@ package authority
 	import morn.core.components.Label;
 	import morn.core.handlers.Handler;
 	
+	import trade.Trade;
+	
 	public class Authority extends Trade
 	{
 		protected var _container:Sprite;
 		protected var role:RoleManagementUI ;
+		protected var edit:RoleEditUI;//添加或者编辑角色
 		public function Authority(container:Sprite)
 		{
 			_container = container;
 			initNuth();
 			super.initPopu(container,role);
-			
+			queryRole();
 		}
 		
 		protected function initNuth():void
@@ -33,18 +35,57 @@ package authority
 			var con:RoleControlUI = new RoleControlUI();
 			con.x = 960;
 			_container.addChild(con);
+			edit = new RoleEditUI(); 
+			edit.confirmBtn.addEventListener(MouseEvent.CLICK, onAddAndEditHandler);
 			role.table.renderHandler = new Handler(listRender);
-			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
+			role.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
+//			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
 			//role.table.mouseHandler = new Handler(onCheckListMouse);
 		}
+		
+		protected function onAddAndEditHandler(e:MouseEvent):void
+		{
+			if(edit.title.text == "添加角色"){
+				var req:Object = new Object();
+				req.rolename = edit.rolename.text;
+				req.roleNumber = edit.roleNumber.selectedIndex;
+				send("role/saveRole", req, function(data:Object):void{
+					edit.close();
+					popu("添加成功!");
+					queryRole();
+				},function(v:String):void{
+					
+				},"POST");
+				
+			}else if(edit.title.text == "编辑角色"){
+				
+			}
+		}
+		
+		protected function onAddHandler(e:MouseEvent):void
+		{
+			edit.title.text = "添加角色";
+			edit.show();
+		}
+		
+		
+		
+		protected function queryRole():void{
+			send("role/findAllRole", {}, function(data:Object):void{
+				role.table.array = data.data;
+			}, function(v:String):void{
+				popu(v);
+			},"POST");
+		}
+		
 		
 		/**按照指定的逻辑渲染List*/
 		private function listRender(cell:Box, index:int):void {
 			if (index < role.table.length) {
-				var label:Label = cell.getChildByName("roleNme") as Label;
+//				var label:Label = cell.getChildByName("roleNme") as Label;
 				var editBtn:Button = cell.getChildByName("editBtn") as Button;
 				editBtn.addEventListener(MouseEvent.CLICK,onEditHandler);
-				label.text = "这里是:" + index;
+//				label.text = "这里是:" + index;
 				cell.graphics.beginFill(0x55ccee,0.5);
 				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
 				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
@@ -86,8 +127,13 @@ package authority
 		protected function onEditHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
-			var label:Label = cell.getChildByName("roleNme") as Label;
-			trace("edit="+label.text);
+			var rolename:Label = cell.getChildByName("rolename") as Label;
+			var roleNumber:Label = cell.getChildByName("roleNumber") as Label;
+			trace("edit="+rolename.text);
+			edit.title.text = "编辑角色";
+			edit.rolename.text = rolename.text;
+			edit.roleNumber.selectedLabel = roleNumber.text;
+			edit.show();
 		}
 		
 		/**处理选择框选中效果*/
