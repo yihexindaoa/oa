@@ -19,12 +19,16 @@ package authority
 		protected var _container:Sprite;
 		protected var role:RoleManagementUI ;
 		protected var edit:RoleEditUI;//添加或者编辑角色
+		protected var parent_menu:Array;//父菜单
+		protected var son_menu:Object;//子菜单
+		protected var con:RoleControlUI;//菜单权限
 		public function Authority(container:Sprite)
 		{
 			_container = container;
 			initNuth();
 			super.initPopu(container,role);
 			queryRole();
+			findAllMenu();
 		}
 		
 		protected function initNuth():void
@@ -32,7 +36,7 @@ package authority
 			role = new RoleManagementUI();
 			_container.addChild(role);
 			role.x = 161;
-			var con:RoleControlUI = new RoleControlUI();
+			con = new RoleControlUI();
 			con.x = 960;
 			_container.addChild(con);
 			
@@ -40,7 +44,7 @@ package authority
 			edit.confirmBtn.addEventListener(MouseEvent.CLICK, onAddAndEditHandler);
 			role.table.renderHandler = new Handler(listRender);
 			role.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
-			
+			son_menu = new Object();
 //			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
 			//role.table.mouseHandler = new Handler(onCheckListMouse);
 		}
@@ -87,7 +91,7 @@ package authority
 		}
 		
 		
-		
+		/**查询所有角色**/
 		protected function queryRole():void{
 			send("role/findAllRole", {}, function(data:Object):void{
 				role.table.array = data.data;
@@ -115,10 +119,21 @@ package authority
 			}
 		}
 		
-		/*查询所有的菜单*/
+		/**查询所有的菜单**/
 		protected function findAllMenu():void{
 			send("levelMenu/findAllMenu", {}, function(data:Object):void{
 				if(data.status == 200){
+					parent_menu = sortOn( "menuOrder", separatorArray("menuSeries",data.data, 1));
+					for( var i:int = 0, m:int = parent_menu.length; i<m ; i++ ){
+						son_menu[ parent_menu[i].id ] = sortOn( "menuOrder", separatorArray("parentMenuid",data.data,  parent_menu[i].id ));
+						
+						
+						
+						
+						
+					}
+					
+					
 					
 					
 				}else{
@@ -137,6 +152,7 @@ package authority
 			var id:Label = cell.getChildByName("id") as Label;
 			var req:Object = new Object();
 			req.roleId = id.text;
+			
 			send("userRole/findUserRoleMenu", req, function(data:Object):void{
 				if(data.status == 200){
 					

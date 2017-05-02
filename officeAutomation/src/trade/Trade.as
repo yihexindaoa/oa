@@ -457,5 +457,43 @@ package trade
 		}
 		
 		
+		/**
+		 *根据某个属性来排序 升序排列
+		 * @param key
+		 * @return 
+		 * 
+		 */		
+		protected function sortOn(key:String, list:Array):Array{
+			for( var i:int = 0, m:int = list.length; i < m ;i++ ){
+				for( var j:int = i+1 ; j < m ; j++ ){
+					if(list[i][key] > list[j][key]){
+						var tmp:Object = list[i][key];
+						list[i][key] = list[j][key];
+						list[j][key] = tmp;
+					}
+				}
+			}
+			
+			return list;
+		}
+		
+		/**
+		 *按某个属性同值来分隔数组 
+		 * @param key
+		 * @param list
+		 * @return 
+		 * 
+		 */		
+		protected function separatorArray( key:String, list:Array ,same:Object):Array{
+			var err:Array = new Array();
+			for( var i:int = 0, m:int = list.length; i < m ;i++ ){
+				if(same && list[i][key] == same){
+					err.push(list[i]);
+				}
+			};
+			return err;
+		}
+		
+		
 	}
 }

@@ -24,6 +24,7 @@ package authority
 			menu = new EntryMenuUI();
 			_container.addChild(menu);
 			menu.x = 161;
+			
 		}
 		
 		
