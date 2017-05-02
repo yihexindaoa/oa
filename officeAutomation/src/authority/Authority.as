@@ -35,30 +35,48 @@ package authority
 			var con:RoleControlUI = new RoleControlUI();
 			con.x = 960;
 			_container.addChild(con);
+			
 			edit = new RoleEditUI(); 
 			edit.confirmBtn.addEventListener(MouseEvent.CLICK, onAddAndEditHandler);
 			role.table.renderHandler = new Handler(listRender);
 			role.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
+			
 //			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
 			//role.table.mouseHandler = new Handler(onCheckListMouse);
 		}
 		
 		protected function onAddAndEditHandler(e:MouseEvent):void
 		{
+			var req:Object = new Object();
+			req.rolename = edit.rolename.text;
+			req.roleNumber = edit.roleNumber.selectedIndex;
 			if(edit.title.text == "添加角色"){
-				var req:Object = new Object();
-				req.rolename = edit.rolename.text;
-				req.roleNumber = edit.roleNumber.selectedIndex;
+				
+				
 				send("role/saveRole", req, function(data:Object):void{
+					if(data.status == 200){
 					edit.close();
 					popu("添加成功!");
 					queryRole();
+					}else{
+						popu(data.msg);
+					}
 				},function(v:String):void{
-					
+					popu(v);
 				},"POST");
 				
 			}else if(edit.title.text == "编辑角色"){
-				
+				send("role/updateRole", req, function(data:Object):void{
+					if(data.status == 200){
+						edit.close();
+						popu("修改成功!");
+						queryRole();
+					}else{
+						popu(data.msg);
+					}
+				},function(v:String):void{
+					popu(v);
+				},"POST");
 			}
 		}
 		
@@ -85,6 +103,10 @@ package authority
 //				var label:Label = cell.getChildByName("roleNme") as Label;
 				var editBtn:Button = cell.getChildByName("editBtn") as Button;
 				editBtn.addEventListener(MouseEvent.CLICK,onEditHandler);
+				var deleteBtn:Button = cell.getChildByName("deleteBtn") as Button;
+				deleteBtn.addEventListener(MouseEvent.CLICK, onDeleteHandler);
+				var setBtn:Button = cell.getChildByName("setBtn") as Button;
+				setBtn.addEventListener(MouseEvent.CLICK, onSetBtnHandler);
 //				label.text = "这里是:" + index;
 				cell.graphics.beginFill(0x55ccee,0.5);
 				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
@@ -93,6 +115,62 @@ package authority
 			}
 		}
 		
+		/*查询所有的菜单*/
+		protected function findAllMenu():void{
+			send("levelMenu/findAllMenu", {}, function(data:Object):void{
+				if(data.status == 200){
+					
+					
+				}else{
+					popu(data.msg);
+				}
+			},function(v:String):void{
+				popu(v);
+			},"POST");
+		}
+		
+		
+		/*权限设置*/
+		protected function onSetBtnHandler(e:MouseEvent):void
+		{
+			var cell:Box = e.target.parent as Box;
+			var id:Label = cell.getChildByName("id") as Label;
+			var req:Object = new Object();
+			req.roleId = id.text;
+			send("userRole/findUserRoleMenu", req, function(data:Object):void{
+				if(data.status == 200){
+					
+					
+				}else{
+					popu(data.msg);
+				}
+			},function(v:String):void{
+				popu(v);
+			},"POST");
+		}
+		
+		/*删除角色*/
+		protected function onDeleteHandler(e:MouseEvent):void
+		{
+			popuConfirm("确定删除改条记录！", function():void{
+				var req:Object = new Object();
+				req.rolename = edit.rolename.text;
+				req.roleNumber = edit.roleNumber.selectedIndex;
+				req.delFlag = 0;
+				send("role/updateRole", req, function(data:Object):void{
+					if(data.status == 200){
+						popu("删除成功!");
+						queryRole();
+					}else{
+						popu(data.msg);
+					}
+				},function(v:String):void{
+					popu(v);
+				},"POST");
+			});
+		}
+		
+		/**/
 		protected function onOutHandler(e:MouseEvent):void
 		{
 			var cell:Box;
@@ -109,6 +187,7 @@ package authority
 			}
 		}
 		
+		/**/
 		protected function onOverHandler(e:MouseEvent):void
 		{
 			var cell:Box;

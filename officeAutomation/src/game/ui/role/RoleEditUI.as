@@ -14,12 +14,13 @@ package game.ui.role {
 			    <Label text="角色名称：" x="17" y="65" width="70" height="18"/>
 			    <Label text="角色编码：" x="17" y="101" width="68" height="18"/>
 			    <TextInput skin="png.comp.textinput" x="92" y="63" var="rolename"/>
-			    <ComboBox labels="label1,label2" skin="png.comp.combobox" x="92" y="95" width="126" height="23" var="roleNumber"/>
+			    <ComboBox labels="admin,info" skin="png.comp.combobox" x="92" y="95" width="126" height="23" var="roleNumber"/>
 			    <Button label="取消" skin="png.comp.button" x="21" y="131" name="close"/>
 			    <Button label="确定" skin="png.comp.button" x="149" y="131" var="confirmBtn"/>
 			    <Button skin="png.comp.btn_close" x="206" y="9" name="close"/>
-			    <Image x="2" y="9" width="232" height="21" name="drag" url="png.comp.blank"/>
+			    
 			  </Box>
+<Image x="2" y="9" width="232" height="21" name="drag" skin="png.comp.blank"/>
 			</Dialog>;
 		public function RoleEditUI(){}
 		override protected function createChildren():void {

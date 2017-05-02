@@ -161,6 +161,24 @@ package trade
 			_box.addChild(popu);
 		}
 		
+		/**
+		 *弹出确认框 
+		 * @param msg
+		 * @param callBack
+		 * 
+		 */		
+		public function popuConfirm(msg:String, callBack:Function):void{
+			var popu:AlertUI = new AlertUI();
+			popu.x = 478;
+			popu.y = 370;
+			popu.msg.text = msg;
+			popu.confirmBtn.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void{
+				callBack();
+			});
+			_box.addChild(popu);
+		}
+		
+		
 		protected function onCloseBtn(e:MouseEvent):void
 		{
 			var popu:AlertUI = e.target.parent as AlertUI;
