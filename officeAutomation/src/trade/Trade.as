@@ -1,6 +1,5 @@
 package trade
 {
-	import flash.display.Loader;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -8,7 +7,6 @@ package trade
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.geom.Point;
-	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	import flash.net.FileReferenceList;
 	import flash.net.URLLoader;
@@ -22,7 +20,10 @@ package trade
 	
 	import game.ui.basic.AlertUI;
 	
-	import iflash.method.importJS;
+	
+	import morn.core.components.ComboBox;
+	import morn.core.components.Component;
+	import morn.core.components.TextInput;
 	
 	import unitl.file.MsMultiPartFormData;
 
@@ -153,12 +154,13 @@ package trade
 		public function popu(msg:String):void
 		{
 			var popu:AlertUI = new AlertUI();
-			popu.x = 478;
-			popu.y = 370;
+			/*popu.x = 478;
+			popu.y = 370;*/
 			popu.msg.text = msg;
+			popu.show();
 //			popu.closeBtn.addEventListener(MouseEvent.CLICK,onCloseBtn);
 //			popu.confirmBtn.addEventListener(MouseEvent.CLICK,onCloseBtn);
-			_box.addChild(popu);
+//			_box.addChild(popu);
 		}
 		
 		/**
@@ -218,8 +220,8 @@ package trade
 				s.graphics.beginFill(0x222222,0.9)
 				s.graphics.drawRect(-20,-2.5,10,2.5);
 				s.rotation = i*45;
-				s.x = Staged.staged.stageWidth/4;
-				s.y = Staged.staged.stageHeight/3;
+				s.x = Staged.staged.stageWidth/3;
+				s.y = Staged.staged.stageHeight/2;
 				_mask.addChild(s);
 				_maskList.push(s);
 			}
@@ -494,6 +496,21 @@ package trade
 			return err;
 		}
 		
+		/**
+		 *清楚自身下面文本内容 
+		 * @param component
+		 * 
+		 */		
+		protected function clear( component:Component ):void{
+			for(var i:int  = 0,m:int = component.numChildren; i<m;i++){
+				if( component.getChildAt(i) is TextInput )
+				{
+					(component.getChildAt(i)  as TextInput).text = "";
+				}else if(component.getChildAt(i) is ComboBox){
+					(component.getChildAt(i) as ComboBox).selectedIndex = -1;
+				}
+			}
+		}
 		
 	}
 }

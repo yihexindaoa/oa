@@ -94,6 +94,7 @@ package authority
 		/**查询所有角色**/
 		protected function queryRole():void{
 			send("role/findAllRole", {}, function(data:Object):void{
+				if(data.data.length>0)
 				role.table.array = data.data;
 			}, function(v:String):void{
 				popu(v);
@@ -126,11 +127,6 @@ package authority
 					parent_menu = sortOn( "menuOrder", separatorArray("menuSeries",data.data, 1));
 					for( var i:int = 0, m:int = parent_menu.length; i<m ; i++ ){
 						son_menu[ parent_menu[i].id ] = sortOn( "menuOrder", separatorArray("parentMenuid",data.data,  parent_menu[i].id ));
-						
-						
-						
-						
-						
 					}
 					
 					
