@@ -42,7 +42,7 @@ package notice
 			_container = container;
 			initNotice();
 			super.initPopu(container,_notice);
-//			queryNotice();
+			queryNotice();
 		}
 		
 		private function initNotice():void

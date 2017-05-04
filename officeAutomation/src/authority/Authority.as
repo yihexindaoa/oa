@@ -151,8 +151,14 @@ package authority
 			
 			send("userRole/findUserRoleMenu", req, function(data:Object):void{
 				if(data.status == 200){
-					
-					
+					if(data.data.length>0){
+						
+						
+						for(var i:int = 0, m:int = data.data.length; i < m ; i++){
+							var item:Object = data.data[i];
+//							queryMenuOfone(item.levelMenuid);
+						}
+					}
 				}else{
 					popu(data.msg);
 				}
@@ -160,6 +166,24 @@ package authority
 				popu(v);
 			},"POST");
 		}
+		
+		/**
+		 *根据菜单id 
+		 * @param levelMenuid
+		 * @return 
+		 * 
+		 */		
+		protected function queryMenuOfone( levelMenuid:int ):Object{
+			for( var i:int = 0, m:int = parent_menu.length; i<m ; i++ ){
+				var p:Object = parent_menu[i];
+				if(p.id == levelMenuid)return p;
+				for( var j:int = 0, n:int = son_menu[ p.id ].length ; j < n ; j++ ){
+					var s:Object = son_menu[ p.id ][j];
+					if(s.id == levelMenuid)return s;
+				}
+			}
+		}
+		
 		
 		/*删除角色*/
 		protected function onDeleteHandler(e:MouseEvent):void
