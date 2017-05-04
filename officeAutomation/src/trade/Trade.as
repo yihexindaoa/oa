@@ -236,6 +236,7 @@ package trade
 		}
 		
 		protected function stopMask():void{
+			if(_mask.parent)
 			_box.removeChild(_mask);
 			clearInterval(maskTime);
 		}

@@ -21,7 +21,7 @@ package authority
 		protected var edit:RoleEditUI;//添加或者编辑角色
 		protected var parent_menu:Array;//父菜单
 		protected var son_menu:Object;//子菜单
-		protected var con:RoleControlUI;//菜单权限
+		protected var roleMenu:RoleMenu;//菜单权限
 		public function Authority(container:Sprite)
 		{
 			_container = container;
@@ -36,9 +36,7 @@ package authority
 			role = new RoleManagementUI();
 			_container.addChild(role);
 			role.x = 161;
-			con = new RoleControlUI();
-			con.x = 960;
-			_container.addChild(con);
+			roleMenu = new RoleMenu(_container);
 			
 			edit = new RoleEditUI(); 
 			edit.confirmBtn.addEventListener(MouseEvent.CLICK, onAddAndEditHandler);
@@ -47,6 +45,13 @@ package authority
 			son_menu = new Object();
 //			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
 			//role.table.mouseHandler = new Handler(onCheckListMouse);
+			role.queryBtn.addEventListener(MouseEvent.CLICK, onQueryHandler);
+		}
+		
+		/**模糊查询**/
+		protected function onQueryHandler(e:MouseEvent):void
+		{
+			queryRole();
 		}
 		
 		protected function onAddAndEditHandler(e:MouseEvent):void
@@ -124,12 +129,17 @@ package authority
 		protected function findAllMenu():void{
 			send("levelMenu/findAllMenu", {}, function(data:Object):void{
 				if(data.status == 200){
+					
 					parent_menu = sortOn( "menuOrder", separatorArray("menuSeries",data.data, 1));
 					for( var i:int = 0, m:int = parent_menu.length; i<m ; i++ ){
+						roleMenu.createParentMenu(parent_menu[i]);
 						son_menu[ parent_menu[i].id ] = sortOn( "menuOrder", separatorArray("parentMenuid",data.data,  parent_menu[i].id ));
+						for( var j:int=0,n:int = son_menu[ parent_menu[i].id ].length ; j < n ; j++ ){
+							roleMenu.createChildMenu(son_menu[ parent_menu[i].id ][j]);
+						}
 					}
 					
-					
+					roleMenu.posMenu();
 					
 					
 				}else{
@@ -148,17 +158,10 @@ package authority
 			var id:Label = cell.getChildByName("id") as Label;
 			var req:Object = new Object();
 			req.roleId = id.text;
-			
+			roleMenu.roleId = req.roleId;
 			send("userRole/findUserRoleMenu", req, function(data:Object):void{
 				if(data.status == 200){
-					if(data.data.length>0){
-						
-						
-						for(var i:int = 0, m:int = data.data.length; i < m ; i++){
-							var item:Object = data.data[i];
-//							queryMenuOfone(item.levelMenuid);
-						}
-					}
+					roleMenu.checkList(data.data);
 				}else{
 					popu(data.msg);
 				}
@@ -173,16 +176,16 @@ package authority
 		 * @return 
 		 * 
 		 */		
-		protected function queryMenuOfone( levelMenuid:int ):Object{
-			for( var i:int = 0, m:int = parent_menu.length; i<m ; i++ ){
-				var p:Object = parent_menu[i];
-				if(p.id == levelMenuid)return p;
-				for( var j:int = 0, n:int = son_menu[ p.id ].length ; j < n ; j++ ){
-					var s:Object = son_menu[ p.id ][j];
-					if(s.id == levelMenuid)return s;
-				}
-			}
-		}
+//		protected function queryMenuOfone( levelMenuid:int ):void{
+//			for( var i:int = 0, m:int = parent_menu.length; i<m ; i++ ){
+//				var p:Object = parent_menu[i];
+//				if(p.id == levelMenuid)return p;
+//				for( var j:int = 0, n:int = son_menu[ p.id ].length ; j < n ; j++ ){
+//					var s:Object = son_menu[ p.id ][j];
+//					if(s.id == levelMenuid)return s;
+//				}
+//			}
+//		}
 		
 		
 		/*删除角色*/
