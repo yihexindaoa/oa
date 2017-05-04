@@ -131,22 +131,42 @@ package authority
 //						var list:Array = new Array();
 						menu.table.repeatY = data.data.length;
 //						menu.table.array = data.data;
-						menu.table.array = parent_menu = sortOn( "menuOrder", separatorArray("menuSeries",data.data, 1));
+						menu.table.array = [];
+						parent_menu = sortOn( "menuOrder", separatorArray("menuSeries",data.data, 1));
+						for(var c:int = 0;c<parent_menu.length;c++){
+//							trace("parent_menu[c].meunName=",parent_menu[c].meunName);
+							menu.table.addItemAt( parent_menu[c],c);
+						}
 						var str:String = "";
+						var currentIndex:int =0;
+						var len:int  =0;
 						for( var i:int = 0, m:int = parent_menu.length; i < m ; i++ ){
 							if(i < m - 1 )
 								str += parent_menu[i].meunName +",";
 							else
 								str += parent_menu[i].meunName;
 							son_menu[ parent_menu[i].id ] = sortOn( "menuOrder", separatorArray("parentMenuid",data.data,  parent_menu[i].id ));
+							
+							
+							if(i>0){
+								len+=son_menu[ parent_menu[i-1].id ].length;
+								currentIndex = i+len;//当前父菜单的位置
+							}
+									
+							var cell:Box = menu.table.getCell(currentIndex);
+							var clip:Clip = cell.getChildByName("clip") as Clip;
+							clip.visible = true;
+							clip.tag = new Object();
+							clip.tag.index = i;
+							
 							if(son_menu[ parent_menu[i].id ] && son_menu[ parent_menu[i].id ].length>0){
-								var cell:Box = menu.table.getCell(i);
-								var clip:Clip = cell.getChildByName("clip") as Clip;
-								clip.visible = true;
 								clip.addEventListener(MouseEvent.CLICK, onClipHandler);
 								clip.index = 1;
+								if(i>0)
+								clip.tag.index = currentIndex;
+								
 								for( var j:int=0,n:int = son_menu[ parent_menu[i].id ].length ; j < n ; j++ ){
-									menu.table.addItemAt( son_menu[ parent_menu[i].id ][j] , i+j+1 );
+									menu.table.addItemAt( son_menu[ parent_menu[i].id ][j] , currentIndex+j+1 );
 								}
 							}
 						}
@@ -165,11 +185,74 @@ package authority
 		
 		protected function onClipHandler(e:MouseEvent):void
 		{
-			if( (e.target as Clip).index == 1 ){
+			var parentMenuBox:Box = (e.target as Clip).parent as Box;
+			var index:int = parseInt((e.target as Clip).tag.index);//menu.table.getChildIndex(parentMenuBox);
+			
+			if( (e.target as Clip).index == 0 ){//开始父菜单是关闭的,父菜单打开
+				(e.target as Clip).index = 1;
 				
-			}else if((e.target as Clip).index == 0){
+				for( var i:int = index+1, m:int =  menu.table.length; i < m ; i++ ){
+					var cell:Box = menu.table.getCell(i);
+					var menuSeries:Label = cell.getChildByName("menuSeries") as Label;
+					if(menuSeries.text == "2"){//表示子菜单
+						cell.visible = false;
+//						menu.table.array.splice(i,1);
+						
+					}else{
+						break;
+					}
+				}
 				
+			}else if((e.target as Clip).index == 1){//父菜单关闭
+				(e.target as Clip).index = 0;
+				for( var i:int = index+1, m:int =  menu.table.length; i < m ; i++ ){
+					var cell:Box = menu.table.getCell(i);
+					var menuSeries:Label = cell.getChildByName("menuSeries") as Label;
+					if(menuSeries.text == "2"){//表示子菜单
+						cell.visible = true;
+					}else{
+						break;
+					}
+				}
 			}
+			
+//			resertTable();
+		}
+		
+		/**根据cell.visible重置表格**/
+		protected function resertTable():void{
+			menu.table.array = [];
+			for(var c:int = 0;c<parent_menu.length;c++){
+				menu.table.addItemAt( parent_menu[c],c);
+			}
+			var currentIndex:int =0;
+			var len:int  =0;
+			for( var i:int = 0, m:int = parent_menu.length; i < m ; i++ ){
+				
+				
+				if(i>0){
+					len+=son_menu[ parent_menu[i-1].id ].length;
+					currentIndex = i+len;//当前父菜单的位置
+				}
+				
+				var cell:Box = menu.table.getCell(currentIndex);
+				var clip:Clip = cell.getChildByName("clip") as Clip;
+				clip.visible = true;
+				clip.tag = new Object();
+				clip.tag.index = i;
+				
+				if(son_menu[ parent_menu[i].id ] && son_menu[ parent_menu[i].id ].length>0){
+					clip.addEventListener(MouseEvent.CLICK, onClipHandler);
+					
+					if(i>0)
+						clip.tag.index = currentIndex;
+					
+					for( var j:int=0,n:int = son_menu[ parent_menu[i].id ].length ; j < n ; j++ ){
+						menu.table.addItemAt( son_menu[ parent_menu[i].id ][j] , currentIndex+j+1 );
+					}
+				}
+			}
+			
 		}
 		
 		/**录入和编辑菜单**/
