@@ -9,7 +9,10 @@ package navigation
 	import authority.Menu;
 	import authority.User;
 	
+	import game.ui.homePage.HomeEvent;
 	import game.ui.role.NavigationMenuUI;
+	
+	import home.Home;
 	
 	import morn.core.components.Box;
 	import morn.core.components.Button;
@@ -38,6 +41,7 @@ package navigation
 		protected var workReportStatistics:WorkReportStatistics;//工作报表统计
 		protected var mySalay:MySalay;//工资统计表
 		protected var salay:Salary;//调薪记录
+		protected var homePage:Home;//首页
 		protected var nav:NavigationMenuUI;
 		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录"]];
 		protected var mainMenu:Array = [];//主菜单
@@ -84,7 +88,15 @@ package navigation
 			
 			pos();
 			
-			
+			homePage = new Home(_container);
+			homePage.show();
+			homePage.addEventListener(HomeEvent.NAME, onHomeHandler);
+		}
+		
+		/**首页打开其他页**/
+		protected function onHomeHandler(e:HomeEvent):void
+		{
+			showMenu(e.notice);
 		}
 		
 		/*用户登录获取菜单*/
@@ -127,71 +139,17 @@ package navigation
 		{
 			if(e.target is Button){
 				var btn:Button = e.target as Button;
-				if(menu)menu.hide();
-				if(user)user.hide();
-				if(infor)infor.hide();
-				if(auth)auth.hide();
-				if(noticeManager)noticeManager.hide();
-				if(workReportStatistics)workReportStatistics.hide();
-				if(mySalay)mySalay.hide();
-				if(salay)salay.hide();
+				hideAllMenu();
 				if (btn) {
-					switch (btn.label){
-						case "角色管理": 
-							if(!auth)
-							auth = new Authority(_container);
-							else auth.show();
-							break;
-						case "菜单管理": 
-							if(!menu)
-							menu = new Menu(_container);
-							else menu.show();
-							break;
-						case "用户管理":
-							if(!user)
-								user = new User(_container);
-							else 
-								user.show();
-							break;
-						case "信息表管理":
-							if(!infor)
-								infor = new Infor(_container);
-							else 
-								infor.show();
-							break;
-						case "通知告示统计表":
-							if(!noticeManager)
-								noticeManager = new Notice(_container);
-							else 
-								noticeManager.show();
-							break;
-						case "工作报表统计":
-							if(!workReportStatistics)
-								workReportStatistics = new WorkReportStatistics(_container);
-							else
-								workReportStatistics.show();
-							break;
-						case "工资统计表":
-							if(!mySalay)
-								mySalay = new MySalay(_container);
-							else
-								mySalay.show();
-							break;
-						case "调薪记录":
-							if(!salay)
-								salay = new Salary(_container);
-							else
-								salay.show();
-							break;
-						default:
-							break;
-					}
+					showMenu(btn.label);
 				}
 			}
 		}
 		protected function onClickHandler(e:MouseEvent):void
 		{
 			var btn:Button = e.target as Button;
+			hideAllMenu();
+			if(btn&&btn.label == "系统首页")homePage.show();
 			if (btn) {
 				btn.tag = !btn.tag;
 				var i:int = btnList.indexOf(btn);
@@ -214,6 +172,74 @@ package navigation
 					
 				}
 			}
+		}
+		
+		/**隐藏所有页面**/
+		protected function hideAllMenu():void{
+			if(menu)menu.hide();
+			if(user)user.hide();
+			if(infor)infor.hide();
+			if(auth)auth.hide();
+			if(noticeManager)noticeManager.hide();
+			if(workReportStatistics)workReportStatistics.hide();
+			if(mySalay)mySalay.hide();
+			if(salay)salay.hide();
+			if(homePage)homePage.hide();
+		}
+		
+		/**根据不同的标签显示不同页面**/
+		protected function showMenu(tyoe:String):void{
+			switch (tyoe){
+				case "角色管理": 
+					if(!auth)
+						auth = new Authority(_container);
+					else auth.show();
+					break;
+				case "菜单管理": 
+					if(!menu)
+						menu = new Menu(_container);
+					else menu.show();
+					break;
+				case "用户管理":
+					if(!user)
+						user = new User(_container);
+					else 
+						user.show();
+					break;
+				case "信息表管理":
+					if(!infor)
+						infor = new Infor(_container);
+					else 
+						infor.show();
+					break;
+				case "通知告示统计表":
+					if(!noticeManager)
+						noticeManager = new Notice(_container);
+					else 
+						noticeManager.show();
+					break;
+				case "工作报表统计":
+					if(!workReportStatistics)
+						workReportStatistics = new WorkReportStatistics(_container);
+					else
+						workReportStatistics.show();
+					break;
+				case "工资统计表":
+					if(!mySalay)
+						mySalay = new MySalay(_container);
+					else
+						mySalay.show();
+					break;
+				case "调薪记录":
+					if(!salay)
+						salay = new Salary(_container);
+					else
+						salay.show();
+					break;
+				default:
+					break;
+			}
+		
 		}
 		
 		/**

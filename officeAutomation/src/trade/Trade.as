@@ -3,6 +3,7 @@ package trade
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
@@ -20,14 +21,13 @@ package trade
 	
 	import game.ui.basic.AlertUI;
 	
-	
 	import morn.core.components.ComboBox;
 	import morn.core.components.Component;
 	import morn.core.components.TextInput;
 	
 	import unitl.file.MsMultiPartFormData;
 
-	public class Trade
+	public class Trade extends EventDispatcher
 	{
 		protected var _box:Sprite;
 		protected var _child:Sprite;
