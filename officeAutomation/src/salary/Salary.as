@@ -14,6 +14,7 @@ package salary
 	import game.ui.salary.WageStatisticsUI;
 	
 	import morn.core.components.Box;
+	import morn.core.components.Button;
 	import morn.core.components.Label;
 	import morn.core.handlers.Handler;
 	
@@ -48,7 +49,7 @@ package salary
 			initSalary();
 			super.initPopu(container,_salary);
 			//页面加载时加载页面数据
-			queryNotice();
+//			queryNotice();
 			onPayrollRecord();
 		}
 		//初始化
@@ -100,33 +101,50 @@ package salary
 		/**编辑调薪记录**/
 		protected function onEditSalaryHandler(e:MouseEvent):void
 		{
-			
+			var req:Object = new Object();
+			req.id = editSalary.id.text;
+			req.name = editSalary.nameBtn.text ;
+			req.position = editSalary.position.text ;
+			req.workingTime = editSalary.workingTime.text ;
+			req.originalBasicSalary = editSalary.originalBasicSalary.text ;
+			req.salaryBasicWage = editSalary.salaryBasicWage.text ;
+			req.salaryIncrease = editSalary.salaryIncrease.text;
+			send("SalaryIncrease/updateSalaryIncrease",req,function(data:Object):void{
+				if(data.status == 200){
+					popu("编辑成功!");
+					onPayrollRecord();
+				}else{
+					popu(data.msg);
+				}
+			},function(v:String):void{
+				popu(v);
+			},"POST");
 		}
 		
 		/**调薪表格**/
 		private function renderTable2Handler(cell:Box, index:int):void
 		{
 			if(_salary.table2.length>0){
-				var edit:Label = cell.getChildByName("edit") as Label;
-				edit.graphics.beginFill(0xffffff, 0.1);
-				edit.graphics.drawRect(0,0,edit.width,edit.height);
+				var edit:Button = cell.getChildByName("edit") as Button;
+//				edit.graphics.beginFill(0xffffff, 0.1);
+//				edit.graphics.drawRect(0,0,edit.width,edit.height);
 				edit.addEventListener(MouseEvent.CLICK, onEditHandler);
-				var dele:Label = cell.getChildByName("delete") as Label;
-				dele.graphics.beginFill(0xffffff, 0.1);
-				dele.graphics.drawRect(0,0,dele.width,dele.height);
+				var dele:Button = cell.getChildByName("delete") as Button;
+//				dele.graphics.beginFill(0xffffff, 0.1);
+//				dele.graphics.drawRect(0,0,dele.width,dele.height);
 				dele.addEventListener(MouseEvent.CLICK, onDeleteHandler);
 			}
 		}
 		
 		/**删除调薪记录**/
 		protected function onDeleteHandler(e:MouseEvent):void
-		{
+		{trace("删除");
 			var cell:Box = e.target.parent as Box;
 			
 			popuConfirm("确定删除"+(cell.getChildByName("name") as Label).text+"的调薪记录！", function():void{
 				var req:Object = new Object();
 				req.id = (cell.getChildByName("id") as Label).text;
-				send("",req,function(data:Object):void{
+				send("SalaryIncrease/deleteSalaryIncrease",req,function(data:Object):void{
 					if(data.status == 200){
 						popu("删除成功!");
 						onPayrollRecord();
@@ -143,6 +161,14 @@ package salary
 		/**编辑调薪记录表**/
 		protected function onEditHandler(e:MouseEvent):void
 		{
+			var cell:Box = e.target.parent as Box;
+			editSalary.id.text = (cell.getChildByName("id") as Label).text;
+			editSalary.nameBtn.text = (cell.getChildByName("name") as Label).text;
+			editSalary.position.text = (cell.getChildByName("position") as Label).text;
+			editSalary.workingTime.text = (cell.getChildByName("workingTime") as Label).text;
+			editSalary.originalBasicSalary.text = (cell.getChildByName("originalBasicSalary") as Label).text;
+			editSalary.salaryBasicWage.text = (cell.getChildByName("salaryBasicWage") as Label).text;
+			editSalary.salaryIncrease.text = (cell.getChildByName("salaryIncrease") as Label).text;
 			editSalary.show();
 		}
 		//导出工资单列表

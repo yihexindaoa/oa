@@ -3,7 +3,7 @@ package game.ui.salary {
 	import morn.core.components.*;
 	public class EditSalaryUI extends Dialog {
 		public var item:Box = null;
-		public var name:TextInput = null;
+		public var nameBtn:TextInput = null;
 		public var position:TextInput = null;
 		public var salaryIncrease:TextInput = null;
 		public var salaryIncreaseReason:TextInput = null;
@@ -11,6 +11,7 @@ package game.ui.salary {
 		public var originalBasicSalary:TextInput = null;
 		public var workingTime:TextInput = null;
 		public var saveBtn:Button = null;
+		public var id:Label = null;
 		public var title:Label = null;
 		protected static var uiXML:XML =
 			<Dialog width="600" height="400">
@@ -19,7 +20,7 @@ package game.ui.salary {
 			  <Image skin="png.comp.blank" x="3" y="2" width="312" height="20" name="drag"/>
 			  <Box x="0" y="0" name="item" visible="true" var="item" width="350" height="406">
 			    <Label text="姓名：" x="83" y="42" width="44" height="19" size="14"/>
-			    <TextInput skin="png.comp.textinput" x="134" y="38" var="name" width="143" height="26"/>
+			    <TextInput skin="png.comp.textinput" x="134" y="38" var="nameBtn" width="143" height="26"/>
 			    <TextInput skin="png.comp.textinput" x="134" y="78" var="position" width="142" height="26"/>
 			    <Label text="岗位：" x="84" y="83" width="39" height="20" size="14"/>
 			    <Label text="在职时长：" x="55" y="122" width="71" height="20" size="14"/>
@@ -33,6 +34,7 @@ package game.ui.salary {
 			    <TextInput skin="png.comp.textinput" x="134" y="161" width="143" height="26" var="originalBasicSalary"/>
 			    <TextInput skin="png.comp.textinput" x="133" y="119" width="143" height="26" var="workingTime"/>
 			    <Button label="保存" skin="png.comp.button" x="135" y="343" width="59" height="27" var="saveBtn"/>
+			    <Label text="label" x="298" y="331" var="id" visible="false"/>
 			  </Box>
 			  <Label text="编辑调薪记录" x="15" y="5" width="82" height="18" var="title" color="0x99cc"/>
 			</Dialog>;

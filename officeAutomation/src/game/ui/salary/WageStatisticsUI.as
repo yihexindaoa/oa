@@ -42,7 +42,7 @@ package game.ui.salary {
 		protected static var uiXML:XML =
 			<View width="1062" height="900">
 			  <Image skin="png.comp.bg" width="1059" height="900" sizeGrid="50,50,10,10" x="-3" y="0"/>
-			  <Box x="-288" y="-42" name="item" visible="true" var="item" width="1230" height="275">
+			  <Box x="-288" y="-42" name="item" visible="false" var="item" width="1230" height="275">
 			    <Button label="工资统计表" width="115" height="18" var="tab01" x="325" y="109" mouseChildren="true"/>
 			    <Image skin="png.comp.blank_blue" x="345" y="128" width="77" height="3" var="line"/>
 			    <Button label="调薪记录" width="102" height="18" var="tab02" x="427" y="110" mouseChildren="true"/>
@@ -139,7 +139,7 @@ package game.ui.salary {
 			      <Button label="预览" skin="png.comp.button" x="636" y="251" width="38" height="23" var="findAllOutputExcel"/>
 			    </Box>
 			  </Box>
-			  <Box name="render" width="480" height="184" x="76" y="423" visible="false" var="item3">
+			  <Box name="render" width="480" height="184" x="76" y="423" visible="true" var="item3">
 			    <Box x="-65" y="-438" visible="true" var="item5" width="1113" height="70">
 			      <TextInput skin="png.comp.textinput" x="69" y="122" width="223" height="27" toolTip="关键字搜索" var="input2"/>
 			      <Button label="导出" skin="png.comp.button" x="313" y="123" width="59" height="24" var="outputExcelSalaryIncrease"/>
@@ -187,8 +187,8 @@ package game.ui.salary {
 			          <Label text="label" x="541" y="78" width="102" height="20" name="salaryIncreaseReason"/>
 			          <Label text="label" x="660" y="79" width="73" height="18" name="salaryIncrease"/>
 			          <Label text="id" x="843" y="79" width="43" height="18" name="id" visible="false"/>
-			          <Label text="编辑" x="750" y="80" width="31" height="18" color="0xff" name="edit"/>
-			          <Label text="删除" x="795" y="80" color="0xff" name="delete"/>
+			          <Button label="编辑" skin="png.comp.button" x="745" y="74" width="36" height="23" name="edit"/>
+			          <Button label="删除" skin="png.comp.button" x="786" y="74" width="37" height="23" name="delete"/>
 			        </Box>
 			      </List>
 			    </Box>
