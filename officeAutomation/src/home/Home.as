@@ -2,6 +2,7 @@ package home
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.net.URLRequestMethod;
 	
 	import game.ui.homePage.HomeEvent;
 	import game.ui.homePage.HomePageUI;
@@ -77,12 +78,25 @@ package home
 			more.graphics.drawRect(0,0,more.width,more.height);
 			noticeManager.addChild(more);
 			more.addEventListener(MouseEvent.CLICK, onNoticeHandler);
+			
+		}
+		
+		
+		protected function queryNotice():void{
+			var req:Object = new Object();
+			req.pageNum = 1;
+			req.pageSize = 5;
+			
+			send("notice/noticePageInfo",req, function(data:Object):void{
+			
+			}, function(v:String):void{
+			
+			},URLRequestMethod.POST);
 		}
 		
 		/**由更多转到通知**/
 		protected function onNoticeHandler(e:MouseEvent):void
 		{
-			trace("通知");
 			dispatchEvent( new HomeEvent(HomeEvent.NAME, "通知告示统计表") );
 		}		
 		
