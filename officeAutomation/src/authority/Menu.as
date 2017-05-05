@@ -216,42 +216,12 @@ package authority
 				}
 			}
 			
-//			resertTable();
+			resertTable();
 		}
 		
-		/**根据cell.visible重置表格**/
+		/**根据cell.visible重置表格里面的位置**/
 		protected function resertTable():void{
-			menu.table.array = [];
-			for(var c:int = 0;c<parent_menu.length;c++){
-				menu.table.addItemAt( parent_menu[c],c);
-			}
-			var currentIndex:int =0;
-			var len:int  =0;
-			for( var i:int = 0, m:int = parent_menu.length; i < m ; i++ ){
-				
-				
-				if(i>0){
-					len+=son_menu[ parent_menu[i-1].id ].length;
-					currentIndex = i+len;//当前父菜单的位置
-				}
-				
-				var cell:Box = menu.table.getCell(currentIndex);
-				var clip:Clip = cell.getChildByName("clip") as Clip;
-				clip.visible = true;
-				clip.tag = new Object();
-				clip.tag.index = i;
-				
-				if(son_menu[ parent_menu[i].id ] && son_menu[ parent_menu[i].id ].length>0){
-					clip.addEventListener(MouseEvent.CLICK, onClipHandler);
-					
-					if(i>0)
-						clip.tag.index = currentIndex;
-					
-					for( var j:int=0,n:int = son_menu[ parent_menu[i].id ].length ; j < n ; j++ ){
-						menu.table.addItemAt( son_menu[ parent_menu[i].id ][j] , currentIndex+j+1 );
-					}
-				}
-			}
+			
 			
 		}
 		

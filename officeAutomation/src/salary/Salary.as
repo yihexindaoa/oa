@@ -10,7 +10,12 @@ package salary
 	import assembly.PageEvent;
 	import assembly.PageFlip;
 	
+	import game.ui.salary.EditSalaryUI;
 	import game.ui.salary.WageStatisticsUI;
+	
+	import morn.core.components.Box;
+	import morn.core.components.Label;
+	import morn.core.handlers.Handler;
 	
 	import trade.Trade;
 	
@@ -29,7 +34,8 @@ package salary
 		protected var _page:PageFlip;
 		protected var req:Object;
 		protected var calendar:Calendar;
-		private var ip = "192.168.1.119:8089";
+		protected var editSalary:EditSalaryUI;//编辑调薪记录
+//		private var ip = "192.168.1.119:8089";
 		/**
 		 * 工资
 		 * @param container
@@ -43,7 +49,7 @@ package salary
 			super.initPopu(container,_salary);
 			//页面加载时加载页面数据
 			queryNotice();
-			onPayrollRecord
+			onPayrollRecord();
 		}
 		//初始化
 		private function initSalary():void
@@ -64,6 +70,14 @@ package salary
 			_salary.year.addEventListener(MouseEvent.CLICK, onShowCalendar2);
 			_salary.table.repeatY = _page.pageSize;
 			req = new Object();
+			_salary.tab01.graphics.beginFill(0xffffff, 0.1);
+			_salary.tab01.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
+			_salary.tab02.graphics.beginFill(0xffffff, 0.1);
+			_salary.tab02.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
+			_salary.addSalaryIncrease.graphics.beginFill(0xffffff, 0.1);
+			_salary.addSalaryIncrease.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
+			_salary.payrollRecord.graphics.beginFill(0xffffff, 0.1);
+			_salary.payrollRecord.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
 			_salary.tab01.addEventListener(MouseEvent.CLICK,onTab01Handler);
 			_salary.tab02.addEventListener(MouseEvent.CLICK,onTab02Handler);
 			_salary.outputExcel.addEventListener(MouseEvent.CLICK,outputExcel);
@@ -77,6 +91,59 @@ package salary
 			_salary.addSalaryIncrease.addEventListener(MouseEvent.CLICK,onAddSalaryIncrease);
 			_salary.payrollRecord.addEventListener(MouseEvent.CLICK,onTab02Handler);
 			_salary.addSalary.addEventListener(MouseEvent.CLICK,addSalary);
+			_salary.table2.renderHandler = new Handler(renderTable2Handler);
+			
+			editSalary = new EditSalaryUI();
+			editSalary.saveBtn.addEventListener(MouseEvent.CLICK, onEditSalaryHandler);
+		}
+		
+		/**编辑调薪记录**/
+		protected function onEditSalaryHandler(e:MouseEvent):void
+		{
+			
+		}
+		
+		/**调薪表格**/
+		private function renderTable2Handler(cell:Box, index:int):void
+		{
+			if(_salary.table2.length>0){
+				var edit:Label = cell.getChildByName("edit") as Label;
+				edit.graphics.beginFill(0xffffff, 0.1);
+				edit.graphics.drawRect(0,0,edit.width,edit.height);
+				edit.addEventListener(MouseEvent.CLICK, onEditHandler);
+				var dele:Label = cell.getChildByName("delete") as Label;
+				dele.graphics.beginFill(0xffffff, 0.1);
+				dele.graphics.drawRect(0,0,dele.width,dele.height);
+				dele.addEventListener(MouseEvent.CLICK, onDeleteHandler);
+			}
+		}
+		
+		/**删除调薪记录**/
+		protected function onDeleteHandler(e:MouseEvent):void
+		{
+			var cell:Box = e.target.parent as Box;
+			
+			popuConfirm("确定删除"+(cell.getChildByName("name") as Label).text+"的调薪记录！", function():void{
+				var req:Object = new Object();
+				req.id = (cell.getChildByName("id") as Label).text;
+				send("",req,function(data:Object):void{
+					if(data.status == 200){
+						popu("删除成功!");
+						onPayrollRecord();
+					}else{
+						popu(data.msg);
+					}
+				},function(v:String):void{
+					popu(v);
+				},"POST");
+			
+			});
+		}
+		
+		/**编辑调薪记录表**/
+		protected function onEditHandler(e:MouseEvent):void
+		{
+			editSalary.show();
 		}
 		//导出工资单列表
 		private function  outputExcel(e:MouseEvent){
@@ -88,7 +155,7 @@ package salary
 			}
 //			send("OaWage/exportExcel",req,null,onError,"GET");	
 			/*[IF-FLASH-BEGIN]*/
-			navigateToURL(new URLRequest("http://"+ip+"/oa_system/OaWage/exportExcel?input="+encodeURI(req.input)+"&&date="+req.date));
+			navigateToURL(new URLRequest("http://"+path+"OaWage/exportExcel?input="+encodeURI(req.input)+"&&date="+req.date));
 			/*[IF-FLASH-END]*/ 
 //		__JS__
 //		("window.open" +
@@ -154,7 +221,7 @@ package salary
 		
 		//导出样本
 		private function downloadExcel(e:MouseEvent){
-			navigateToURL(new URLRequest("http://"+ip+"/oa_system/OaWage/downloadExcel"));
+			navigateToURL(new URLRequest("http://"+path+"OaWage/downloadExcel"));
 		}
 		
 		//页面加载数据查询
@@ -162,7 +229,7 @@ package salary
 			req.pageNum = _page.currentPage;
 			req.pageSize = _page.pageSize;
 			req.input = _salary.input.text;
-			req.date = _salary.dateTime.text;
+			req.date = calendar.millisecondsNumber;//_salary.dateTime.text;
 			send("OaWage/findAllOaWage",req,onCompleteHandler,onError,"GET");
 		}
 		//点击页码，再次查询页面数据
@@ -231,7 +298,7 @@ package salary
 			var reqs:Object = new Object();
 			reqs.input = _salary.input2.text;	
 			/*[IF-FLASH-BEGIN]*/
-			navigateToURL(new URLRequest("http://"+ip+"/oa_system/SalaryIncrease/outputExcelSalaryIncrease?input="+encodeURI(reqs.input)));
+			navigateToURL(new URLRequest("http://"+path+"SalaryIncrease/outputExcelSalaryIncrease?input="+encodeURI(reqs.input)));
 			/*[IF-FLASH-END]*/ 
 		}
 		//保存调薪记录
@@ -244,7 +311,9 @@ package salary
 			reqs.salaryBasicWage = _salary.salaryBasicWage.text;	
 			reqs.salaryIncreaseReason = _salary.salaryIncreaseReason.text;	
 			reqs.salaryIncrease = _salary.salaryIncrease.text;	
-			send("SalaryIncrease/addSalaryIncrease",reqs,null,onError,"POST");
+			send("SalaryIncrease/addSalaryIncrease",reqs,function(data:Object):void{
+				popu(data.msg);
+			},onError,"POST");
 		}
 		
 	}

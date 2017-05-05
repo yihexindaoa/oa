@@ -19,6 +19,9 @@ package navigation
 	
 	import report.WorkReportStatistics;
 	
+	import salary.MySalay;
+	import salary.Salary;
+	
 	import trade.Trade;
 	
 	public class Navigation extends Trade
@@ -33,8 +36,10 @@ package navigation
 		protected var infor:Infor;//信息表管理
 		protected var noticeManager:Notice;//通知告示管理
 		protected var workReportStatistics:WorkReportStatistics;//工作报表统计
+		protected var mySalay:MySalay;//工资统计表
+		protected var salay:Salary;//调薪记录
 		protected var nav:NavigationMenuUI;
-		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"]];
+		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录"]];
 		protected var mainMenu:Array = [];//主菜单
 		protected var subMenu:Array = [];
 		public function Navigation(container:Sprite)
@@ -128,6 +133,8 @@ package navigation
 				if(auth)auth.hide();
 				if(noticeManager)noticeManager.hide();
 				if(workReportStatistics)workReportStatistics.hide();
+				if(mySalay)mySalay.hide();
+				if(salay)salay.hide();
 				if (btn) {
 					switch (btn.label){
 						case "角色管理": 
@@ -163,6 +170,18 @@ package navigation
 								workReportStatistics = new WorkReportStatistics(_container);
 							else
 								workReportStatistics.show();
+							break;
+						case "工资统计表":
+							if(!mySalay)
+								mySalay = new MySalay(_container);
+							else
+								mySalay.show();
+							break;
+						case "调薪记录":
+							if(!salay)
+								salay = new Salary(_container);
+							else
+								salay.show();
 							break;
 						default:
 							break;

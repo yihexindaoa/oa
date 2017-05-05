@@ -40,14 +40,14 @@ package salary
 			_mySalary.x = 161;
 			_container.addChild(_mySalary);
 			_page = new PageFlip();
-			_page.x = 82;
-			_page.y = 317;
+			_page.x = 48;
+			_page.y = 320;
 			_page.setWidth(887);
 			_page.pageSize = 10;
 			_page.pageNum = 1;
 			_page.addEventListener(PageEvent.CURRENT_PAGE, queryTableHandler);
 			_mySalary.addChild(_page);
-			_mySalary.table.repeatY = _page.pageSize;
+//			_mySalary.table.repeatY = _page.pageSize;
 			req = new Object();
 			calendar = new Calendar(_mySalary);
 			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler);

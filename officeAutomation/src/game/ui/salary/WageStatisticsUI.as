@@ -43,9 +43,9 @@ package game.ui.salary {
 			<View width="1062" height="900">
 			  <Image skin="png.comp.bg" width="1059" height="900" sizeGrid="50,50,10,10" x="-3" y="0"/>
 			  <Box x="-288" y="-42" name="item" visible="true" var="item" width="1230" height="275">
-			    <Button label="工资统计表" width="115" height="18" var="tab01" x="325" y="109"/>
+			    <Button label="工资统计表" width="115" height="18" var="tab01" x="325" y="109" mouseChildren="true"/>
 			    <Image skin="png.comp.blank_blue" x="345" y="128" width="77" height="3" var="line"/>
-			    <Button label="调薪记录" width="102" height="18" var="tab02" x="427" y="110"/>
+			    <Button label="调薪记录" width="102" height="18" var="tab02" x="427" y="110" mouseChildren="true"/>
 			    <Box x="347" y="156" name="item1" visible="true" var="item1">
 			      <Button label="新增" skin="png.comp.button" width="64" height="23" var="addBtn" name="addBtn"/>
 			      <Label text="日期：" x="107" y="3" width="39" height="18"/>
@@ -187,8 +187,8 @@ package game.ui.salary {
 			          <Label text="label" x="541" y="78" width="102" height="20" name="salaryIncreaseReason"/>
 			          <Label text="label" x="660" y="79" width="73" height="18" name="salaryIncrease"/>
 			          <Label text="id" x="843" y="79" width="43" height="18" name="id" visible="false"/>
-			          <Label text="编辑" x="750" y="80" width="31" height="18" color="0xff"/>
-			          <Label text="删除" x="795" y="80" color="0xff"/>
+			          <Label text="编辑" x="750" y="80" width="31" height="18" color="0xff" name="edit"/>
+			          <Label text="删除" x="795" y="80" color="0xff" name="delete"/>
 			        </Box>
 			      </List>
 			    </Box>
@@ -210,8 +210,8 @@ package game.ui.salary {
 			      <Button label="保存" skin="png.comp.button" x="62" y="190" width="59" height="27" var="addSalary"/>
 			    </Box>
 			    <Image skin="png.comp.blank_blue" x="-17" y="-337" width="72" height="3" var="imageTwo"/>
-			    <Button label="调薪记录" x="-18" y="-355" width="70" height="19" var="payrollRecord"/>
-			    <Button label="新增调薪" x="80" y="-355" width="58" height="19" var="addSalaryIncrease"/>
+			    <Button label="调薪记录" x="-18" y="-355" width="70" height="19" var="payrollRecord" mouseChildren="true"/>
+			    <Button label="新增调薪" x="80" y="-355" width="58" height="19" var="addSalaryIncrease" mouseChildren="true"/>
 			  </Box>
 			</View>;
 		public function WageStatisticsUI(){}
