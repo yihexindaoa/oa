@@ -12,7 +12,7 @@ package game.ui.notice {
 			  <Button skin="png.comp.btn_close" x="565" y="4" name="close"/>
 			  <Image skin="png.comp.blank" x="4" y="3" width="561" height="19" name="drag"/>
 			  <Label text="通知告示类型：" x="25" y="48" width="107" height="21" size="15" align="right" font="黑体"/>
-			  <ComboBox labels="公司通知,奖励通知,惩罚通知" skin="png.comp.combobox" x="142" y="46" width="121" height="23" selectedIndex="0" var="signType" name="signType" mouseEnabled="false"/>
+			  <ComboBox labels="公司通知,惩罚通知,奖励通知" skin="png.comp.combobox" x="142" y="46" width="121" height="23" selectedIndex="0" var="signType" name="signType" mouseEnabled="false"/>
 			  <Label text="标题：" x="25" width="107" height="21" y="82" align="right"/>
 			  <TextInput skin="png.comp.textinput" x="142" y="82" width="145" height="22" var="title" name="title" editable="false" mouseChildren="false" mouseEnabled="false"/>
 			  <TextArea text="&lt;font  face=&quot;微软雅黑&quot; size=&quot;30&quot;>黑体&lt;/font>&lt;font   size=&quot;30&quot;>大幅度&lt;/font>" skin="png.comp.textarea" x="142" y="123" width="439" height="277" isHtml="true" align="left" var="content" name="content" editable="false" mouseChildren="false" mouseEnabled="false"/>

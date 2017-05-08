@@ -142,6 +142,8 @@ package notice
 		public function showEdit():void{
 			_edit.operTxt.text = "编辑";
 			_edit.show();
+			showForm(_edit,new Point(142,383));
+			showFullEdit(_edit,new Point(142,122));
 		}
 		
 	}

@@ -47,7 +47,13 @@ $("#newUpload2").hide();
 
 function as_initFullEdit(){
 
-	var 	layaIndex;layui.use('layedit', function(){	var layedit = layui.layedit;	layaIndexH = layaIndex = layedit.build('demo');
+	var 	layaIndex;layui.use('layedit', function(){	var layedit = layui.layedit;	
+	
+	layedit.set({  uploadImage: {
+	    url: 'http://192.168.1.122:8080/oa_system/file/fileImgUpload', //接口url   
+	    type: 'post' //默认post 
+	     }});
+	layaIndexH = layaIndex = layedit.build('demo');
 	console.log("layedit",layedit);
 	$(".layui-layedit").css({"position":"absolute","left":"0px","top":"0px","z-index":-1,"width":"1px","height":"1px"});
 	 });

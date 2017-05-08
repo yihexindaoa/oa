@@ -148,7 +148,15 @@ package navigation
 		protected function onClickHandler(e:MouseEvent):void
 		{
 			var btn:Button = e.target as Button;
-			hideAllMenu();
+//			hideAllMenu();先不把首页给隐藏掉
+			if(menu)menu.hide();
+			if(user)user.hide();
+			if(infor)infor.hide();
+			if(auth)auth.hide();
+			if(noticeManager)noticeManager.hide();
+			if(workReportStatistics)workReportStatistics.hide();
+			if(mySalay)mySalay.hide();
+			if(salay)salay.hide();
 			if(btn&&btn.label == "系统首页")homePage.show();
 			if (btn) {
 				btn.tag = !btn.tag;
