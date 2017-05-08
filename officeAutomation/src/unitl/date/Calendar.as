@@ -225,6 +225,7 @@ package unitl.date
 		 */		
 		public function get millisecondsNumber():Number
 		{
+			_millisecondsNumber = date.getTime();
 			return _millisecondsNumber;
 		}
 
