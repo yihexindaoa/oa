@@ -72,8 +72,9 @@ package authority
 				if(check.selected){
 					count++;
 					var req:Object = new Object();
-					req.userId = _roleId;
+					req.roleId = _roleId;
 					req.levelMenuid = box.tag.id;
+					req.authType = 1;
 					send("roleMenuAuth/update", req, function(data:Object):void{
 						if(data.status == 200){
 							
@@ -102,8 +103,9 @@ package authority
 				if(check.selected){
 					count++;
 					var req:Object = new Object();
-					req.userId = _roleId;
+					req.roleId = _roleId;
 					req.levelMenuid = box.tag.id;
+					req.authType = 1;
 					send("roleMenuAuth/save", req, function(data:Object):void{
 						if(data.status == 200){
 							

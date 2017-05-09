@@ -99,8 +99,11 @@ package authority
 		/**查询所有角色**/
 		protected function queryRole():void{
 			send("role/findAllRole", {}, function(data:Object):void{
-				if(data.data.length>0)
-				role.table.array = data.data;
+				if(data.data.length>0){
+					role.table.repeatY = data.data.length;
+					role.table.array = data.data;
+				}
+				
 			}, function(v:String):void{
 				popu(v);
 			},"POST");
@@ -159,7 +162,7 @@ package authority
 			var req:Object = new Object();
 			req.roleId = id.text;
 			roleMenu.roleId = req.roleId;
-			send("userRole/findUserRoleMenu", req, function(data:Object):void{
+			send("roleMenuAuth/findByAuth", req, function(data:Object):void{
 				if(data.status == 200){
 					roleMenu.checkList(data.data);
 				}else{
