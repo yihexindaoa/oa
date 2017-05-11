@@ -1,7 +1,5 @@
 package salary
 {
-	import com.greensock.TweenLite;
-	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
@@ -11,6 +9,7 @@ package salary
 	import assembly.PageFlip;
 	
 	import game.ui.salary.EditSalaryUI;
+	import game.ui.salary.MySalaryUI;
 	import game.ui.salary.WageStatisticsUI;
 	
 	import morn.core.components.Box;
@@ -22,13 +21,8 @@ package salary
 	
 	import unitl.date.Calendar;
 	import unitl.date.CalendarEvent;
-
-	/**
-	 * 工资
-	 * @author lq
-	 * 
-	 */	
-	public class Salary extends Trade
+	
+	public class AddSalary extends Trade
 	{
 		protected var _container:Sprite;
 		protected var _salary:WageStatisticsUI;
@@ -36,22 +30,17 @@ package salary
 		protected var req:Object;
 		protected var calendar:Calendar;
 		protected var editSalary:EditSalaryUI;//编辑调薪记录
-//		private var ip = "192.168.1.119:8089";
-		/**
-		 * 工资
-		 * @param container
-		 * 
-		 */		
-		public function Salary(container:Sprite)
+		public function AddSalary(container:Sprite)
 		{
 			_container = container;
-//			TweenLite.to(_container,5,{scaleX:0.5,scaleY:0.5});
+			//			TweenLite.to(_container,5,{scaleX:0.5,scaleY:0.5});
 			initSalary();
 			super.initPopu(container,_salary);
 			//页面加载时加载页面数据
-//			queryNotice();
+			//			queryNotice();
 			onPayrollRecord();
 		}
+		
 		//初始化
 		private function initSalary():void
 		{
@@ -71,6 +60,10 @@ package salary
 			_salary.year.addEventListener(MouseEvent.CLICK, onShowCalendar2);
 			_salary.table.repeatY = _page.pageSize;
 			req = new Object();
+			_salary.item.visible = true;
+//			_salary.item1.visible = true;
+//			_salary.item2.visible = false;
+			_salary.item3.visible = false;
 			_salary.tab01.graphics.beginFill(0xffffff, 0.1);
 			_salary.tab01.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
 			_salary.tab02.graphics.beginFill(0xffffff, 0.1);
@@ -126,12 +119,12 @@ package salary
 		{
 			if(_salary.table2.length>0){
 				var edit:Button = cell.getChildByName("edit") as Button;
-//				edit.graphics.beginFill(0xffffff, 0.1);
-//				edit.graphics.drawRect(0,0,edit.width,edit.height);
+				//				edit.graphics.beginFill(0xffffff, 0.1);
+				//				edit.graphics.drawRect(0,0,edit.width,edit.height);
 				edit.addEventListener(MouseEvent.CLICK, onEditHandler);
 				var dele:Button = cell.getChildByName("delete") as Button;
-//				dele.graphics.beginFill(0xffffff, 0.1);
-//				dele.graphics.drawRect(0,0,dele.width,dele.height);
+				//				dele.graphics.beginFill(0xffffff, 0.1);
+				//				dele.graphics.drawRect(0,0,dele.width,dele.height);
 				dele.addEventListener(MouseEvent.CLICK, onDeleteHandler);
 			}
 		}
@@ -154,7 +147,7 @@ package salary
 				},function(v:String):void{
 					popu(v);
 				},"POST");
-			
+				
 			});
 		}
 		
@@ -179,13 +172,13 @@ package salary
 			if( _salary.dateTime.text!=null&&_salary.dateTime.text!="" ){
 				req.date = _salary.dateTime.text;
 			}
-//			send("OaWage/exportExcel",req,null,onError,"GET");	
+			//			send("OaWage/exportExcel",req,null,onError,"GET");	
 			/*[IF-FLASH-BEGIN]*/
 			navigateToURL(new URLRequest(path+"OaWage/exportExcel?input="+encodeURI(req.input)+"&&date="+req.date));
 			/*[IF-FLASH-END]*/ 
-//		__JS__
-//		("window.open" +
-//			"('http://192.168.1.119:8089/oa_system/OaWage/exportExcel?Inpute='+this.req.Inpute+'&&date='+this.req.date);");
+			//		__JS__
+			//		("window.open" +
+			//			"('http://192.168.1.119:8089/oa_system/OaWage/exportExcel?Inpute='+this.req.Inpute+'&&date='+this.req.date);");
 		}
 		protected function onShowCalendar1(e:MouseEvent):void
 		{
@@ -281,7 +274,7 @@ package salary
 				}
 				_salary.table.array = data.data;
 				
-//				popu(data.data);
+				//				popu(data.data);
 			}else{
 				_salary.table.array= null;	
 			}
@@ -290,7 +283,7 @@ package salary
 		private function onFind(e:MouseEvent){
 			queryNotice();
 		}
-	
+		
 		
 		//调薪记录数据查询
 		private function onPayrollRecord(){
@@ -341,6 +334,5 @@ package salary
 				popu(data.msg);
 			},onError,"POST");
 		}
-		
 	}
 }

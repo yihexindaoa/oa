@@ -19,13 +19,14 @@ package game.ui.role {
 			      <Label text="01" x="-1" y="0" width="49" height="34" align="center" size="15" background="true" backgroundColor="0x6699cc" name="id"/>
 			      <Label text="label" x="49" y="0" width="95" height="34" size="15" align="center" background="true" backgroundColor="0x6699cc" name="userName"/>
 			      <Label text="label" x="145" y="0" height="34" align="center" size="15" width="103" background="true" backgroundColor="0x6699cc" name="officeName"/>
-			      <Label text="label" x="354" y="0" height="34" align="center" size="15" width="82" background="true" backgroundColor="0x6699cc" name="roleNme"/>
+			      <Label text=" " x="354" y="0" height="34" align="center" size="15" width="82" background="true" backgroundColor="0x6699cc"/>
 			      <Label text="label" x="438" y="0" height="34" align="center" size="15" width="91" background="true" backgroundColor="0x6699cc" name="loginName"/>
 			      <Label text="label" x="531" y="0" height="34" align="center" size="15" width="86" background="true" backgroundColor="0x6699cc" name="workNumber"/>
 			      <Label text=" " x="621" y="0" height="34" align="center" size="15" width="86" background="true" backgroundColor="0x6699cc" name="roleNme"/>
 			      <Label text="label" x="250" y="0" height="34" align="center" size="15" width="103" background="true" backgroundColor="0x6699cc" name="positionInformation"/>
 			      <Button label="禁用" skin="png.comp.button" x="627" y="3" width="37" height="23" labelColors="0xff0000" name="disBtn"/>
 			      <Button label="启用" skin="png.comp.button" x="669" y="3" width="35" height="23" labelColors="0x0000ff" name="adbleBtn"/>
+			      <ComboBox x="361" y="3" width="71" height="23" selectedIndex="0" name="officeId" labels="赵要峰,陈敬通,陈树宏,宋琪"/>
 			    </Box>
 			  </List>
 			  <Clip skin="png.comp.clip_timg" x="443" y="85" clipX="4" clipY="4" index="2" width="29" height="23" var="queryBtn"/>

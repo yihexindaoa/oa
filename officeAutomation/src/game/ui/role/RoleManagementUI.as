@@ -10,7 +10,7 @@ package game.ui.role {
 			<View width="800" height="900" buttonMode="true">
 			  <Image skin="png.comp.bg" x="0" y="0" width="800" height="900" sizeGrid="50,50,10,10"/>
 			  <Button label="添加角色" skin="png.comp.button" x="167" y="87" var="addBtn"/>
-			  <TextInput skin="png.comp.textinput" x="265" y="86" width="175" height="22" toolTip="按角色名次进行搜索" var="queryTxt"/>
+			  <TextInput skin="png.comp.textinput" x="265" y="86" width="175" height="22" toolTip="按角色名称进行搜索" var="queryTxt"/>
 			  <List x="169" y="165" spaceY="10" width="517" height="142" repeatX="1" repeatY="4" var="table">
 			    <Box name="render" width="513" height="27" x="1" y="0">
 			      <Label x="318" y="0" width="197" height="34" background="true" backgroundColor="0x6699cc"/>

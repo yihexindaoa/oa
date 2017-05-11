@@ -26,6 +26,7 @@ package authority
 		protected var boxContainer:Box;
 		protected var saveBtn:Button;//保存角色菜单设置按钮
 		protected var modfiyBtn:Button;//修改角色权限按钮
+		protected var _openList:Array;//保存先前已经选择的box
 		protected var _roleId:int;
 		/**
 		 *保存所有的菜单box 
@@ -61,20 +62,39 @@ package authority
 			modfiyBtn.x = 90;
 			modfiyBtn.addEventListener(MouseEvent.CLICK, onModfiyHandler);
 			con.addChild(modfiyBtn);
+			_openList = new Array();
 		}
 		
 		protected function onModfiyHandler(e:MouseEvent):void
 		{
 			var count:int=0;
-			for(var j:int = 0,n:int = _boxList.length; j<n ;j++){
-				var box:Box = _boxList[j];
+			var authReq:Object = new Object();
+			authReq.authorizationMenu = "";
+			if(_openList.length < 1)
+				popu("此角色未分配菜单权限，请点击分配按钮再酌情修改！");
+			for(var j:int = 0,n:int = _openList.length; j<n ;j++){
+				var box:Box = _openList[j];
 				var check:CheckBox = box.getChildByName("check") as CheckBox ;
-				if(check.selected){
+				
 					count++;
 					var req:Object = new Object();
 					req.roleId = _roleId;
 					req.levelMenuid = box.tag.id;
-					req.authType = 1;
+					if(check.selected)
+						req.authType = 1;
+					else 
+						req.authType = 0;
+					if(box.tag.menuId){
+						req.id = box.tag.menuId;
+						if(j == n-1)
+							authReq.authorizationMenu+= req.levelMenuid;
+						else
+							authReq.authorizationMenu+= req.levelMenuid+",";
+					}
+					else{
+						popu("此角色未分配菜单权限，请点击分配按钮再酌情修改！");
+						return;
+					}
 					send("roleMenuAuth/update", req, function(data:Object):void{
 						if(data.status == 200){
 							
@@ -82,30 +102,57 @@ package authority
 							if(count==0){
 								popu("修改成功!");
 							}
+							
 						}else{
 							popu(data.msg);
 						}
 					},function(v:String):void{
 						popu(v);
 					},URLRequestMethod.POST);
-				}
+				
 			}
 			
-			
+			authReq.roleId = _roleId;
+			/*修改权限菜单*/
+			send("authorizationMenu/update", authReq, function(data:Object):void{
+				if(data.status == 200){
+					
+					
+				}else{
+					popu(data.msg);
+				}
+			},function(v:String):void{
+				popu(v);
+			},URLRequestMethod.POST);
 		}
 		
 		protected function onSaveHandler(e:MouseEvent):void
 		{
 			var count:int=0;
+			var authReq:Object = new Object();
+			authReq.authorizationMenu = "";
 			for(var j:int = 0,n:int = _boxList.length; j<n ;j++){
 				var box:Box = _boxList[j];
 				var check:CheckBox = box.getChildByName("check") as CheckBox ;
+				if(check.selected){
+					if(j == n-1)
+						authReq.authorizationMenu+= box.tag.id;
+					else
+						authReq.authorizationMenu+= box.tag.id+",";
+				}
+				
+				if(checkIsDistribution(box))continue;
+				
+				
+				
 				if(check.selected){
 					count++;
 					var req:Object = new Object();
 					req.roleId = _roleId;
 					req.levelMenuid = box.tag.id;
 					req.authType = 1;
+					
+					
 					send("roleMenuAuth/save", req, function(data:Object):void{
 						if(data.status == 200){
 							
@@ -119,11 +166,36 @@ package authority
 					},function(v:String):void{
 						popu(v);
 					},URLRequestMethod.POST);
+					
 				}
 			}
-			
+			authReq.roleId = _roleId;
+			/*修改权限菜单*/
+			send("authorizationMenu/save", authReq, function(data:Object):void{
+				if(data.status == 200){
+					
+					
+				}else{
+					popu(data.msg);
+				}
+			},function(v:String):void{
+				popu(v);
+			},URLRequestMethod.POST);
 			
 		}
+		
+		/**
+		 *检查是否已经被分配过 
+		 * @return 
+		 * 
+		 */		
+		protected function checkIsDistribution(box:Box):Boolean{
+			for( var i:int = 0,m:int = _openList.length ; i < m ; i++ ){
+				if(box==_openList[i])return true;
+			};
+			return false;
+		}
+		
 		
 		/**
 		 *创建父菜单 
@@ -190,17 +262,18 @@ package authority
 		public function checkList(data:Array):void{
 			
 			clearCheck();
-			
+			_openList = [];
 			for( var i:int = 0, m:int = data.length ; i<m ;i++ ){
 				var d:Object = data[i];
 				
 				for(var j:int = 0,n:int = _boxList.length; j<n ;j++){
 					var box:Box = _boxList[j];
 					var c:Object = box.tag;
-					
-					if(c.id == d.levelMenuid){
+					if(c.id == d.levelMenuid && d.authType == 1){
 						var check:CheckBox = box.getChildByName("check") as CheckBox ;
 						check.selected = true;
+						c.menuId = d.id;//修改菜单对应的权限是时要用到
+						_openList.push(box);
 					}
 				}
 			}
@@ -221,6 +294,15 @@ package authority
 		public function set roleId(value:int):void
 		{
 			_roleId = value;
+		}
+		
+		/**
+		 *角色菜单权限分配title名称 
+		 * @param v
+		 * 
+		 */		
+		public function setTitle(v:String):void{
+			con.title.text = v;
 		}
 
 	}

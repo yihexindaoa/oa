@@ -22,6 +22,7 @@ package navigation
 	
 	import report.WorkReportStatistics;
 	
+	import salary.AddSalary;
 	import salary.MySalay;
 	import salary.Salary;
 	
@@ -42,8 +43,9 @@ package navigation
 		protected var mySalay:MySalay;//工资统计表
 		protected var salay:Salary;//调薪记录
 		protected var homePage:Home;//首页
+		protected var addSalary:AddSalary;//工资统计表
 		protected var nav:NavigationMenuUI;
-		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录"]];
+		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录","我的工资单"]];
 		protected var mainMenu:Array = [];//主菜单
 		protected var subMenu:Array = [];
 		public function Navigation(container:Sprite)
@@ -51,7 +53,7 @@ package navigation
 			_container = container;
 			initNav();
 			super.initPopu(container);
-//			findUserRole();
+			findUserRole();
 		}
 		
 		protected function initNav():void
@@ -68,7 +70,7 @@ package navigation
 //			childList[2] = nav.noticeChild;
 //			childList[3] = nav.reportChild;
 			
-			for(var i:int = 0,m:int = btnList.length; i < m ; i++ ){
+			/*for(var i:int = 0,m:int = btnList.length; i < m ; i++ ){
 				btnList[i].addEventListener(MouseEvent.CLICK, onClickHandler);
 				if(bar[i]){
 					var box:Box = new Box();
@@ -86,7 +88,7 @@ package navigation
 				}
 			}
 			
-			pos();
+			pos();*/
 			
 			homePage = new Home(_container);
 			homePage.show();
@@ -107,11 +109,19 @@ package navigation
 				for(var i:int = 0,m:int = mainMenu.length; i < m ; i++ ){
 					var mainBox:Box = new Box();
 					var clip:Clip = new Clip("png.comp.clip_timg",4,4);
+					clip.width = 31;
+					clip.height = 32;
 					mainBox.addChild(clip);
 					var mainButton:Button = new Button("png.comp.button",mainMenu[i].meunName);
+					mainButton.width = 123;
+					mainButton.height = 32;
 					mainButton.x = 31;
 					mainBox.addChild(mainButton);
-					btnList[i] = mainBox;
+//					mainBox.x=5;
+					mainBox.y = i*32+158;
+					nav.addChild(mainBox);
+					boxList[i] = mainBox;
+					btnList[i] = mainButton;
 					btnList[i].addEventListener(MouseEvent.CLICK, onClickHandler);
 					if(subMenu[i]){
 						var box:Box = new Box();
@@ -157,7 +167,8 @@ package navigation
 			if(workReportStatistics)workReportStatistics.hide();
 			if(mySalay)mySalay.hide();
 			if(salay)salay.hide();
-			if(btn&&btn.label == "系统首页")homePage.show();
+//			if(btn&&btn.label == "系统首页")
+				homePage.show();
 			if (btn) {
 				btn.tag = !btn.tag;
 				var i:int = btnList.indexOf(btn);
@@ -193,6 +204,7 @@ package navigation
 			if(mySalay)mySalay.hide();
 			if(salay)salay.hide();
 			if(homePage)homePage.hide();
+			if(addSalary)addSalary.hide();
 		}
 		
 		/**根据不同的标签显示不同页面**/
@@ -233,10 +245,10 @@ package navigation
 						workReportStatistics.show();
 					break;
 				case "工资统计表":
-					if(!mySalay)
-						mySalay = new MySalay(_container);
+					if(!addSalary)
+						addSalary = new AddSalary(_container);
 					else
-						mySalay.show();
+						addSalary.show();
 					break;
 				case "调薪记录":
 					if(!salay)
@@ -244,7 +256,14 @@ package navigation
 					else
 						salay.show();
 					break;
+				case "我的工资单":
+					if(!mySalay)
+						mySalay = new MySalay(_container);
+					else
+						mySalay.show();
+					break;
 				default:
+					
 					break;
 			}
 		

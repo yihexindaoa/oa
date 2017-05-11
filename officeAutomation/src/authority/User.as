@@ -12,6 +12,7 @@ package authority
 	
 	import morn.core.components.Box;
 	import morn.core.components.Button;
+	import morn.core.components.ComboBox;
 	import morn.core.components.Label;
 	import morn.core.handlers.Handler;
 	
@@ -84,28 +85,77 @@ package authority
 		protected function onSaveHandler(e:MouseEvent):void
 		{
 			var req:Object = new Object();
-			req.loginName = _edit.accountTxt.text ;
+			
 			req.userName = _edit.nmeTxt.text ;
 			req.password = _edit.password.text;
 			req.workNumber = _edit.workNumber.text;
+			req.positionInformation = _edit.positionInformation.selectedLabel;
+			req.officeId = _edit.officeId.selectedIndex;
+			
 			if(_edit.title.text == "新增用户"){
+				req.loginName = _edit.accountTxt.text ;
 				send("user/saveUser", req, function(data:Object):void{
 					if(data.status == 200){
 						_edit.close();
 						popu("新增成功!");
-						queryUser();
+						queryUser(  function(d:Object):void{
+							for(var i:int = 0;i<d.data.length;i++){
+								if(d.data[i].loginName == req.loginName){
+									//添加用户对应角色
+									var userRoleReq:Object = new Object();
+									userRoleReq.roleId = _edit.positionInformation.selectedIndex;
+									userRoleReq.userId = d.data[i].id;
+									send("userRole/save", userRoleReq , function(data:Object):void{
+										if(data.status == 200){
+											
+										}else{
+											popu(data.msg);
+										}
+									},function(v:String):void{
+										popu(v);
+									},URLRequestMethod.POST);
+									break;
+								}
+							}
+							
+						
+						}  );
 					}else{
 						popu(data.msg);
 					}
 				},function(v:String):void{
 					popu(v);
 				},URLRequestMethod.POST);
+				
 			}else{
+				req.id = _edit.id.text;
 				send("user/updateUser", req, function(data:Object):void{
 					if(data.status == 200){
 						_edit.close();
-						popu("修改成功!");
-						queryUser();
+//						popu("修改成功!");
+						popu(data.msg);
+						queryUser(function(d:Object):void{
+							for(var i:int = 0;i<d.data.length;i++){
+								if(d.data[i].loginName == _edit.accountTxt.text){
+									//添加用户对应角色
+									var userRoleReq:Object = new Object();
+									userRoleReq.roleId = _edit.positionInformation.selectedIndex;
+									userRoleReq.userId = d.data[i].id;
+									send("userRole/update", userRoleReq , function(data:Object):void{
+										if(data.status == 200){
+											
+										}else{
+											popu(data.msg);
+										}
+									},function(v:String):void{
+										popu(v);
+									},URLRequestMethod.POST);
+									break;
+								}
+							}
+							
+							
+						});
 					}else{
 						popu(data.msg);
 					}
@@ -116,7 +166,7 @@ package authority
 		}
 		
 		/**查询用户信息**/
-		protected function queryUser():void{
+		protected function queryUser( func:Function = null ):void{
 			var req:Object = new Object();
 			req.pageNum = _page.currentPage;
 			req.pageSize = _page.pageSize;
@@ -124,8 +174,10 @@ package authority
 				if(data.status == 200){
 					if(data.data.length > 0){
 						_user.table.array = data.data;
+						
 					}
-					
+					if(func)
+					func(data);
 					_page.y = _user.table.y+_user.table.height;
 					_page.totalPage = data.total;
 				}else{
@@ -207,6 +259,9 @@ package authority
 			_edit.accountTxt.editable = false;
 			_edit.nmeTxt.editable = false;
 			_edit.workNumber.text = (cell.getChildByName("workNumber") as Label).text;
+			_edit.positionInformation.selectedLabel = (cell.getChildByName("positionInformation") as Label).text;
+			_edit.officeId.selectedLabel = (cell.getChildByName("officeId") as ComboBox).selectedLabel;
+			_edit.id.text = (cell.getChildByName("id") as Label).text;
 //			_edit.accountTxt.text = (cell.getChildByName("loginName") as Label).text;
 //			_edit.accountTxt.text = (cell.getChildByName("loginName") as Label).text;
 			_edit.show();

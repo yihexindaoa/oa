@@ -22,6 +22,7 @@ package authority
 		protected var parent_menu:Array;//父菜单
 		protected var son_menu:Object;//子菜单
 		protected var roleMenu:RoleMenu;//菜单权限
+//		protected var currentRoleId:int ;//当前选择的角色id
 		public function Authority(container:Sprite)
 		{
 			_container = container;
@@ -58,7 +59,8 @@ package authority
 		{
 			var req:Object = new Object();
 			req.rolename = edit.rolename.text;
-			req.roleNumber = edit.roleNumber.selectedIndex;
+			req.roleNumber = edit.roleNumber.selectedLabel;
+			
 			if(edit.title.text == "添加角色"){
 				
 				
@@ -75,6 +77,7 @@ package authority
 				},"POST");
 				
 			}else if(edit.title.text == "编辑角色"){
+				req.id = edit.id.text;
 				send("role/updateRole", req, function(data:Object):void{
 					if(data.status == 200){
 						edit.close();
@@ -98,7 +101,10 @@ package authority
 		
 		/**查询所有角色**/
 		protected function queryRole():void{
-			send("role/findAllRole", {}, function(data:Object):void{
+			var req:Object = new Object();
+			if(role.queryTxt.text!="")
+			req.rolename = role.queryTxt.text;
+			send("role/findAllRole", req, function(data:Object):void{
 				if(data.data.length>0){
 					role.table.repeatY = data.data.length;
 					role.table.array = data.data;
@@ -162,8 +168,10 @@ package authority
 			var req:Object = new Object();
 			req.roleId = id.text;
 			roleMenu.roleId = req.roleId;
+			roleMenu.setTitle("角色编码："+(cell.getChildByName("roleNumber") as Label).text+"角色名称:"+(cell.getChildByName("rolename") as Label).text);
 			send("roleMenuAuth/findByAuth", req, function(data:Object):void{
 				if(data.status == 200){
+					roleMenu.show();
 					roleMenu.checkList(data.data);
 				}else{
 					popu(data.msg);
@@ -194,10 +202,11 @@ package authority
 		/*删除角色*/
 		protected function onDeleteHandler(e:MouseEvent):void
 		{
-			popuConfirm("确定删除改条记录！", function():void{
+			var cell:Box = e.target.parent as Box;
+			var rolename:Label = cell.getChildByName("rolename") as Label;
+			popuConfirm("确定删除角色“"+rolename.text+"”的记录！", function():void{
 				var req:Object = new Object();
-				req.rolename = edit.rolename.text;
-				req.roleNumber = edit.roleNumber.selectedIndex;
+				req.id = (cell.getChildByName("id") as Label).text;
 				req.delFlag = 0;
 				send("role/updateRole", req, function(data:Object):void{
 					if(data.status == 200){
@@ -254,6 +263,7 @@ package authority
 			edit.title.text = "编辑角色";
 			edit.rolename.text = rolename.text;
 			edit.roleNumber.selectedLabel = roleNumber.text;
+			edit.id.text = (cell.getChildByName("id") as Label).text;
 			edit.show();
 		}
 		
