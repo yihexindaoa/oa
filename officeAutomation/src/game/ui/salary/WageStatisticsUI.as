@@ -20,6 +20,7 @@ package game.ui.salary {
 		public var timeDate:Label = null;
 		public var year:TextInput = null;
 		public var findAllOutputExcel:Button = null;
+		public var backBtn:Button = null;
 		public var item3:Box = null;
 		public var item5:Box = null;
 		public var input2:TextInput = null;
@@ -137,6 +138,7 @@ package game.ui.salary {
 			      <Label text="Excel文件：" x="347" y="256" width="67" height="18"/>
 			      <TextInput skin="png.comp.textinput" x="425" y="249" width="189" height="26"/>
 			      <Button label="预览" skin="png.comp.button" x="636" y="251" width="38" height="23" var="findAllOutputExcel"/>
+			      <Button label="返回工资统计列表" skin="png.comp.button" x="636" y="351" width="150" height="23" var="backBtn"/>
 			    </Box>
 			  </Box>
 			  <Box name="render" width="480" height="184" x="76" y="423" visible="true" var="item3">

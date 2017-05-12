@@ -70,7 +70,7 @@ package
 			//初始化组件
 			App.init(this);
 			//加载资源			
-			App.loader.loadAssets(["assets/comp.swf", "assets/vector.swf"], new Handler(loadCompleteMornUI), new Handler(loadProgress));
+			App.loader.loadAssets(["assets/comp.swf", "assets/vector.swf","assets/exam.swf"], new Handler(loadCompleteMornUI), new Handler(loadProgress));
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
 			loader.load(new URLRequest("image/bg.jpg"));

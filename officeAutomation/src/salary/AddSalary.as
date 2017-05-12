@@ -1,7 +1,9 @@
 package salary
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
@@ -61,111 +63,54 @@ package salary
 			_salary.table.repeatY = _page.pageSize;
 			req = new Object();
 			_salary.item.visible = true;
-//			_salary.item1.visible = true;
+			_salary.item1.visible = true;
 //			_salary.item2.visible = false;
 			_salary.item3.visible = false;
 			_salary.tab01.graphics.beginFill(0xffffff, 0.1);
 			_salary.tab01.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
-			_salary.tab02.graphics.beginFill(0xffffff, 0.1);
-			_salary.tab02.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
-			_salary.addSalaryIncrease.graphics.beginFill(0xffffff, 0.1);
-			_salary.addSalaryIncrease.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
-			_salary.payrollRecord.graphics.beginFill(0xffffff, 0.1);
-			_salary.payrollRecord.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);
+			_salary.tab02.visible = false;
+			/*_salary.tab02.graphics.beginFill(0xffffff, 0.1);
+			_salary.tab02.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);*/
+			/*_salary.addSalaryIncrease.graphics.beginFill(0xffffff, 0.1);
+			_salary.addSalaryIncrease.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);*/
+			/*_salary.payrollRecord.graphics.beginFill(0xffffff, 0.1);
+			_salary.payrollRecord.graphics.drawRect(0,0,_salary.tab01.width,_salary.tab01.height);*/
 			_salary.tab01.addEventListener(MouseEvent.CLICK,onTab01Handler);
-			_salary.tab02.addEventListener(MouseEvent.CLICK,onTab02Handler);
+			_salary.backBtn.addEventListener(MouseEvent.CLICK,onTab01Handler);
+			
+			/*_salary.tab02.addEventListener(MouseEvent.CLICK,onTab02Handler);*/
 			_salary.outputExcel.addEventListener(MouseEvent.CLICK,outputExcel);
 			_salary.find.addEventListener(MouseEvent.CLICK,onFind);
 			calendar = new Calendar(_salary);
 			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler);
-			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler2);
+//			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler2);
 			_salary.outputExcelSample.addEventListener(MouseEvent.CLICK,downloadExcel);
 			_salary.imageOne.addEventListener(MouseEvent.CLICK,onImageOne);
 			_salary.outputExcelSalaryIncrease.addEventListener(MouseEvent.CLICK,outputSalaryIncrease);
 			_salary.addSalaryIncrease.addEventListener(MouseEvent.CLICK,onAddSalaryIncrease);
 			_salary.payrollRecord.addEventListener(MouseEvent.CLICK,onTab02Handler);
 			_salary.addSalary.addEventListener(MouseEvent.CLICK,addSalary);
-			_salary.table2.renderHandler = new Handler(renderTable2Handler);
-			
-			editSalary = new EditSalaryUI();
-			editSalary.saveBtn.addEventListener(MouseEvent.CLICK, onEditSalaryHandler);
+			_salary.inputExcel.addEventListener(MouseEvent.CLICK, onInputExcelHandler);
+			initForm();
+			/*editSalary = new EditSalaryUI();
+			editSalary.saveBtn.addEventListener(MouseEvent.CLICK, onEditSalaryHandler);*/
+			addEventListener("CLOSETRADE", hidefileForm);
 		}
 		
-		/**编辑调薪记录**/
-		protected function onEditSalaryHandler(e:MouseEvent):void
+		protected function hidefileForm(e:Event):void
+		{
+			hideForm();
+		}
+		
+		/**批量导入**/
+		protected function onInputExcelHandler(e:MouseEvent):void
 		{
 			var req:Object = new Object();
-			req.id = editSalary.id.text;
-			req.name = editSalary.nameBtn.text ;
-			req.position = editSalary.position.text ;
-			req.workingTime = editSalary.workingTime.text ;
-			req.originalBasicSalary = editSalary.originalBasicSalary.text ;
-			req.salaryBasicWage = editSalary.salaryBasicWage.text ;
-			req.salaryIncrease = editSalary.salaryIncrease.text;
-			send("SalaryIncrease/updateSalaryIncrease",req,function(data:Object):void{
-				if(data.status == 200){
-					popu("编辑成功!");
-					onPayrollRecord();
-				}else{
-					popu(data.msg);
-				}
-			},function(v:String):void{
-				popu(v);
-			},"POST");
-		}
+			sendFormFile(req,"OaWage/addOaWage");
+		}		
 		
-		/**调薪表格**/
-		private function renderTable2Handler(cell:Box, index:int):void
-		{
-			if(_salary.table2.length>0){
-				var edit:Button = cell.getChildByName("edit") as Button;
-				//				edit.graphics.beginFill(0xffffff, 0.1);
-				//				edit.graphics.drawRect(0,0,edit.width,edit.height);
-				edit.addEventListener(MouseEvent.CLICK, onEditHandler);
-				var dele:Button = cell.getChildByName("delete") as Button;
-				//				dele.graphics.beginFill(0xffffff, 0.1);
-				//				dele.graphics.drawRect(0,0,dele.width,dele.height);
-				dele.addEventListener(MouseEvent.CLICK, onDeleteHandler);
-			}
-		}
-		
-		/**删除调薪记录**/
-		protected function onDeleteHandler(e:MouseEvent):void
-		{trace("删除");
-			var cell:Box = e.target.parent as Box;
-			
-			popuConfirm("确定删除"+(cell.getChildByName("name") as Label).text+"的调薪记录！", function():void{
-				var req:Object = new Object();
-				req.id = (cell.getChildByName("id") as Label).text;
-				send("SalaryIncrease/deleteSalaryIncrease",req,function(data:Object):void{
-					if(data.status == 200){
-						popu("删除成功!");
-						onPayrollRecord();
-					}else{
-						popu(data.msg);
-					}
-				},function(v:String):void{
-					popu(v);
-				},"POST");
-				
-			});
-		}
-		
-		/**编辑调薪记录表**/
-		protected function onEditHandler(e:MouseEvent):void
-		{
-			var cell:Box = e.target.parent as Box;
-			editSalary.id.text = (cell.getChildByName("id") as Label).text;
-			editSalary.nameBtn.text = (cell.getChildByName("name") as Label).text;
-			editSalary.position.text = (cell.getChildByName("position") as Label).text;
-			editSalary.workingTime.text = (cell.getChildByName("workingTime") as Label).text;
-			editSalary.originalBasicSalary.text = (cell.getChildByName("originalBasicSalary") as Label).text;
-			editSalary.salaryBasicWage.text = (cell.getChildByName("salaryBasicWage") as Label).text;
-			editSalary.salaryIncrease.text = (cell.getChildByName("salaryIncrease") as Label).text;
-			editSalary.show();
-		}
 		//导出工资单列表
-		private function  outputExcel(e:MouseEvent){
+		private function  outputExcel(e:MouseEvent):void{
 			if(_salary.input.text!=null && _salary.input.text!=""){
 				req.input = _salary.input.text;
 			}
@@ -204,6 +149,7 @@ package salary
 		//工资统计表页面
 		protected function onTab01Handler(e:MouseEvent=null):void
 		{
+			hideForm();
 			_salary.item1.visible = true;
 			_salary.item2.visible = false;
 			_salary.line.x = 343;
@@ -216,6 +162,7 @@ package salary
 			_salary.item1.visible = false;
 			_salary.item2.visible = true;
 			_page.visible = false;
+			showForm( _salary, new Point(456,158) );
 		}
 		//调薪记录
 		protected function onTab02Handler(e:MouseEvent):void
@@ -240,7 +187,7 @@ package salary
 		
 		//导出样本
 		private function downloadExcel(e:MouseEvent){
-			navigateToURL(new URLRequest("http://"+path+"OaWage/downloadExcel"));
+			navigateToURL(new URLRequest(path+"OaWage/downloadExcel"));
 		}
 		
 		//页面加载数据查询

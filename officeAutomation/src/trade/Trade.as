@@ -34,7 +34,7 @@ package trade
 		protected var _mask:Sprite;//遮罩
 		protected var _maskList:Array;
 		protected var _byteArray:ByteArray;
-		protected var _path:String = "http://192.168.1.113:8080/oa_system/";
+		protected var _path:String = "http://192.168.1.110:8080/oa_system/";
 		/**
 		 *加载完二进制的回调 
 		 */		
@@ -205,8 +205,10 @@ package trade
 		 */		
 		public function hide():void
 		{
-			if(_child && _box.contains(_child))
-			_box.removeChild(_child);
+			if(_child && _box.contains(_child)){
+				_box.removeChild(_child);
+				dispatchEvent(new Event("CLOSETRADE"));
+			}
 		}
 		
 		/*初始化遮罩信息*/

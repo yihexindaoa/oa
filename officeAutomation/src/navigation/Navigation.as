@@ -18,6 +18,11 @@ package navigation
 	import morn.core.components.Button;
 	import morn.core.components.Clip;
 	
+	import myExamination.ExaminationDetail;
+	import myExamination.ExaminationSave;
+	import myExamination.ExaminationUpdate;
+	import myExamination.MyExamination;
+	
 	import notice.Notice;
 	
 	import report.WorkReportStatistics;
@@ -44,6 +49,10 @@ package navigation
 		protected var salay:Salary;//调薪记录
 		protected var homePage:Home;//首页
 		protected var addSalary:AddSalary;//工资统计表
+		protected var examDetail:ExaminationDetail//审批管理详情
+		protected var examSave:ExaminationSave;//审批管理新增
+		protected var examUpdate:ExaminationUpdate;//审批管理修改
+		protected var myExan:MyExamination;//我提交审批
 		protected var nav:NavigationMenuUI;
 		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录","我的工资单"]];
 		protected var mainMenu:Array = [];//主菜单
@@ -167,6 +176,11 @@ package navigation
 			if(workReportStatistics)workReportStatistics.hide();
 			if(mySalay)mySalay.hide();
 			if(salay)salay.hide();
+			if(addSalary)addSalary.hide();
+			if(examDetail)examDetail.hide();
+			if(examSave)examSave.hide();
+			if(examUpdate)examUpdate.hide();
+			if(myExan)myExan.hide();
 //			if(btn&&btn.label == "系统首页")
 				homePage.show();
 			if (btn) {
@@ -205,6 +219,10 @@ package navigation
 			if(salay)salay.hide();
 			if(homePage)homePage.hide();
 			if(addSalary)addSalary.hide();
+			if(examDetail)examDetail.hide();
+			if(examSave)examSave.hide();
+			if(examUpdate)examUpdate.hide();
+			if(myExan)myExan.hide();
 		}
 		
 		/**根据不同的标签显示不同页面**/
@@ -261,6 +279,30 @@ package navigation
 						mySalay = new MySalay(_container);
 					else
 						mySalay.show();
+					break;
+				case "审批管理详情":
+					if(!examDetail)
+						examDetail = new ExaminationDetail(_container);
+					else
+						examDetail.show();
+					break;
+				case "审批管理新增":
+					if(!examSave)
+						examSave = new ExaminationSave(_container);
+					else
+						examSave.show();
+					break;
+				case "审批管理修改":
+					if(!examUpdate)
+						examUpdate = new ExaminationUpdate(_container);
+					else 
+						examUpdate.show();
+					break;
+				case "我提交审批":
+					if(!myExan)
+						myExan = new MyExamination(_container);
+					else
+						myExan.show();
 					break;
 				default:
 					
