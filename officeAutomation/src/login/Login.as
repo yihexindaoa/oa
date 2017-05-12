@@ -53,7 +53,7 @@ package login
 		
 		protected function onClickHandler(event:MouseEvent):void
 		{
-			send("login/userLogin",{"loginName":"songqi","password":"123456"},function(data:Object):void{
+			send("login/userLogin",{"loginName":loginUI.account.text,"password":loginUI.password.text},function(data:Object):void{
 				trace(data);
 				_container.removeChild(loginUI);
 				loginUI = null;

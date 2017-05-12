@@ -53,7 +53,7 @@ package home
 		/**生成通知告示管理模块**/
 		private function generateNotificationManagement():void{
 			noticeManager = new Box();
-			noticeManager.graphics.beginFill(0x3399ff,0.5);
+			noticeManager.graphics.beginFill(0x066480,0.5);
 			noticeManager.graphics.drawRoundRect(0,0,260,160,30,30);
 			noticeManager.graphics.lineStyle(1,0x0);
 			noticeManager.graphics.moveTo(0,25);
@@ -134,7 +134,7 @@ package home
 		protected function generateAgencyBusiness():void{
 			
 			agencyBusiness = new Box();
-			agencyBusiness.graphics.beginFill(0x3399ff,0.5);
+			agencyBusiness.graphics.beginFill(0x066480,0.5);
 			agencyBusiness.graphics.drawRoundRect(0,0,260,160,30,30);
 			agencyBusiness.graphics.lineStyle(1,0x0);
 			agencyBusiness.graphics.moveTo(0,25);
