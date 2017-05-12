@@ -6,7 +6,11 @@ package authority
 	import game.ui.role.InforUI;
 	
 	import trade.Trade;
-	
+	/**
+	 * 员工信息
+	 * @author QS
+	 * 
+	 */	
 	public class Infor extends Trade
 	{
 		protected var _container:Sprite;

@@ -7,6 +7,7 @@ package login
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
+	import flash.net.SharedObject;
 	import flash.net.URLLoader;
 	
 	import game.ui.login.LoginUI;
@@ -49,10 +50,21 @@ package login
 				
 			}});*/
 			TweenLite.to(loginUI, 0.6,{y:200});
+			var myLSO:SharedObject = SharedObject.getLocal("foo");
+			if(myLSO.data.myObj == undefined){ 
+			}else{ 
+				loginUI.account.text = myLSO.data.myObj.loginName; 
+				loginUI.password.text = myLSO.data.myObj.password;
+			}
 		}
 		
 		protected function onClickHandler(event:MouseEvent):void
 		{
+			var myLSO:SharedObject = SharedObject.getLocal("foo");
+			var myObj:Object = {}; 
+			myObj.loginName = loginUI.account.text;
+			myObj.password = loginUI.password.text; 
+			myLSO.data.myObj = myObj; 
 			send("login/userLogin",{"loginName":loginUI.account.text,"password":loginUI.password.text},function(data:Object):void{
 				trace(data);
 				_container.removeChild(loginUI);

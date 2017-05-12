@@ -1,6 +1,7 @@
 package authority
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import game.ui.role.RoleControlUI;
@@ -47,7 +48,22 @@ package authority
 //			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
 			//role.table.mouseHandler = new Handler(onCheckListMouse);
 			role.queryBtn.addEventListener(MouseEvent.CLICK, onQueryHandler);
+			addEventListener("CLOSETRADE", hideConFunc);
+			addEventListener("SHOWTRADE", showConFunc);
 		}
+		
+		/**显示con**/
+		protected function showConFunc(e:Event):void
+		{
+			roleMenu.show();
+		}
+		
+		/**隐藏con**/
+		protected function hideConFunc(e:Event):void
+		{
+			roleMenu.hide();
+		}
+		
 		
 		/**模糊查询**/
 		protected function onQueryHandler(e:MouseEvent):void

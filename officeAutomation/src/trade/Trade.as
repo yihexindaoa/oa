@@ -195,8 +195,10 @@ package trade
 		 */		
 		public function show():void
 		{
-			if(_child)
-			_box.addChild(_child);
+			if(_child){
+				_box.addChild(_child);
+				dispatchEvent(new Event("SHOWTRADE"));
+			}
 		}
 		
 		/**

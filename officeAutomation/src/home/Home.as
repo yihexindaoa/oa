@@ -27,6 +27,7 @@ package home
 		protected var homeUI:HomePageUI;
 		protected var noticeManager:Box;
 		protected var agencyBusiness:Box;
+		protected var homeLeft:HomeLeft;
 		protected var detail:NoticeDetail;//显示通知详情
 		/**
 		 *首页 
@@ -46,6 +47,7 @@ package home
 		{
 			homeUI = new HomePageUI();
 			homeUI.x = 161;
+			homeLeft = new HomeLeft(_container);
 			generateNotificationManagement();
 			generateAgencyBusiness();
 		}

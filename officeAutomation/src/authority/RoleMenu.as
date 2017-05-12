@@ -1,6 +1,7 @@
 package authority
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequestMethod;
 	
@@ -63,7 +64,13 @@ package authority
 			modfiyBtn.addEventListener(MouseEvent.CLICK, onModfiyHandler);
 			con.addChild(modfiyBtn);
 			_openList = new Array();
+			
 		}
+		
+		
+		
+		
+		
 		
 		protected function onModfiyHandler(e:MouseEvent):void
 		{
