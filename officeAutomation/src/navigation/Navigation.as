@@ -33,6 +33,9 @@ package navigation
 	
 	import trade.Trade;
 	
+	import workreport.OtherSatement;
+	import workreport.WorkReport;
+	
 	public class Navigation extends Trade
 	{
 		protected var _container:Sprite;
@@ -53,6 +56,8 @@ package navigation
 		protected var examSave:ExaminationSave;//审批管理新增
 		protected var examUpdate:ExaminationUpdate;//审批管理修改
 		protected var myExan:MyExamination;//我提交审批
+		protected var myReport:WorkReport;//我的工作报表
+		protected var otherReport:OtherSatement;//他人工作报表
 		protected var nav:NavigationMenuUI;
 		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录","我的工资单"]];
 		protected var mainMenu:Array = [];//主菜单
@@ -181,6 +186,8 @@ package navigation
 			if(examSave)examSave.hide();
 			if(examUpdate)examUpdate.hide();
 			if(myExan)myExan.hide();
+			if(myReport)myReport.hide();
+			if(otherReport)otherReport.hide();
 //			if(btn&&btn.label == "系统首页")
 				homePage.show();
 			if (btn) {
@@ -223,6 +230,8 @@ package navigation
 			if(examSave)examSave.hide();
 			if(examUpdate)examUpdate.hide();
 			if(myExan)myExan.hide();
+			if(myReport)myReport.hide();
+			if(otherReport)otherReport.hide();
 		}
 		
 		/**根据不同的标签显示不同页面**/
@@ -303,6 +312,18 @@ package navigation
 						myExan = new MyExamination(_container);
 					else
 						myExan.show();
+					break;
+				case "我的工作报表":
+					if(!myReport)
+						myReport = new WorkReport(_container);
+					else
+						myReport.show();
+					break;
+				case "他人工作报表":
+					if(!otherReport)
+						otherReport = new OtherSatement(_container);
+					else
+						otherReport.show();
 					break;
 				default:
 					

@@ -29,6 +29,7 @@ package workreport
 		private function initWork():void
 		{
 			myDaily = new myDailyUI();
+			myDaily.x = 161;
 			_container.addChild(myDaily);
 			req = new Object();
 			myDaily.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);

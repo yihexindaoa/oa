@@ -90,7 +90,7 @@ package authority
 			req.password = _edit.password.text;
 			req.workNumber = _edit.workNumber.text;
 			req.positionInformation = _edit.positionInformation.selectedLabel;
-			req.officeId = _edit.officeId.selectedIndex;
+			req.officeId = _edit.officeId.selectedIndex+1;
 			
 			if(_edit.title.text == "新增用户"){
 				req.loginName = _edit.accountTxt.text ;
@@ -103,7 +103,7 @@ package authority
 								if(d.data[i].loginName == req.loginName){
 									//添加用户对应角色
 									var userRoleReq:Object = new Object();
-									userRoleReq.roleId = _edit.positionInformation.selectedIndex;
+									userRoleReq.roleId = _edit.positionInformation.selectedIndex+1;
 									userRoleReq.userId = d.data[i].id;
 									send("userRole/save", userRoleReq , function(data:Object):void{
 										if(data.status == 200){
@@ -139,7 +139,7 @@ package authority
 								if(d.data[i].loginName == _edit.accountTxt.text){
 									//添加用户对应角色
 									var userRoleReq:Object = new Object();
-									userRoleReq.roleId = _edit.positionInformation.selectedIndex;
+									userRoleReq.roleId = _edit.positionInformation.selectedIndex+1;
 									userRoleReq.userId = d.data[i].id;
 									send("userRole/update", userRoleReq , function(data:Object):void{
 										if(data.status == 200){

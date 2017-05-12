@@ -34,7 +34,7 @@ package trade
 		protected var _mask:Sprite;//遮罩
 		protected var _maskList:Array;
 		protected var _byteArray:ByteArray;
-		protected var _path:String = "http://192.168.1.110:8080/oa_system/";
+		protected var _path:String = "http://192.168.1.115:8080/oa_system/";
 		/**
 		 *加载完二进制的回调 
 		 */		
