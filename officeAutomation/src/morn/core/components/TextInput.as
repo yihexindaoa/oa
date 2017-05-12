@@ -3,15 +3,23 @@
  * Feedback yungvip@163.com weixin:yungzhu
  */
 package morn.core.components {
+	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TextEvent;
 	import flash.text.TextFieldType;
+	
+	import unitl.date.Calendar;
+	import unitl.date.CalendarEvent;
 	
 	/**当用户输入文本时调度*/
 	[Event(name="textInput",type="flash.events.TextEvent")]
 	
 	/**输入框*/
 	public class TextInput extends Label {
+		
+		protected var _calendar:Calendar;
+		protected var _content:TextInput;
 		
 		public function TextInput(text:String = "", skin:String = null) {
 			super(text, skin);
@@ -64,5 +72,33 @@ package morn.core.components {
 		public function set maxChars(value:int):void {
 			_textField.maxChars = value;
 		}
+		
+		public function setCalendar(s:Sprite):void{
+			_calendar = new Calendar(s);
+			_content = new TextInput("选择时间","png.comp.textinput");
+			_content.x = x;
+			_content.y = y;
+			s.addChild(_content);
+			visible = false;
+			_calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler);
+			_content.addEventListener(MouseEvent.CLICK, onShowCalendarHandler);
+		}
+		
+		protected function onShowCalendarHandler(e:MouseEvent):void
+		{
+			_calendar.show(x,y);
+		}
+		
+		/*日历选择事件*/
+		protected function onCalendarHandler(e:CalendarEvent):void
+		{
+			_content.text = e.date;
+			text = e.millisecondsNumber+"";
+			_calendar.hide();
+		}
+		
+		/*public function get calendar():Calendar{
+			return _calendar;
+		}*/
 	}
 }

@@ -3,7 +3,6 @@ package game.ui.role {
 	import morn.core.components.*;
 	public class EditInforUI extends Dialog {
 		public var title:Label = null;
-		public var nameTxt:TextInput = null;
 		public var workNumber:TextInput = null;
 		public var creationTime:TextInput = null;
 		public var remarks:TextInput = null;
@@ -18,7 +17,7 @@ package game.ui.role {
 		public var idAddress:Label = null;
 		public var idCard:TextInput = null;
 		public var dateBirth:TextInput = null;
-		public var graduationTime:Label = null;
+		public var graduationTime:TextInput = null;
 		public var recordFormalSchooling:TextInput = null;
 		public var whatLearnProfessional:TextInput = null;
 		public var accumulationFundCard:TextInput = null;
@@ -42,6 +41,7 @@ package game.ui.role {
 		public var inductionTime:TextInput = null;
 		public var incumbent:TextInput = null;
 		public var sex:TextInput = null;
+		public var saveBtn:Button = null;
 		protected static var uiXML:XML =
 			<Dialog width="800" height="900">
 			  <Image skin="png.comp.bg" y="0" width="800" height="900" sizeGrid="50,50,10,10"/>
@@ -49,9 +49,8 @@ package game.ui.role {
 			  <Button skin="png.comp.btn_close" x="767" y="4" name="close"/>
 			  <Label text="新增" x="20" y="5" width="87" height="18" var="title"/>
 			  <Label text="姓名：" x="86" y="45" width="40" height="19"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="43" var="nameTxt"/>
 			  <Label text="性别：" x="85" y="77"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="43" var="workNumber" name="workNumber"/>
+			  <TextInput skin="png.comp.textinput" x="522" y="43" var="workNumber" name="workNumber"/>
 			  <Label text="工号：" x="487" y="45"/>
 			  <TextInput skin="png.comp.textinput" x="526" y="538" name="creationTime" var="creationTime"/>
 			  <Label text="创建时间：" x="466" y="540"/>
@@ -79,8 +78,8 @@ package game.ui.role {
 			  <Label text="身份证号码：" x="450" y="140" width="86" height="19"/>
 			  <TextInput skin="png.comp.textinput" x="524" y="106" var="dateBirth" name="dateBirth"/>
 			  <Label text="出生年月日：" x="451" y="107"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="75"/>
-			  <Label text="毕业时间：" x="463" y="74" name="graduationTime" var="graduationTime"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="75" var="graduationTime" name="graduationTime"/>
+			  <Label text="毕业时间：" x="463" y="74"/>
 			  <TextInput skin="png.comp.textinput" x="123" y="809" name="recordFormalSchooling" var="recordFormalSchooling" width="238" height="22"/>
 			  <Label text="学历：" x="84" y="808"/>
 			  <TextInput skin="png.comp.textinput" x="123" y="780" var="whatLearnProfessional" name="whatLearnProfessional" width="238" height="22"/>
@@ -128,6 +127,7 @@ package game.ui.role {
 			  <TextInput skin="png.comp.textinput" x="122" y="116" var="incumbent" name="incumbent"/>
 			  <Label text="现任职务：" x="62" y="116" width="61" height="19"/>
 			  <TextInput skin="png.comp.textinput" x="122" y="78" var="sex" name="sex"/>
+			  <Button label="保存" skin="png.comp.button" x="479" y="668" width="88" height="58" var="saveBtn"/>
 			</Dialog>;
 		public function EditInforUI(){}
 		override protected function createChildren():void {

@@ -10,6 +10,7 @@ package game.ui.role {
 		public var importBtn:Button = null;
 		public var deteBtn:Button = null;
 		public var panelTable:Panel = null;
+		public var table:List = null;
 		protected static var uiXML:XML =
 			<View width="800" height="900" buttonMode="true">
 			  <Image skin="png.comp.bg" x="0" y="0" width="800" height="900" sizeGrid="50,50,10,10"/>
@@ -57,6 +58,46 @@ package game.ui.role {
 			    <Label text="配偶生日" x="2177" y="48"/>
 			    <Label text="个人爱好" x="2279" y="38"/>
 			    <Label text="私人信息" x="1630" y="0"/>
+			    <Label text="操作" x="2408" y="38" width="80" height="18"/>
+			    <List spaceY="10" width="861" height="133" repeatX="1" repeatY="4" var="table" x="0" y="87">
+			      <Box width="986" height="35">
+			        <Label text="label" x="12" y="0" name="name"/>
+			        <Label text="label" x="83" y="0" name="sex"/>
+			        <Label text="label" x="147" y="0" name="incumbent" width="40" height="20"/>
+			        <Label text="label" x="206" y="0" name="inductionTime" width="46" height="18"/>
+			        <Label text="label" x="272" y="0" name="contractStartTime" width="71" height="18"/>
+			        <Label text="label" x="358" y="0" width="21" height="18" name="englishListening"/>
+			        <Label text="label" x="394" y="0" width="18" height="18" name="englishSay"/>
+			        <Label text="label" x="420" y="0" width="17" height="18" name="englishReading"/>
+			        <Label text="label" x="445" y="0" width="19" height="18" name="englishWritten"/>
+			        <Label text="label" x="485" y="0" width="42" height="18" name="qq"/>
+			        <Label text="label" x="534" y="0" width="45" height="18" name="wechat"/>
+			        <Label text="label" x="605" y="0" width="46" height="18" name="companyMailbox"/>
+			        <Label text="label" x="670" y="0" name="personalMailbox" width="45" height="18"/>
+			        <Label text="label" x="726" y="0" width="74" height="18" name="emergencyCall"/>
+			        <Label x="820" y="0" width="93" height="18" name="bankAccount" text="labl"/>
+			        <Label text="label" x="926" y="0" width="85" height="18" name="securityCardComputer"/>
+			        <Label text="label" x="1032" y="0" width="51" height="18" name="remarks"/>
+			        <Label x="1093" y="0" width="79" height="18" name="graduateSchool" text="lab"/>
+			        <Label text="label" x="1177" y="0" width="68" height="18" name="whatLearnProfessional"/>
+			        <Label text="label" x="1258" y="0" width="37" height="18" name="recordFormalSchooling"/>
+			        <Label text="label" x="1332" y="0" name="graduationTime"/>
+			        <Label text="label" x="1440" y="0" name="dateBirth"/>
+			        <Label text="label" x="1517" y="0" width="72" height="18" name="idCard"/>
+			        <Label text="label" x="1636" y="0" width="62" height="18" name="idAddress"/>
+			        <Label text="label" x="1723" y="0" width="46" height="18" name="currentAddress"/>
+			        <Label text="label" x="1799" y="0" width="47" height="18" name="maritalStatus"/>
+			        <Label text="label" x="1886" y="0" width="49" height="18" name="thing"/>
+			        <Label text="label" x="1974" y="0" width="40" height="18" name="personalBirthday"/>
+			        <Label text="label" x="2041" y="0" name="parentsBirthday"/>
+			        <Label text="label" x="2112" y="0" width="31" height="19" name="childrenBirthday"/>
+			        <Label text="label" x="2178" y="0" width="48" height="18" name="spouseBirthday"/>
+			        <Label text="label" x="2287" y="0" width="60" height="18" name="personalInterests"/>
+			        <Button label="修改" skin="png.comp.button" x="2365" y="-4" width="35" height="23" name="modfiyBtn"/>
+			        <Button label="详情" skin="png.comp.button" x="2409" y="-4" width="33" height="23" name="detailsBtn"/>
+			        <Button label="删除" skin="png.comp.button" x="2448" y="-4" width="33" height="23" name="deleteBtn"/>
+			      </Box>
+			    </List>
 			  </Panel>
 			</View>;
 		public function InforUI(){}

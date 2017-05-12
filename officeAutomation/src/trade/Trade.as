@@ -517,5 +517,28 @@ package trade
 			}
 		}
 		
+		/**
+		 *获取容器里面数据 
+		 * @param component
+		 * @return 
+		 * 
+		 */		
+		protected function getData(component:Component ):Object{
+			var data:Object = new Object();
+			for(var i:int  = 0,m:int = component.numChildren; i<m;i++){
+				if( component.getChildAt(i) is TextInput )
+				{
+					var text:TextInput = (component.getChildAt(i)  as TextInput);
+					if(text.text!="")
+					data[text.name] = text.text;
+				}else if(component.getChildAt(i) is ComboBox){
+					var com:ComboBox = (component.getChildAt(i) as ComboBox);
+					if(com.selectedIndex!=-1)
+					data[com.name] = com.selectedIndex;
+				}
+			}
+			return data;
+		}
+		
 	}
 }
