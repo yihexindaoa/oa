@@ -564,8 +564,8 @@ package trade
 		 * @param content
 		 * 
 		 */		
-		protected function setContent(content:String):void{
-			_JS__AS_("as_setContentText",null,null,content);
+		protected function setContent(content:String,indexcontent:int):void{
+			_JS__AS_("as_setContentText",null,null,content,indexcontent);
 		}
 		
 	}

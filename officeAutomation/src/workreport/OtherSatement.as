@@ -127,7 +127,7 @@ package workreport
 				details.addEventListener(MouseEvent.CLICK, onDetailsHandler);
 				//删除
 				var  delect:Button = cell.getChildByName("delect") as Button;
-				delect.labelColors
+//				delect.labelColors
 				delect.addEventListener(MouseEvent.CLICK, onDetailsDelectHandler);
 				}
 		} 

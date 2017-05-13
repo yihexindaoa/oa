@@ -70,13 +70,14 @@ package notice
 		/*发送*/
 		protected function onSendHandler(e:MouseEvent):void
 		{
+			var request:Object = new Object();
+			request.signType = _edit.signType.selectedIndex;//告示类型
+			request.title = _edit.title.text;//标题
+			request.content = getLayaText();//_edit.content.text;//内容
+			request.typeName = _edit.signType.selectedLabel;
 			switch(_edit.operTxt.text)
 			{
 				case "新增":
-					var request:Object = new Object();
-					request.signType = _edit.signType.selectedIndex;//告示类型
-					request.title = _edit.title.text;//标题
-					request.content = getLayaText();//_edit.content.text;//内容
 					
 					
 //					request.file = "";//trace("request=",request);
@@ -85,8 +86,9 @@ package notice
 //						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
 					/*[IF-FLASH-END]*/ 
 					sendFormFile(request, "notice/saveNotice",function(value:String):void{
-						trace("JavaScript says: " + value + "\n");
-						
+						trace("新增JavaScript says: " + value + "\n");
+						_edit.close();
+						popu(value);
 					});
 					/*
 					 * $.ajax({type:"POST",
@@ -98,7 +100,11 @@ package notice
 						
 					break;
 				case "编辑":
-					
+					sendFormFile(request, "notice/modifyNotice",function(value:String):void{
+						trace("编辑JavaScript says: " + value + "\n");
+						_edit.close();
+						popu(value);
+					});
 					break;
 				default:
 					break;
@@ -131,6 +137,7 @@ package notice
 			showFullEdit(_edit,new Point(142,122));
 		}
 		
+		
 		/**edit关闭的回调函数**/
 		protected function editCloseHandler(type:String):void{
 			
@@ -142,11 +149,32 @@ package notice
 		 * 显示编辑页面
 		 * 
 		 */		
-		public function showEdit():void{
+		public function showEdit(id:int):void{
 			_edit.operTxt.text = "编辑";
 			_edit.show();
 			showForm(_edit,new Point(142,383));
 			showFullEdit(_edit,new Point(142,122));
+			send("notice/findNoticeById",{"id":id},onfindNoticeComplete, onError,URLRequestMethod.POST);
+		}
+		
+		/*新增成功的回调函数*/
+		protected function onfindNoticeComplete(data:Object):void{
+			if(data.status == 200){
+				_edit.signType.selectedIndex = data.data.signType;
+				_edit.title.text = data.data.title;
+				_edit.content.text = data.data.content;
+				setContent(data.data.content,layaIndex);				
+				/*if(data.data.attachmentMap){
+					for( var key:String in data.data.attachmentMap ){
+						_key = key;
+						_detail.fileName.text = data.data.attachmentMap[key];
+						_detail.downBtn.mouseEnabled = true;
+					}
+				}*/
+				
+			}else{
+				popu(data.msg);
+			}
 		}
 		
 	}

@@ -51,15 +51,15 @@ package notice
 			_container.addChild(_notice);
 			_notice.x = 161;
 			_page = new PageFlip();
-			_page.x = 82;
+			_page.x = 43;
 			_page.y = 317;
-			_page.setWidth(887);
+			_page.setWidth(916);
 			_page.pageSize = 10;
 			_page.pageNum = 1;
 			_page.addEventListener(PageEvent.CURRENT_PAGE, queryTableHandler);
 			_notice.addChild(_page);
 			_notice.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
-			_notice.editBtn.addEventListener(MouseEvent.CLICK,onEditHandler);
+//			_notice.editBtn.addEventListener(MouseEvent.CLICK,onEditHandler);
 			_notice.dateBtn.addEventListener(MouseEvent.CLICK,onDateHandler);
 			_notice.table.renderHandler = new Handler(listRender);
 			edit = new NoticeEdit(_container);
@@ -72,14 +72,16 @@ package notice
 		/*日历选择事件*/
 		protected function onCalendarHandler(e:CalendarEvent):void
 		{
-			_notice.dateTxt.text = e.date;trace(e.millisecondsNumber);
+			_notice.dateTxt.text = e.date;//trace(e.millisecondsNumber);
 			calendar.hide();
 		}
 		
 		/*编辑*/
 		protected function onEditHandler(e:MouseEvent):void
 		{
-			edit.showEdit();
+			var cell:Box = e.target.parent as Box;
+			var id:int = parseInt((cell.getChildByName("id") as Label).text);
+			edit.showEdit(id);
 		}
 		
 		/*日期回调函数*/
@@ -150,7 +152,7 @@ package notice
 					if(item.releaseTime){
 					var date:Date = new Date( item.releaseTime );
 					item.releaseTime = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-					trace(item.releaseTime);
+//					trace(item.releaseTime);
 					}
 				}
 				var len:int = list.length;
@@ -167,7 +169,8 @@ package notice
 		/*通知告示统计表错误回调函数*/
 		protected function onError(t:String):void
 		{
-			trace(t);
+//			trace(t);
+			popu(t);
 		}
 		
 		/**按照指定的逻辑渲染List*/
@@ -177,11 +180,31 @@ package notice
 				check.addEventListener(MouseEvent.CLICK, onSelectHandler);
 				var noticeBtn:Button = cell.getChildByName("detailsBtn") as Button;
 				noticeBtn.addEventListener(MouseEvent.CLICK, onNoticeDetailHandler);
+				var edit:Button = cell.getChildByName("edit") as Button;
+				edit.addEventListener(MouseEvent.CLICK,onEditHandler);
+				var deleteBtn:Button = cell.getChildByName("delete") as Button;
+				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteHandler);
 				cell.graphics.beginFill(0x55ccee,0.5);
 				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
 				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
 				cell.addEventListener(MouseEvent.MOUSE_OUT, onOutHandler);
 			}
+		}
+		
+		/**删除**/
+		protected function onDeleteHandler(e:MouseEvent):void
+		{
+			var cell:Box = e.target.parent as Box;
+			var id:int = parseInt((cell.getChildByName("id") as Label).text);
+			send("notice/deleteNoticeByid",{"ids":[id]},function(data:Object):void{
+				popu(data.msg);
+				if(data.status == 200){
+					queryNotice();
+				}
+				
+			},function(v:String):void{
+				popu(v);
+			},"POST");
 		}
 		
 		/*查看详情*/

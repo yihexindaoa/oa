@@ -123,7 +123,6 @@ package home
 		protected function onNoticeDetailHandler(e:MouseEvent):void
 		{
 			detail.showDetail( parseInt((e.target as Button).name) );
-			showFullEdit(detail,new Point(142,122));
 		}
 		
 		/**由更多转到通知**/
