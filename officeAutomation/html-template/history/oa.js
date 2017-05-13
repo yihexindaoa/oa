@@ -19,7 +19,7 @@ function as_sendFromFile(layaIndex ,url){
 	$("#userForm2").attr("action", url);
 	if(isNull){
 			var layaText;layui.use("layedit", function(){
-				var layedit = layui.layedit;layaText = layedit.getText(layaIndexH);
+				var layedit = layui.layedit;layaText = layedit.getContent(layaIndexH);
 				$('#'+nullKey).val(layaText);console.log("sendfile",layaIndexH,layaText);
 				isNull = false;
 				//$("#userForm2").submit();
@@ -95,6 +95,11 @@ function as_hideFullEdit(){
 function as_getLayaText(layaIndex){
 	var layaText;layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)});
 	return layaText;
+}
+
+function as_setContentText(content,indexcontent){
+	$("#LAY_layedit_"+indexcontent).contents().find("body").html(content);
+	
 }
 
 

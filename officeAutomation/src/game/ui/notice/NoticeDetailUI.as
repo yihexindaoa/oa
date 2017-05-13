@@ -6,6 +6,8 @@ package game.ui.notice {
 		public var title:TextInput = null;
 		public var content:TextArea = null;
 		public var operTxt:Label = null;
+		public var downBtn:Button = null;
+		public var fileName:Label = null;
 		protected static var uiXML:XML =
 			<Dialog width="600" height="600">
 			  <Image skin="png.comp.bg" x="0" y="0" width="600" height="600" sizeGrid="50,50,10,10"/>
@@ -18,6 +20,8 @@ package game.ui.notice {
 			  <TextArea text="&lt;font  face=&quot;微软雅黑&quot; size=&quot;30&quot;>黑体&lt;/font>&lt;font   size=&quot;30&quot;>大幅度&lt;/font>" skin="png.comp.textarea" x="142" y="123" width="439" height="277" isHtml="true" align="left" var="content" name="content" editable="false" mouseChildren="false" mouseEnabled="false"/>
 			  <Label text="内容：" x="25" y="199" width="107" height="21" align="right"/>
 			  <Label text="详情" x="14" y="4" width="48" height="18" var="operTxt"/>
+			  <Button label="附件下载" skin="png.comp.button" x="156" y="436" var="downBtn"/>
+			  <Label text="无附件" x="93" y="438" width="64" height="18" var="fileName"/>
 			</Dialog>;
 		public function NoticeDetailUI(){}
 		override protected function createChildren():void {

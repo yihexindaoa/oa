@@ -2,6 +2,7 @@ package home
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.net.URLRequestMethod;
 	
 	import game.ui.homePage.HomeEvent;
@@ -86,7 +87,6 @@ package home
 			noticeManager.addChild(more);
 			more.addEventListener(MouseEvent.CLICK, onNoticeHandler);
 			detail = new NoticeDetail(_container);
-			
 		}
 		
 		
@@ -123,6 +123,7 @@ package home
 		protected function onNoticeDetailHandler(e:MouseEvent):void
 		{
 			detail.showDetail( parseInt((e.target as Button).name) );
+			showFullEdit(detail,new Point(142,122));
 		}
 		
 		/**由更多转到通知**/
@@ -172,5 +173,6 @@ package home
 		{
 			popu("暂时无此功能");
 		}
+		
 	}
 }

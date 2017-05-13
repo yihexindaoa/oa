@@ -559,5 +559,14 @@ package trade
 			return data;
 		}
 		
+		/**
+		 *把值设置到iframe富文本编辑框里面去 
+		 * @param content
+		 * 
+		 */		
+		protected function setContent(content:String):void{
+			_JS__AS_("as_setContentText",null,null,content);
+		}
+		
 	}
 }
