@@ -329,7 +329,7 @@ package trade
 		 * @param req
 		 * 
 		 */		
-		protected function sendFormFile(req:Object , url:String):void{
+		protected function sendFormFile(req:Object , url:String,callback:Function = null):void{
 			
 			///*[IF-SCRIPT-BEGIN]
 			var f:String = "";
@@ -337,10 +337,20 @@ package trade
 				f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
 				_JS__AS_("as_createInput",null,null,key,req[key]);
 			}
-			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);uptDogProInfo();');
-			_JS__AS_("as_sendFromFile",function(value:String):void{
-				trace("JavaScript says: " + value + "\n");
-			},"sendFromFileCallBack",layaIndex,_path+url);
+			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);'
+			+'var ajax_option={'
+		+'url:$("#userForm2").attr("action"),//form 的action'
+		+'type:"post",  //form 的method方法'
+		+'beforeSubmit:checkUppro,  //在表达提交前执行的验证函数'
+		+'contentType: "application/x-www-form-urlencoded; charset=utf-8",   //设置编码集'
+		+'success:function(data){  //表单提交成功后执行的函数'
+		+'	alert("执行成功！");'
+		+'	callback(JSON.stringify(data));'
+			+'}'
+			+'}'
+			+'$("#userForm2").ajaxSubmit(ajax_option);'
+			);
+			_JS__AS_("as_sendFromFile",callback,"sendFromFileCallBack",layaIndex,_path+url);
 			//[IF-SCRIPT-END]*/ 
 			
 		}
