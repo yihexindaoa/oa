@@ -13,6 +13,7 @@ package authority
 	import morn.core.components.Box;
 	import morn.core.components.Button;
 	import morn.core.components.CheckBox;
+	import morn.core.components.Label;
 	import morn.core.components.List;
 	import morn.core.handlers.Handler;
 	
@@ -31,6 +32,8 @@ package authority
 		protected var _list:Array;
 		protected var _page:PageFlip;
 		protected var currentIndex:int = 0;//目前选择的table，index
+		protected var shape:Shape ;
+		protected var contentShape:Shape;//内容
 		public function Infor(container:Sprite)
 		{
 			_container = container;
@@ -45,15 +48,15 @@ package authority
 			_infor = new InforUI();
 			_container.addChild(_infor);
 			_infor.x = 161;
-			var shape:Shape = new Shape();
+			shape = new Shape();
 			_infor.panelTable.addChildAt(shape,0);
 			shape.graphics.lineStyle(2,0x000000);
 			shape.graphics.moveTo(0,0);
-			shape.graphics.lineTo(0,150);
-			shape.graphics.lineTo(2340,150);
-			shape.graphics.lineTo(2340,0);
+			shape.graphics.lineTo(0,75);
+			shape.graphics.lineTo(2482,75);
+			shape.graphics.lineTo(2482,0);
 			shape.graphics.lineTo(0,0);
-			shape.graphics.drawRect(0,0,70,158);
+//			shape.graphics.drawRect(0,0,70,158);
 			shape.graphics.beginFill(0xff0000,0.5);
 			shape.graphics.drawRect(0,0,70,75);
 			//[IF-JS]shape.graphics.beginFill(0xff0000,0.5);
@@ -139,6 +142,8 @@ package authority
 			//[IF-JS]shape.graphics.beginFill(0xff0000,0.5);
 			shape.graphics.drawRect(2340,0,142,75);
 			
+			contentShape = new Shape();
+			_infor.panelTable.addChild(contentShape);
 			
 		}
 		
@@ -147,15 +152,15 @@ package authority
 			_edit = new EditInforUI();
 			
 			_page = new PageFlip();
-			_page.x = 82;
-			_page.y = 317;
-			_page.setWidth(887);
+			_page.x = 5;
+			_page.y = 300;
+			_page.setWidth(760);
 			_page.pageSize = 10;
 			_page.pageNum = 1;
 			_page.addEventListener(PageEvent.CURRENT_PAGE, queryTableHandler);
-			_infor.panelTable.addChild(_page);
+			_infor.addChild(_page);
 			_infor.panelTable.height = 700;
-			_edit.inductionTime.setCalendar(_edit);
+			/*_edit.inductionTime.setCalendar(_edit);
 			_edit.contractStartTime.setCalendar(_edit);
 			_edit.graduationTime.setCalendar(_edit);
 			_edit.dateBirth.setCalendar(_edit);
@@ -163,7 +168,7 @@ package authority
 			_edit.personalBirthday.setCalendar(_edit);
 			_edit.childrenBirthday.setCalendar(_edit);
 			_edit.spouseBirthday.setCalendar(_edit);
-			_edit.dateBirth.setCalendar(_edit);
+			_edit.dateBirth.setCalendar(_edit);*/
 			_edit.saveBtn.addEventListener(MouseEvent.CLICK, onEditHandler);
 			_infor.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
 			
@@ -182,13 +187,26 @@ package authority
 			req.pageSize = _page.pageSize;
 			send("employeeInformation/findAllEmploy",req,function(data:Object):void{
 				if(data.data && data.data.length > 0){
-					_list = data.data;
+					contentShape.graphics.clear();
+					var len:int = data.data.length;
+					_list = [];
+					for(var i:int = 0;i<len;i++ ){
+						var a:Object = data.data[i];
+						var item:Object = new Object();
+						for(var key:String in a){
+							if(a[key])item[key]=a[key];
+							
+						}
+						_list.push(item);
+						contentShape.graphics.beginFill(0x000000,0.5);
+						contentShape.graphics.drawRect(0,i*45+75,2482,30);
+					}
 					
 					
-					var len:int = _list.length;
-					_infor.table.array = data.data;
+					_infor.table.array = _list;
 					_infor.table.repeatY = len;
-					_page.y = 165+len*37;
+					_infor.panelTable.height = 100+45*len
+					_page.y = 140+_infor.panelTable.height;
 					_page.totalPage = data.total;
 				}
 			},function(v:String):void{
@@ -203,17 +221,38 @@ package authority
 				var modify:Button = cell.getChildByName("modfiyBtn") as Button;
 				modify.addEventListener(MouseEvent.CLICK, onModifyHandler);
 				var deleteBtn:Button = cell.getChildByName("deleteBtn") as Button;
-				
+				deleteBtn.addEventListener(MouseEvent.CLICK, onDeleteHandler);
 				var detailsBtn:Button = cell.getChildByName("detailsBtn") as Button;
 				detailsBtn.addEventListener(MouseEvent.CLICK, onDetailsHandler);
+				cell.tag = new Object();
+				cell.tag.index = index;
 			}
+		}
+		
+		protected function onDeleteHandler(e:MouseEvent):void
+		{
+			var cell:Box = e.target.parent as Box;
+			popuConfirm("确定删除“"+(cell.getChildByName("name") as Label).text+"”的信息吗！", function():void{
+				var req:Object = new Object();
+				req.id = (cell.getChildByName("id") as Label).text;
+				send("employeeInformation/delectEmploy", req, function(data:Object):void{
+					if(data.status == 200){
+						popu("删除成功!");
+						queryAllInfo();
+					}else{
+						popu(data.msg);
+					}
+				},function(v:String):void{
+					popu(v);
+				},"POST");
+			});
 		}
 		
 		/**显示员工信息详情**/
 		protected function onDetailsHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
-			_edit.dataSource = _list[cell.tabIndex];
+			_edit.dataSource = _list[cell.tag.index];trace("cell.tag.index=",cell.tag.index);
 			_edit.title.text = "详情";
 			
 			_edit.show();
@@ -223,7 +262,7 @@ package authority
 		protected function onModifyHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
-			_edit.dataSource = _list[cell.tabIndex];
+			_edit.dataSource = _list[cell.tag.index];
 			_edit.title.text = "修改";
 			
 			_edit.show();
@@ -231,12 +270,22 @@ package authority
 		
 		protected function onEditHandler(e:MouseEvent):void
 		{
-			var req:Object = new Object();
 			if(_edit.title.text == "新增"){
 				send("employeeInformation/saveEmploy", getData(_edit), function(data:Object):void{
 					popu(data.msg);
+					
 					if(data.status == 200){
-						
+						_edit.close();
+						queryAllInfo();
+					}
+				},function(v:String):void{popu(v)},"POST");
+			}else if(_edit.title.text == "修改"){
+				send("employeeInformation/updateEmploy", getData(_edit), function(data:Object):void{
+					popu(data.msg);
+					
+					if(data.status == 200){
+						_edit.close();
+						queryAllInfo();
 					}
 				},function(v:String):void{popu(v)},"POST");
 			}

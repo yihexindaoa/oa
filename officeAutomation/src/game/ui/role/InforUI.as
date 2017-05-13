@@ -60,7 +60,7 @@ package game.ui.role {
 			    <Label text="私人信息" x="1630" y="0"/>
 			    <Label text="操作" x="2408" y="38" width="80" height="18"/>
 			    <List spaceY="10" width="861" height="133" repeatX="1" repeatY="4" var="table" x="0" y="87">
-			      <Box width="986" height="35">
+			      <Box width="986" height="35" name="render">
 			        <Label text="label" x="12" y="0" name="name"/>
 			        <Label text="label" x="83" y="0" name="sex"/>
 			        <Label text="label" x="147" y="0" name="incumbent" width="40" height="20"/>
@@ -93,6 +93,7 @@ package game.ui.role {
 			        <Label text="label" x="2112" y="0" width="31" height="19" name="childrenBirthday"/>
 			        <Label text="label" x="2178" y="0" width="48" height="18" name="spouseBirthday"/>
 			        <Label text="label" x="2287" y="0" width="60" height="18" name="personalInterests"/>
+			        <Label text="label" x="2287" y="0" width="60" height="18" name="id" visible="false"/>
 			        <Button label="修改" skin="png.comp.button" x="2365" y="-4" width="35" height="23" name="modfiyBtn"/>
 			        <Button label="详情" skin="png.comp.button" x="2409" y="-4" width="33" height="23" name="detailsBtn"/>
 			        <Button label="删除" skin="png.comp.button" x="2448" y="-4" width="33" height="23" name="deleteBtn"/>
