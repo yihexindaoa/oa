@@ -335,10 +335,12 @@ package trade
 			var f:String = "";
 			for(var key:String in req){
 				f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
-				_JS__AS_("as_createInput",key,req[key]);
+				_JS__AS_("as_createInput",null,null,key,req[key]);
 			}
-			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);$("#userForm2").submit();');
-			_JS__AS_("as_sendFromFile",layaIndex,_path+url);
+			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);uptDogProInfo();');
+			_JS__AS_("as_sendFromFile",function(value:String):void{
+				trace("JavaScript says: " + value + "\n");
+			},"sendFromFileCallBack",layaIndex,_path+url);
 			//[IF-SCRIPT-END]*/ 
 			
 		}
@@ -361,7 +363,7 @@ package trade
 			trace(lx,ly);
 			var f:String = "<input type=\"file\" name=\"file\">";
 			__JS__('$("#newUpload2").empty();$("#newUpload2").append(f);$("#newUpload2").show();$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
-			_JS__AS_("as_showForm",lx,ly);
+			_JS__AS_("as_showForm",null,null,lx,ly);
 			///*[IF-SCRIPT-BEGIN]
 			t = setInterval(posForm,30);
 			//[IF-SCRIPT-END]*/ 
@@ -373,7 +375,7 @@ package trade
 			var ly:Number = form_p.y + form_s.y;
 //			trace(lx,ly);
 			__JS__('$("#newUpload2").css({"left":lx+"px","top":ly+"px"})');
-			_JS__AS_('as_posForm',lx,ly);
+			_JS__AS_('as_posForm',null,null,lx,ly);
 		}
 		
 		protected function hideForm():void{
@@ -406,7 +408,7 @@ package trade
 			var ly:Number = fullEdit_p.y+fullEdit_s.y;
 			trace(lx,ly);
 			__JS__('$(".layui-layedit").show();$(".layui-layedit").css({"position":"absolute","left":lx+"px","top":ly+"px","z-index":999,"width":"447px","height":"235px"})');
-			_JS__AS_('as_showFullEdit',lx,ly);
+			_JS__AS_('as_showFullEdit',null,null,lx,ly);
 			///*[IF-SCRIPT-BEGIN]
 			ft = setInterval(posFullEdit,30);
 			//[IF-SCRIPT-END]*/ 
@@ -416,7 +418,7 @@ package trade
 			var ly:Number = fullEdit_p.y+fullEdit_s.y;
 			//			trace(lx,ly);
 			__JS__('$(".layui-layedit").css({"left":lx+"px","top":ly+"px"})');
-			_JS__AS_('as_posFullEdit',lx,ly);
+			_JS__AS_('as_posFullEdit',null,null,lx,ly);
 		}
 		protected function hideFullEdit():void{
 			__JS__('$(".layui-layedit").hide();');
@@ -436,7 +438,7 @@ package trade
 			var layaText:String="";
 			__JS__('layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)})');
 			/*[IF-FLASH-BEGIN]*/
-			layaText = _JS__AS_('as_getLayaText',layaIndex);
+			layaText = _JS__AS_('as_getLayaText',null,null,layaIndex);
 			/*[IF-FLASH-END]*/ 
 			return layaText;
 		}
@@ -445,14 +447,21 @@ package trade
 		
 		//-------------------------------------------as3调用js------------------------------------------------------------
 		/**
-		 *AS3执行js代码 
-		 * @param value
+		 * AS3执行js代码
+		 * @param func
+		 * @param callback
+		 * @param callbackName js 回调函数的名字
+		 * @param args
+		 * @return 
 		 * 
-		 */		
-		protected function _JS__AS_(func:String,...args):*{
+		 */			
+		protected function _JS__AS_(func:String,callback:Function=null,callbackName:String=null,...args):*{
 			//eval是js的一个“古老”的函数，目前所有知名的浏览器都支持，在AS3中可以放心使用。
 			//参数js eval详细资料：http://www.w3schools.com/jsref/jsref_eval.ASP
 			/*[IF-FLASH-BEGIN]*/
+			if(callback && callbackName)
+			ExternalInterface.addCallback(callbackName, callback);
+			
 			if(args.length <1)
 				return ExternalInterface.call(func,args);
 			else if(args.length == 1)

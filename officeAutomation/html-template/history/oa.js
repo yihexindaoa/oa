@@ -22,13 +22,31 @@ function as_sendFromFile(layaIndex ,url){
 				var layedit = layui.layedit;layaText = layedit.getText(layaIndexH);
 				$('#'+nullKey).val(layaText);console.log("sendfile",layaIndexH,layaText);
 				isNull = false;
-				$("#userForm2").submit();
-				
+				//$("#userForm2").submit();
+				uptDogProInfo();
 			});
 		}else{
-			$("#userForm2").submit();
+			uptDogProInfo();
 		}
 		
+}
+
+/**使用ajaxSubmit上传文件返回**/
+function uptDogProInfo(){
+	var ajax_option={
+		url:$("#userForm2").attr("action"),//form 的action
+		type:"post",  //form 的method方法
+		beforeSubmit:checkUppro,  //在表达提交前执行的验证函数
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",   //设置编码集
+		success:function(data){  //表单提交成功后执行的函数
+			alert("执行成功！");
+			thisMovie("OfficeAutomation").sendFromFileCallBack(JSON.stringify(data));
+		}
+	}
+	$("#userForm2").ajaxSubmit(ajax_option);
+}
+function checkUppro(){
+
 }
 
 function as_showForm(lx,ly){
@@ -50,7 +68,7 @@ function as_initFullEdit(){
 	var 	layaIndex;layui.use('layedit', function(){	var layedit = layui.layedit;	
 	
 	layedit.set({  uploadImage: {
-	    url: 'http://192.168.1.122:8080/oa_system/file/fileImgUpload', //接口url   
+	    url: 'http://192.168.1.115:8080/oa_system/file/fileImgUpload', //接口url   
 	    type: 'post' //默认post 
 	     }});
 	layaIndexH = layaIndex = layedit.build('demo');
@@ -78,3 +96,14 @@ function as_getLayaText(layaIndex){
 	var layaText;layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)});
 	return layaText;
 }
+
+
+//----------------
+
+function thisMovie(movieName) {
+     if (navigator.appName.indexOf("Microsoft") != -1) {
+         return window[movieName];
+     } else {
+         return document[movieName];
+     }
+ }
