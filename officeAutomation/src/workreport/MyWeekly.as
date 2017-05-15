@@ -3,8 +3,8 @@ package workreport
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import game.ui.workReport.MyWeeklyUI;
 	import game.ui.workReport.PersonMsgUI;
-	import game.ui.workReport.myDailyUI;
 	
 	import morn.core.components.Box;
 	import morn.core.components.CheckBox;
@@ -16,34 +16,34 @@ package workreport
 	/**
 	 * 提交工作日报
 	 */
-	public class WorkReport extends Trade
+	public class MyWeekly extends Trade
 	{
 		protected var _container:Sprite;
-		protected var myDaily:myDailyUI;
+		protected var myWeekly:MyWeeklyUI;
 		protected var req:Object;
 		protected var personMsg:PersonMsgUI;
-		public function WorkReport(container:Sprite)
+		public function MyWeekly(container:Sprite)
 		{
 			_container = container;
 			initWork();
-			super.initPopu(container,myDaily);
+			super.initPopu(container,myWeekly);
 			querySatement();
 		}
 		
 		private function initWork():void
 		{
-			myDaily = new myDailyUI();
-			myDaily.x = 161;
-			_container.addChild(myDaily);
+			myWeekly = new MyWeeklyUI();
+			myWeekly.x = 161;
+			_container.addChild(myWeekly);
 			req = new Object();
-			myDaily.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
-			myDaily.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
+			myWeekly.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
+			myWeekly.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
 		}
 		
 		//查询接受人
 		protected function onShowPersonHandler(e:MouseEvent):void
 		{
-			send("user/findByUser",{"pageNum":0,"pageSize":10000000000},onUserComp,onUserError,"POST");
+			send("user/findByUser",{"pageNum":0,"pageSize":10000000},onUserComp,onUserError,"POST");
 			
 		}
 		
@@ -85,7 +85,7 @@ package workreport
 					lable.text = userName.text;
 					lable.x = pos * 50+100;
 					lable.y = 347;
-					myDaily.addChild(lable);
+					myWeekly.addChild(lable);
 					pos++;
 				}
 			}
@@ -105,11 +105,11 @@ package workreport
 			
 		}
 		
-		//添加日报
+		//添加周报
 		protected function onSubmitHandler(event:MouseEvent):void
 		{
-			req.noticeContent = myDaily.noticeContent.text;
-			send("daily/save",req,onComp,onError,"POST");
+			req.noticeContent = myWeekly.weeklyContent.text;
+			send("weekly/save",req,onComp,onError,"POST");
 		}
 		
 		private function onError(e:String):void
@@ -124,10 +124,10 @@ package workreport
 			}
 		}
 		
-		//查询页面加载今昨两天的日报
+		//查询页面加载周报
 		private function querySatement():void
 		{
-			send("daily/findAllMyDaily",req,onCompleteHandler,onError,"POST");
+			send("weekly/findAllMyWeekly",req,onCompleteHandler,onError,"POST");
 			
 		}
 		
@@ -137,9 +137,9 @@ package workreport
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
-					myDaily.table.array = data.data;
+					myWeekly.table.array = data.data;
 				}else{
-					myDaily.table.array= null;	
+					myWeekly.table.array= null;	
 				}
 			}else{
 				popu(data.msg);

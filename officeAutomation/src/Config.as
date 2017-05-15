@@ -24,5 +24,7 @@ package {
 		public static var touchScrollEnable:Boolean = true;
 		/**是否支持鼠标滚轴滚动*/
 		public static var mouseWheelEnable:Boolean = true;
+		/**请求接口的路径**/
+		public static var PATH:String = "";
 	}
 }

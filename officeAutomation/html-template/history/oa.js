@@ -63,12 +63,12 @@ $("#newUpload2").hide();
 
 }
 
-function as_initFullEdit(){
+function as_initFullEdit(path){
 
 	var 	layaIndex;layui.use('layedit', function(){	var layedit = layui.layedit;	
 	
 	layedit.set({  uploadImage: {
-	    url: 'http://192.168.1.115:8080/oa_system/file/fileImgUpload', //接口url   
+	    url: path+'file/fileImgUpload', //接口url   
 	    type: 'post' //默认post 
 	     }});
 	layaIndexH = layaIndex = layedit.build('demo');

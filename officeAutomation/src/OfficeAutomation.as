@@ -6,6 +6,8 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.ProgressEvent;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	
@@ -23,6 +25,7 @@ package
 	{
 		private var box:Sprite;
 		private var content:Bitmap;
+		protected var jsonload:URLLoader;//配置文件的加载
 		public function OfficeAutomation()
 		{
 			
@@ -62,6 +65,21 @@ package
 			IFlash.setOrientationEx(1); //是否为横屏模式
 			IFlash.setBgcolor("#ffffff"); //背景色
 			IFlash.showInfo(false); //是否显示帧率
+			jsonload=new URLLoader;
+			jsonload.addEventListener(Event.COMPLETE,jsonComplete);
+			jsonload.addEventListener(ProgressEvent.PROGRESS , imgProgress );
+			jsonload.load(new URLRequest(encodeURI("data/config.json")));
+		}
+		
+		protected function imgProgress(e:ProgressEvent):void
+		{
+			
+		}
+		
+		protected function jsonComplete(e:Event):void
+		{
+			var json:Object = JSON.parse((e.currentTarget as URLLoader).data as String);
+			Config.PATH = json.path;
 			initMornUI();
 		}
 		

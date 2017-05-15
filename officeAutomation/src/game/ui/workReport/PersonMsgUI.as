@@ -13,6 +13,7 @@ package game.ui.workReport {
 			    <Box name="render" width="726" height="27" x="0" y="0">
 			      <CheckBox skin="png.comp.checkbox" x="0" y="0" name="check"/>
 			      <Label text="用户" x="23" y="-4" size="14" name="userName"/>
+			      <Label text="id" x="66" y="-4" name="id" visible="false"/>
 			    </Box>
 			  </List>
 			  <Button label="关闭" skin="png.comp.button" x="515" y="566" width="57" height="24" name="close"/>

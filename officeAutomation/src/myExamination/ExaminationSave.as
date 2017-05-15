@@ -109,7 +109,7 @@ package myExamination
 			exam.applicationNumber.addEventListener(Event.CHANGE, onChandeHandler);
 			exam.approvalSubmitBtn.addEventListener(MouseEvent.CLICK,onSubimtHandler);//添加提交事件
 			exam.applicationNumber.selectedIndex = 0;
-			exam.qj.visible = true;
+			exam.qj.visible = false;
 			exam.baoxiao.visible = false;
 			exam.jb.visible = false;
 			exam.jj.visible = false;

@@ -40,6 +40,7 @@ package examination
 		private function initExamination():void
 		{
 			exam = new ExaminationUI();
+			exam.x = 161;
 			_container.addChild(exam);
 			req = new Object();
 			_page = new PageFlip();

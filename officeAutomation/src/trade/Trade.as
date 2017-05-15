@@ -34,7 +34,7 @@ package trade
 		protected var _mask:Sprite;//遮罩
 		protected var _maskList:Array;
 		protected var _byteArray:ByteArray;
-		protected var _path:String = "http://192.168.1.115:8080/oa_system/";
+		protected var _path:String = Config.PATH;//"http://192.168.1.115:8080/oa_system/";
 		/**
 		 *加载完二进制的回调 
 		 */		
@@ -401,11 +401,11 @@ package trade
 		protected function initFullEdit():void{
 			/*[IF-SCRIPT-BEGIN]
 			
-			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layaIndex = layedit.build('demo'); });");
+			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layedit.set({  uploadImage: {	url: this._path+'file/fileImgUpload', //接口url  	type: 'post' //默认post }});layaIndex = layedit.build('demo'); });");
 			
 			[IF-SCRIPT-END]*/ 
 			/*[IF-FLASH-BEGIN]*/
-			layaIndex = _JS__AS_("as_initFullEdit");
+			layaIndex = _JS__AS_("as_initFullEdit",null,null,_path);
 			/*[IF-FLASH-END]*/ 
 		}
 		protected var fullEdit_s:Point;

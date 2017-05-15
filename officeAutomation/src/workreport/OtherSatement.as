@@ -8,7 +8,7 @@ package workreport
 	
 	import game.ui.workReport.DelectPopUI;
 	import game.ui.workReport.OtherSatementUI;
-	import game.ui.workReport.PersonMsgUI;
+	import game.ui.workReport.ReportDetailsUI;
 	
 	import morn.core.components.Box;
 	import morn.core.components.Button;
@@ -30,6 +30,7 @@ package workreport
 		protected var _container:Sprite;
 		protected var otherSatement:OtherSatementUI;
 		protected var delectPop:DelectPopUI;
+		protected var reportDetails:ReportDetailsUI;
 		protected var _page:PageFlip;
 		protected var req:Object;
 		protected var calendar:Calendar;
@@ -64,6 +65,7 @@ package workreport
 			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler);
 			delectPop = new DelectPopUI();
 			delectPop.submit.addEventListener(MouseEvent.CLICK, onShowdelectHandler);
+			reportDetails = new ReportDetailsUI();
 		}
 		
 		protected var currentReportType:Label;
@@ -118,6 +120,7 @@ package workreport
 			}
 		}
 		
+		//操作栏按钮处理
 		private function tableRenderHnadler(cell:Box,index:int):void
 		{
 				if(otherSatement.table.length>0){
@@ -127,16 +130,44 @@ package workreport
 				details.addEventListener(MouseEvent.CLICK, onDetailsHandler);
 				//删除
 				var  delect:Button = cell.getChildByName("delect") as Button;
-//				delect.labelColors
+				delect.labelColors
 				delect.addEventListener(MouseEvent.CLICK, onDetailsDelectHandler);
 				}
 		} 
 		
+		//详情弹框
 		protected function onDetailsHandler(e:MouseEvent):void
 		{
 			var cell:Box = (e.target).parent;
-			var reportName:Label = cell.getChildByName("reportName") as Label;
-			popu(reportName.text);
+			var reportType:Label = cell.getChildByName("reportType") as Label;
+			if(reportType.text=="1"){
+				var noticeContent:Label = cell.getChildByName("noticeContent") as Label;
+				var userName:Label = cell.getChildByName("userName") as Label;
+				var sendTime:Label = cell.getChildByName("sendTime") as Label;
+				reportDetails.userName.text = userName.text;
+				reportDetails.dateTime.text = sendTime.text;
+				reportDetails.content.text = noticeContent.text;
+				reportDetails.show();
+			}else if(reportType.text=="2"){
+				var weeklyContent:Label = cell.getChildByName("weeklyContent") as Label;
+				var userName:Label = cell.getChildByName("userName") as Label;
+				var sendTime:Label = cell.getChildByName("sendTime") as Label;
+				reportDetails.userName.text = userName.text;
+				reportDetails.dateTime.text = sendTime.text;
+				reportDetails.content.text = weeklyContent.text;
+				reportDetails.show();
+			}else if(reportType.text=="3"){
+				var monthlyContent:Label = cell.getChildByName("monthlyContent") as Label;
+				var userName:Label = cell.getChildByName("userName") as Label;
+				var sendTime:Label = cell.getChildByName("sendTime") as Label;
+				reportDetails.userName.text = userName.text;
+				reportDetails.dateTime.text = sendTime.text;
+				reportDetails.content.text = monthlyContent.text;
+				reportDetails.show();
+			}else{
+				popu("没有此报表内容");
+			}
+			
 		}
 		
 		//时间选择

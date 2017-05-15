@@ -9,6 +9,8 @@ package navigation
 	import authority.Menu;
 	import authority.User;
 	
+	import examination.Examination;
+	
 	import game.ui.homePage.HomeEvent;
 	import game.ui.role.NavigationMenuUI;
 	
@@ -55,6 +57,7 @@ package navigation
 		protected var examDetail:ExaminationDetail//审批管理详情
 		protected var examSave:ExaminationSave;//审批管理新增
 		protected var examUpdate:ExaminationUpdate;//审批管理修改
+		protected var exam:Examination;//审批员工
 		protected var myExan:MyExamination;//我提交审批
 		protected var myReport:WorkReport;//我的工作报表
 		protected var otherReport:OtherSatement;//他人工作报表
@@ -188,6 +191,7 @@ package navigation
 			if(myExan)myExan.hide();
 			if(myReport)myReport.hide();
 			if(otherReport)otherReport.hide();
+			if(exam)exam.hide();
 //			if(btn&&btn.label == "系统首页")
 				homePage.show();
 			if (btn) {
@@ -232,6 +236,7 @@ package navigation
 			if(myExan)myExan.hide();
 			if(myReport)myReport.hide();
 			if(otherReport)otherReport.hide();
+			if(exam)exam.hide();
 		}
 		
 		/**根据不同的标签显示不同页面**/
@@ -324,6 +329,12 @@ package navigation
 						otherReport = new OtherSatement(_container);
 					else
 						otherReport.show();
+					break;
+				case "审批员工":
+					if(!exam)
+						exam = new Examination(_container);
+					else
+						exam.show();
 					break;
 				default:
 					

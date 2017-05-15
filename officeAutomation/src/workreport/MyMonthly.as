@@ -3,8 +3,8 @@ package workreport
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import game.ui.workReport.MyMonthlyUI;
 	import game.ui.workReport.PersonMsgUI;
-	import game.ui.workReport.myDailyUI;
 	
 	import morn.core.components.Box;
 	import morn.core.components.CheckBox;
@@ -16,34 +16,34 @@ package workreport
 	/**
 	 * 提交工作日报
 	 */
-	public class WorkReport extends Trade
+	public class MyMonthly extends Trade
 	{
 		protected var _container:Sprite;
-		protected var myDaily:myDailyUI;
+		protected var myMonth:MyMonthlyUI;
 		protected var req:Object;
 		protected var personMsg:PersonMsgUI;
-		public function WorkReport(container:Sprite)
+		public function MyMonthly(container:Sprite)
 		{
 			_container = container;
 			initWork();
-			super.initPopu(container,myDaily);
+			super.initPopu(container,myMonth);
 			querySatement();
 		}
 		
 		private function initWork():void
 		{
-			myDaily = new myDailyUI();
-			myDaily.x = 161;
-			_container.addChild(myDaily);
+			myMonth = new MyMonthlyUI();
+			myMonth.x = 161;
+			_container.addChild(myMonth);
 			req = new Object();
-			myDaily.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
-			myDaily.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
+			myMonth.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
+			myMonth.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
 		}
 		
 		//查询接受人
 		protected function onShowPersonHandler(e:MouseEvent):void
 		{
-			send("user/findByUser",{"pageNum":0,"pageSize":10000000000},onUserComp,onUserError,"POST");
+			send("user/findByUser",{"pageNum":0,"pageSize":100000000000},onUserComp,onUserError,"POST");
 			
 		}
 		
@@ -75,7 +75,6 @@ package workreport
 			personMsg.close();
 			var pos:int = 0;
 			for(var i=0;i< personMsg.table.length;i++){
-				
 				var cell:Box = personMsg.table.getCell(i);
 				var check:CheckBox = cell.getChildByName("check") as CheckBox;
 				var userName:Label = cell.getChildByName("userName") as Label;
@@ -83,9 +82,9 @@ package workreport
 				if(check.selected){
 					var lable:Label = new Label();
 					lable.text = userName.text;
-					lable.x = pos * 50+100;
-					lable.y = 347;
-					myDaily.addChild(lable);
+					lable.x = pos * 10+280;
+					lable.y = 344;
+					myMonth.addChild(lable);
 					pos++;
 				}
 			}
@@ -105,11 +104,11 @@ package workreport
 			
 		}
 		
-		//添加日报
+		//添加月报
 		protected function onSubmitHandler(event:MouseEvent):void
 		{
-			req.noticeContent = myDaily.noticeContent.text;
-			send("daily/save",req,onComp,onError,"POST");
+			req.noticeContent = myMonth.monthlyContent.text;
+			send("monthly/save",req,onComp,onError,"POST");
 		}
 		
 		private function onError(e:String):void
@@ -124,10 +123,10 @@ package workreport
 			}
 		}
 		
-		//查询页面加载今昨两天的日报
+		//查询页面加载月报
 		private function querySatement():void
 		{
-			send("daily/findAllMyDaily",req,onCompleteHandler,onError,"POST");
+			send("monthly/findAllMyMonthly",req,onCompleteHandler,onError,"POST");
 			
 		}
 		
@@ -137,9 +136,9 @@ package workreport
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
-					myDaily.table.array = data.data;
+					myMonth.table.array = data.data;
 				}else{
-					myDaily.table.array= null;	
+					myMonth.table.array= null;	
 				}
 			}else{
 				popu(data.msg);
