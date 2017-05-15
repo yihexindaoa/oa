@@ -149,6 +149,11 @@ package workreport
 		//查询页面加载今昨两天的日报
 		private function querySatement():void
 		{
+			var today:Date = new Date();
+			var yeasterday:Date = new Date();
+			yeasterday.setDate(today.getDate()-1);
+			req.endTime = today.getTime();
+			req.beginTime = yeasterday.getTime();
 			send("daily/findAllMyDaily",req,onCompleteHandler,onError,"POST");
 			
 		}
