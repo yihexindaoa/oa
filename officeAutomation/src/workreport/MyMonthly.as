@@ -43,7 +43,7 @@ package workreport
 		//查询接受人
 		protected function onShowPersonHandler(e:MouseEvent):void
 		{
-			send("user/findByUser",{"pageNum":0,"pageSize":100000000000},onUserComp,onUserError,"POST");
+			send("user/findByUser",{"pageNum":0,"pageSize":100000000},onUserComp,onUserError,"POST");
 			
 		}
 		

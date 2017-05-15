@@ -548,8 +548,13 @@ package trade
 				if( component.getChildAt(i) is TextInput )
 				{
 					var text:TextInput = (component.getChildAt(i)  as TextInput);
-					if(text.text!="")
-					data[text.name] = text.text;
+					if(text.text!=""){
+						if(text.isCalendar){
+							data[text.name] = parseInt(text.text);trace(text.name,"=",data[text.name])
+						}else
+							data[text.name] = text.text;
+					}
+					
 				}else if(component.getChildAt(i) is ComboBox){
 					var com:ComboBox = (component.getChildAt(i) as ComboBox);
 					if(com.selectedIndex!=-1)

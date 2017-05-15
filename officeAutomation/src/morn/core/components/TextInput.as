@@ -20,7 +20,7 @@ package morn.core.components {
 		
 		protected var _calendar:Calendar;
 		protected var _content:TextInput;
-		
+		protected var _isCalendar:Boolean;//是否是日期控件
 		public function TextInput(text:String = "", skin:String = null) {
 			super(text, skin);
 		}
@@ -74,6 +74,7 @@ package morn.core.components {
 		}
 		
 		public function setCalendar(s:Sprite):void{
+			_isCalendar = true;
 			_calendar = new Calendar(s);
 			_content = new TextInput("选择时间","png.comp.textinput");
 			_content.x = x;
@@ -96,6 +97,34 @@ package morn.core.components {
 			text = e.millisecondsNumber+"";
 			_calendar.hide();
 		}
+		
+		override public function set text(value:String):void
+		{
+				if (_text != value) {
+					if(_calendar){
+						var date:Date = new Date(parseInt(value));
+						_content.text = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+							
+					}
+					
+						_text = value || "";
+						_text = _text.replace( new RegExp("\\n","g"), "\n");
+					//callLater(changeText);
+					changeText();
+					sendEvent(Event.CHANGE);
+				}
+		}
+
+		/**
+		 * 是否是日期控件
+		 */
+		public function get isCalendar():Boolean
+		{
+			return _isCalendar;
+		}
+		
+		
+		
 		
 		/*public function get calendar():Calendar{
 			return _calendar;

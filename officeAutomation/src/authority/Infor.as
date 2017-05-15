@@ -160,15 +160,16 @@ package authority
 			_page.addEventListener(PageEvent.CURRENT_PAGE, queryTableHandler);
 			_infor.addChild(_page);
 			_infor.panelTable.height = 700;
-			/*_edit.inductionTime.setCalendar(_edit);
+			_edit.inductionTime.setCalendar(_edit);
 			_edit.contractStartTime.setCalendar(_edit);
 			_edit.graduationTime.setCalendar(_edit);
 			_edit.dateBirth.setCalendar(_edit);
 			_edit.creationTime.setCalendar(_edit);
 			_edit.personalBirthday.setCalendar(_edit);
+			_edit.parentsBirthday.setCalendar(_edit);
 			_edit.childrenBirthday.setCalendar(_edit);
 			_edit.spouseBirthday.setCalendar(_edit);
-			_edit.dateBirth.setCalendar(_edit);*/
+			_edit.dateBirth.setCalendar(_edit);
 			_edit.saveBtn.addEventListener(MouseEvent.CLICK, onEditHandler);
 			_infor.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
 			

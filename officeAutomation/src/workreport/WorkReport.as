@@ -22,6 +22,8 @@ package workreport
 		protected var myDaily:myDailyUI;
 		protected var req:Object;
 		protected var personMsg:PersonMsgUI;
+		protected var _personList:Array;//保存要发送的人员
+		protected var recipientId:String = "";//发送人的id值
 		public function WorkReport(container:Sprite)
 		{
 			_container = container;
@@ -32,18 +34,22 @@ package workreport
 		
 		private function initWork():void
 		{
+			_personList = new Array();
 			myDaily = new myDailyUI();
 			myDaily.x = 161;
 			_container.addChild(myDaily);
 			req = new Object();
 			myDaily.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
 			myDaily.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
+			personMsg = new PersonMsgUI();
+			personMsg.table.renderHandler = new Handler(listRender);
+			personMsg.submit.addEventListener(MouseEvent.CLICK,onAddPersonMsgHandler);
 		}
 		
 		//查询接受人
 		protected function onShowPersonHandler(e:MouseEvent):void
 		{
-			send("user/findByUser",{"pageNum":0,"pageSize":10000000000},onUserComp,onUserError,"POST");
+			send("user/findByUser",{"pageNum":0,"pageSize":100000000},onUserComp,onUserError,"POST");
 			
 		}
 		
@@ -51,16 +57,15 @@ package workreport
 		{
 			if(data.status==200){
 				//如果返回值等于200，弹出操作框
-				if(!personMsg){
-					personMsg = new PersonMsgUI();
-					personMsg.table.renderHandler = new Handler(listRender);
-					personMsg.submit.addEventListener(MouseEvent.CLICK,onAddPersonMsgHandler);
+//				if(!personMsg){
+//					
+//					personMsg.show();
+//				}else{
 					personMsg.show();
-				}else{
-					personMsg.show();
-				}
+//				}
 				var list:Array = data.data;
 				personMsg.table.array = list;
+				personMsg.table.repeatY = list.length;
 			}else{
 				var date:Object;
 				popu(date.msg+"");
@@ -74,7 +79,15 @@ package workreport
 		{
 			personMsg.close();
 			var pos:int = 0;
-			for(var i=0;i< personMsg.table.length;i++){
+			
+			for( var j:int = 0;j< _personList.length; j++){
+				var lable:Label = _personList[j];
+				myDaily.removeChild(lable);
+				lable = null;
+			}
+			_personList = [];
+			recipientId = "";
+			for(var i:int=0;i< personMsg.table.length;i++){
 				
 				var cell:Box = personMsg.table.getCell(i);
 				var check:CheckBox = cell.getChildByName("check") as CheckBox;
@@ -85,7 +98,12 @@ package workreport
 					lable.text = userName.text;
 					lable.x = pos * 50+100;
 					lable.y = 347;
+					if(i<personMsg.table.length-1)
+						recipientId+=id.text + ",";
+					else
+						recipientId+=id.text;
 					myDaily.addChild(lable);
+					_personList.push(lable);
 					pos++;
 				}
 			}
@@ -109,6 +127,10 @@ package workreport
 		protected function onSubmitHandler(event:MouseEvent):void
 		{
 			req.noticeContent = myDaily.noticeContent.text;
+			//发送人Id
+//			req.senderId = 
+			//接收人Id
+			req.recipientId = recipientId;
 			send("daily/save",req,onComp,onError,"POST");
 		}
 		

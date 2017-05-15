@@ -22,6 +22,7 @@ package notice
 	{
 		protected var _container:Sprite;
 		protected var _edit:NoticeEditUI;
+		protected var _id:int ;
 		/**
 		 * 通告编辑
 		 * @param container 父容器
@@ -100,6 +101,7 @@ package notice
 						
 					break;
 				case "编辑":
+					request.id = _id;
 					sendFormFile(request, "notice/modifyNotice",function(value:String):void{
 						trace("编辑JavaScript says: " + value + "\n");
 						_edit.close();
@@ -150,6 +152,7 @@ package notice
 		 * 
 		 */		
 		public function showEdit(id:int):void{
+			_id = id;
 			_edit.operTxt.text = "编辑";
 			_edit.show();
 			showForm(_edit,new Point(142,383));
