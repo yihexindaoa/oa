@@ -1,4 +1,4 @@
 {
-    "path": "http://192.168.1.115:8080/oa_system/"
-
+    "path": "http://119.23.13.107:8080/oa_system/",
+	"backups":"http://192.168.1.121:8080/oa_system/"
 }

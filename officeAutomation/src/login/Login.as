@@ -50,21 +50,59 @@ package login
 				
 			}});*/
 			TweenLite.to(loginUI, 0.6,{y:200});
+			/*[IF-FLASH-BEGIN]*/
 			var myLSO:SharedObject = SharedObject.getLocal("foo");
 			if(myLSO.data.myObj == undefined){ 
 			}else{ 
 				loginUI.account.text = myLSO.data.myObj.loginName; 
 				loginUI.password.text = myLSO.data.myObj.password;
 			}
+			/*[IF-FLASH-END]*/ 
+			/*[IF-SCRIPT-BEGIN]
+			this.loginUI.account.text=getCookie("loginName");
+			this.loginUI.password.text=getCookie("password");
+			function getCookie(c_name)
+			{
+			var c_start,c_end;
+			if (Browser.document.cookie&&Browser.document.cookie.length>0)
+			  {
+			  c_start=Browser.document.cookie.indexOf(c_name + "=")
+			  if (c_start!=-1)
+			    { 
+			    c_start=c_start + c_name.length+1 
+			    c_end=Browser.document.cookie.indexOf(";",c_start)
+			    if (c_end==-1) c_end=Browser.document.cookie.length
+			    return unescape(Browser.document.cookie.substring(c_start,c_end))
+			    } 
+			  }
+			return ""
+			}
+			
+			[IF-SCRIPT-END]*/ 
+			
 		}
 		
 		protected function onClickHandler(event:MouseEvent):void
 		{
+			/*[IF-FLASH-BEGIN]*/
 			var myLSO:SharedObject = SharedObject.getLocal("foo");
 			var myObj:Object = {}; 
 			myObj.loginName = loginUI.account.text;
 			myObj.password = loginUI.password.text; 
 			myLSO.data.myObj = myObj; 
+			/*[IF-FLASH-END]*/ 
+			/*[IF-SCRIPT-BEGIN]
+			setCookie("loginName",this.loginUI.account.text,5);
+			setCookie("password",this.loginUI.password.text,5);
+			function setCookie(c_name,value,expiredays)
+			{
+				var exdate=new Date()
+				exdate.setDate(exdate.getDate()+expiredays)
+			Browser.document.cookie=c_name+ "=" +escape(value)+
+				((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+			}
+			
+			[IF-SCRIPT-END]*/ 
 			send("login/userLogin",{"loginName":loginUI.account.text,"password":loginUI.password.text},function(data:Object):void{
 				trace(data);
 				_container.removeChild(loginUI);

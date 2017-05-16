@@ -401,7 +401,7 @@ package trade
 		protected function initFullEdit():void{
 			/*[IF-SCRIPT-BEGIN]
 			
-			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layedit.set({  uploadImage: {	url: this._path+'file/fileImgUpload', //接口url  	type: 'post' //默认post }});layaIndex = layedit.build('demo'); });");
+			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layedit.set({  uploadImage: {	url: this._path+'file/fileImgUpload',  	type: 'post' }});layaIndex = layedit.build('demo'); });");
 			
 			[IF-SCRIPT-END]*/ 
 			/*[IF-FLASH-BEGIN]*/
