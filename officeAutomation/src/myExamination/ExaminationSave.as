@@ -86,7 +86,7 @@ package myExamination
 		{
 			exam = new ExaminationLeaveSaveUI();
 			exam.x = 161;
-			_container.addChild(exam);
+//			_container.addChild(exam);
 			//请假
 			calendar_qj_s = new Calendar(exam);
 			calendar_qj_s.addEventListener(CalendarEvent.DATE, onCalendarHandler);
@@ -270,8 +270,12 @@ package myExamination
 			}
 			
 //			send("examination/saveExamination",req, saveExaminationOnComplete, onError,URLRequestMethod.POST);
-			sendFormFile(req,"examination/saveExamination");
-			initForm();
+			sendFormFile(req,"examination/saveExamination",function(v:String):void{
+				exam.close();
+				popu("添加成功");
+				dispatchEvent(new Event("SUCCESS"));
+			});
+//			initForm();
 			hideForm();
 		}
 		
@@ -310,7 +314,7 @@ package myExamination
 			switch(exam.applicationNumber.selectedIndex )
 			{
 				case 0:
-					initForm();
+//					initForm();
 					exam.qj.visible = true;
 					showForm(exam,new Point(300,600));
 					break;
@@ -333,6 +337,7 @@ package myExamination
 		{
 			showForm(exam,new Point(300,600));
 			exam.show();
+			exam.qj.visible = true;
 		}
 		
 		

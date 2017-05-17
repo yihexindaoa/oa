@@ -37,7 +37,7 @@ package myExamination
 		{
 			exam = new ExaminationDetailUI();
 			exam.x = 161;
-			_container.addChild(exam);
+//			_container.addChild(exam);
 			exam.qj.visible = false;
 			exam.baoxiao.visible = false;
 			exam.jb.visible = false;

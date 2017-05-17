@@ -1,6 +1,7 @@
 package myExamination
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequestMethod;
 	
@@ -29,7 +30,7 @@ package myExamination
 		protected var req:Object;
 		protected var approvla:ExaminationSave;
 		protected var detail:ExaminationDetail;
-		protected var update:ExaminationUpdate;
+//		protected var update:ExaminationUpdate;
 		public function MyExamination(container:Sprite)
 		{
 			
@@ -58,9 +59,16 @@ package myExamination
 			outputExcelMyApplyBtn.addEventListener(MouseEvent.CLICK, outputExcelMyApplyHandler);
 			exam.table.renderHandler = new Handler(listRender);
 			approvla = new ExaminationSave(_container);
+			approvla.addEventListener("SUCCESS", onApprovalHandler);
 			detail=new ExaminationDetail(_container);
 			exam.submit.addEventListener(MouseEvent.CLICK, onGoTOApprovalHandler);
-			update=new ExaminationUpdate(_container);
+//			update=new ExaminationUpdate(_container);
+		}
+		
+		/**添加申请成功后的回调**/
+		protected function onApprovalHandler(e:Event):void
+		{
+			queryMyExamination();
 		}
 		
 		/**进入审批流程**/
