@@ -39,7 +39,7 @@ function uptDogProInfo(){
 		beforeSubmit:checkUppro,  //在表达提交前执行的验证函数
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",   //设置编码集
 		success:function(data){  //表单提交成功后执行的函数
-			alert("执行成功！");
+			//alert("执行成功！");
 			thisMovie("OfficeAutomation").sendFromFileCallBack(JSON.stringify(data));
 		}
 	}

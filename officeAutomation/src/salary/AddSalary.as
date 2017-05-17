@@ -106,7 +106,7 @@ package salary
 		protected function onInputExcelHandler(e:MouseEvent):void
 		{
 			var req:Object = new Object();
-			sendFormFile(req,"OaWage/addOaWage");
+			sendFormFile(req,"OaWage/addOaWage",function(v:String){ popu("添加成功") });
 		}		
 		
 		//导出工资单列表

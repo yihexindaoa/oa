@@ -331,27 +331,19 @@ package trade
 		 */		
 		protected function sendFormFile(req:Object , url:String,callback:Function = null):void{
 			
-			///*[IF-SCRIPT-BEGIN]
+			
 			var f:String = "";
 			for(var key:String in req){
 				f+="<input type=\"hidden\" name=\""+key+"\" value=\""+req[key]+"\" id = \""+key+"\">";
 				_JS__AS_("as_createInput",null,null,key,req[key]);
 			}
-			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);'
-			+'var ajax_option={'
-		+'url:$("#userForm2").attr("action"),//form 的action'
-		+'type:"post",  //form 的method方法'
-		+'beforeSubmit:checkUppro,  //在表达提交前执行的验证函数'
-		+'contentType: "application/x-www-form-urlencoded; charset=utf-8",   //设置编码集'
-		+'success:function(data){  //表单提交成功后执行的函数'
-		+'	alert("执行成功！");'
-		+'	callback(JSON.stringify(data));'
-			+'}'
-			+'}'
-			+'$("#userForm2").ajaxSubmit(ajax_option);'
-			);
-			_JS__AS_("as_sendFromFile",callback,"sendFromFileCallBack",layaIndex,_path+url);
+			///*[IF-SCRIPT-BEGIN]
+			
+			__JS__('$("#newUpload2").append(f);$("#userForm2").attr("action", this._path+url);			var ajax_option={		url:$("#userForm2").attr("action"),	type:"post",  		beforeSubmit:function(){},  	contentType: "application/x-www-form-urlencoded; charset=utf-8",  	success:function(data){  					callback(JSON.stringify(data));			}			}			')
+			__JS__('$("#userForm2").ajaxSubmit(ajax_option);')
 			//[IF-SCRIPT-END]*/ 
+			_JS__AS_("as_sendFromFile",callback,"sendFromFileCallBack",layaIndex,_path+url);
+			
 			
 		}
 		
@@ -397,11 +389,11 @@ package trade
 		}
 		//--------------------------------------form----------------------------------------------
 		//-----------------------------------富文本编辑器--------------------------------------------
-		protected static var layaIndex:int ;
+		protected  var layaIndex:int ;
 		protected function initFullEdit():void{
 			/*[IF-SCRIPT-BEGIN]
 			
-			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layedit.set({  uploadImage: {	url: this._path+'file/fileImgUpload',  	type: 'post' }});layaIndex = layedit.build('demo'); });");
+			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit;	layedit.set({  uploadImage: {	url: this._path+'file/fileImgUpload',  	type: 'post' }});this.layaIndex = layedit.build('demo'); });");
 			
 			[IF-SCRIPT-END]*/ 
 			/*[IF-FLASH-BEGIN]*/
@@ -570,6 +562,7 @@ package trade
 		 * 
 		 */		
 		protected function setContent(content:String,indexcontent:int):void{
+			__JS__('$("#LAY_layedit_"+3).contents().find("body").html(content)');
 			_JS__AS_("as_setContentText",null,null,content,indexcontent);
 		}
 		
