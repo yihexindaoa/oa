@@ -8,6 +8,7 @@ package morn.core.components {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	
 	import morn.core.utils.ObjectUtils;
 	import morn.core.utils.StringUtils;
 	
@@ -25,7 +26,7 @@ package morn.core.components {
 		protected var _skin:String = null;
 		protected var _bitmap:AutoBitmap;
 		protected var _margin:Array = Styles.labelMargin;
-		
+		protected var _isDate:Boolean ;//日期控件
 		public function Label(text:String = "", skin:String = null) {
 			this.text = text;
 			this.skin = skin;
@@ -67,6 +68,12 @@ package morn.core.components {
 		}
 		
 		public function set text(value:String):void {
+			
+			if(_isDate){
+				var date:Date = new Date();
+				date.setTime(value);
+				value = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+			}		
 			if (_text != value) {
 				_text = value || "";
 				_text = _text.replace(reg, "\n");
@@ -393,5 +400,22 @@ package morn.core.components {
 				super.dataSource = value;
 			}
 		}
+
+		/**
+		 *是否日期控件 
+		 */
+		public function get isDate():Boolean
+		{
+			return _isDate;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set isDate(value:Boolean):void
+		{
+			_isDate = value;
+		}
+
 	}
 }

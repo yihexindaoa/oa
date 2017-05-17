@@ -14,12 +14,13 @@ package game.ui.role {
 		public var thing:Label = null;
 		public var maritalStatus:TextInput = null;
 		public var currentAddress:TextInput = null;
-		public var idAddress:Label = null;
+		public var idAddress:TextInput = null;
 		public var idCard:TextInput = null;
 		public var dateBirth:TextInput = null;
 		public var graduationTime:TextInput = null;
 		public var recordFormalSchooling:TextInput = null;
 		public var whatLearnProfessional:TextInput = null;
+		public var graduateSchool:TextInput = null;
 		public var accumulationFundCard:TextInput = null;
 		public var accumulationFundAccount:TextInput = null;
 		public var socialSecurityCard:TextInput = null;
@@ -52,19 +53,19 @@ package game.ui.role {
 			  <Label text="性别：" x="85" y="77"/>
 			  <TextInput skin="png.comp.textinput" x="522" y="43" var="workNumber" name="workNumber"/>
 			  <Label text="工号：" x="487" y="45"/>
-			  <TextInput skin="png.comp.textinput" x="526" y="538" name="creationTime" var="creationTime"/>
+			  <TextInput skin="png.comp.textinput" x="526" y="538" name="employee_creationTime" var="creationTime"/>
 			  <Label text="创建时间：" x="466" y="540"/>
 			  <TextInput skin="png.comp.textinput" x="526" y="478" width="263" height="50" multiline="true" wordWrap="true" name="remarks" var="remarks"/>
 			  <Label text="备注信息：" x="467" y="475"/>
 			  <TextInput skin="png.comp.textinput" x="524" y="404" name="personalInterests" var="personalInterests" width="264" height="62" multiline="true" wordWrap="true"/>
 			  <Label text="个人爱好：" x="464" y="405"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="376" var="spouseBirthday" name="spouseBirthday"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="376" var="spouseBirthday" name="employee_spouseBirthday"/>
 			  <Label text="配偶生日：" x="463" y="377"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="348" var="childrenBirthday" name="childrenBirthday"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="348" var="childrenBirthday" name="employee_childrenBirthday"/>
 			  <Label text="子女生日：" x="464" y="349"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="318" name="parentsBirthday" var="parentsBirthday"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="318" name="employee_parentsBirthday" var="parentsBirthday"/>
 			  <Label text="父母生日：" x="464" y="319"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="286" name="personalBirthday" var="personalBirthday"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="286" name="employee_personalBirthday" var="personalBirthday"/>
 			  <Label text="个人生日：" x="464" y="288"/>
 			  <TextInput skin="png.comp.textinput" x="524" y="256"/>
 			  <Label text="子女情况：" x="463" y="256" name="thing" var="thing"/>
@@ -72,19 +73,19 @@ package game.ui.role {
 			  <Label text="婚姻状况：" x="463" y="231"/>
 			  <TextInput skin="png.comp.textinput" x="524" y="200" name="currentAddress" var="currentAddress"/>
 			  <Label text="现住址：" x="474" y="201"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="168" width="263" height="22"/>
-			  <Label text="身份证地址：" x="450" y="169" width="74" height="19" var="idAddress" name="idAddress"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="168" width="263" height="22" name="idAddress" var="idAddress"/>
+			  <Label text="身份证地址：" x="450" y="169" width="74" height="19"/>
 			  <TextInput skin="png.comp.textinput" x="524" y="138" name="idCard" var="idCard"/>
 			  <Label text="身份证号码：" x="450" y="140" width="86" height="19"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="106" var="dateBirth" name="dateBirth"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="106" var="dateBirth" name="employee_dateBirth"/>
 			  <Label text="出生年月日：" x="451" y="107"/>
-			  <TextInput skin="png.comp.textinput" x="524" y="75" var="graduationTime" name="graduationTime"/>
+			  <TextInput skin="png.comp.textinput" x="524" y="75" var="graduationTime" name="employee_graduationTime"/>
 			  <Label text="毕业时间：" x="463" y="74"/>
 			  <TextInput skin="png.comp.textinput" x="123" y="809" name="recordFormalSchooling" var="recordFormalSchooling" width="238" height="22"/>
 			  <Label text="学历：" x="84" y="808"/>
 			  <TextInput skin="png.comp.textinput" x="123" y="780" var="whatLearnProfessional" name="whatLearnProfessional" width="238" height="22"/>
 			  <Label text="所学专业：" x="60" y="781"/>
-			  <TextInput skin="png.comp.textinput" x="123" y="750" width="239" height="22"/>
+			  <TextInput skin="png.comp.textinput" x="123" y="750" width="239" height="22" name="graduateSchool" var="graduateSchool"/>
 			  <Label text="毕业院校：" x="60" y="751" width="87" height="19"/>
 			  <TextInput skin="png.comp.textinput" x="123" y="722" name="accumulationFundCard" var="accumulationFundCard"/>
 			  <Label text="公积金卡编号：" x="36" y="722"/>
@@ -120,14 +121,15 @@ package game.ui.role {
 			  <Label text="英文能力(听)：" x="43" y="232"/>
 			  <TextInput skin="png.comp.textinput" x="123" y="231" name="englishListening" var="englishListening"/>
 			  <Label text="现合同起始时间：" x="27" y="195"/>
-			  <TextInput skin="png.comp.textinput" x="124" y="194" var="contractStartTime" name="contractStartTime"/>
+			  <TextInput skin="png.comp.textinput" x="124" y="194" var="contractStartTime" name="employee_contractStartTime"/>
 			  <Label text=" " x="74" y="124"/>
-			  <TextInput skin="png.comp.textinput" x="122" y="153" var="inductionTime" name="inductionTime"/>
+			  <TextInput skin="png.comp.textinput" x="122" y="153" var="inductionTime" name="employee_inductionTime"/>
 			  <Label text="入职时间：" x="62" y="153"/>
 			  <TextInput skin="png.comp.textinput" x="122" y="116" var="incumbent" name="incumbent"/>
 			  <Label text="现任职务：" x="62" y="116" width="61" height="19"/>
 			  <TextInput skin="png.comp.textinput" x="122" y="78" var="sex" name="sex"/>
 			  <Button label="保存" skin="png.comp.button" x="479" y="668" width="88" height="58" var="saveBtn"/>
+			  <TextInput text="id" skin="png.comp.textinput" x="644" y="627" name="id" visible="false"/>
 			</Dialog>;
 		public function EditInforUI(){}
 		override protected function createChildren():void {

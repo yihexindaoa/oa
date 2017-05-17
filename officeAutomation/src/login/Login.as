@@ -120,7 +120,7 @@ package login
 		protected function createEffect():void
 		{
 			for(var i:int = 0;i<20;i++){
-				var shape:Shape = new Shape();
+				var shape:Shape = new Shape(); 
 				shape.graphics.beginFill(0xff0000,0.5);
 				shape.graphics.drawCircle(0,0,i);
 				shape.x = Math.random()*300+300;

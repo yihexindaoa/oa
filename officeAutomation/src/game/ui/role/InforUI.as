@@ -64,7 +64,7 @@ package game.ui.role {
 			        <Label text="label" x="12" y="0" name="name"/>
 			        <Label text="label" x="83" y="0" name="sex"/>
 			        <Label text="label" x="147" y="0" name="incumbent" width="40" height="20"/>
-			        <Label text="label" x="206" y="0" name="inductionTime" width="46" height="18"/>
+			        <Label text="label" x="206" y="0" name="inductionTime" width="46" height="18" isDate="true"/>
 			        <Label text="label" x="272" y="0" name="contractStartTime" width="71" height="18"/>
 			        <Label text="label" x="358" y="0" width="21" height="18" name="englishListening"/>
 			        <Label text="label" x="394" y="0" width="18" height="18" name="englishSay"/>
@@ -81,17 +81,17 @@ package game.ui.role {
 			        <Label x="1093" y="0" width="79" height="18" name="graduateSchool" text="lab"/>
 			        <Label text="label" x="1177" y="0" width="68" height="18" name="whatLearnProfessional"/>
 			        <Label text="label" x="1258" y="0" width="37" height="18" name="recordFormalSchooling"/>
-			        <Label text="label" x="1332" y="0" name="graduationTime"/>
+			        <Label text="label" x="1332" y="0" name="graduationTime" isDate="true"/>
 			        <Label text="label" x="1440" y="0" name="dateBirth"/>
 			        <Label text="label" x="1517" y="0" width="72" height="18" name="idCard"/>
 			        <Label text="label" x="1636" y="0" width="62" height="18" name="idAddress"/>
 			        <Label text="label" x="1723" y="0" width="46" height="18" name="currentAddress"/>
 			        <Label text="label" x="1799" y="0" width="47" height="18" name="maritalStatus"/>
 			        <Label text="label" x="1886" y="0" width="49" height="18" name="thing"/>
-			        <Label text="label" x="1974" y="0" width="40" height="18" name="personalBirthday"/>
+			        <Label text="label" x="1974" y="0" width="40" height="18" name="personalBirthday" isDate="true"/>
 			        <Label text="label" x="2041" y="0" name="parentsBirthday"/>
-			        <Label text="label" x="2112" y="0" width="31" height="19" name="childrenBirthday"/>
-			        <Label text="label" x="2178" y="0" width="48" height="18" name="spouseBirthday"/>
+			        <Label text="label" x="2112" y="0" width="31" height="19" name="childrenBirthday" isDate="true"/>
+			        <Label text="label" x="2178" y="0" width="48" height="18" name="spouseBirthday" isDate="true"/>
 			        <Label text="label" x="2287" y="0" width="60" height="18" name="personalInterests"/>
 			        <Label text="label" x="2287" y="0" width="60" height="18" name="id" visible="false"/>
 			        <Button label="修改" skin="png.comp.button" x="2365" y="-4" width="35" height="23" name="modfiyBtn"/>

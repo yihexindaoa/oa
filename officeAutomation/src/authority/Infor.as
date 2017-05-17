@@ -195,7 +195,9 @@ package authority
 						var a:Object = data.data[i];
 						var item:Object = new Object();
 						for(var key:String in a){
-							if(a[key])item[key]=a[key];
+							if(a[key]){
+								item[key]=a[key];
+							}
 							
 						}
 						_list.push(item);
@@ -253,7 +255,34 @@ package authority
 		protected function onDetailsHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
-			_edit.dataSource = _list[cell.tag.index];trace("cell.tag.index=",cell.tag.index);
+			var data:Object = new Object();
+			var item:Object = _list[cell.tag.index]  ;
+			for( var key:String in item ){
+				
+				if(key == "inductionTime")
+					data["employee_inductionTime"] = item["inductionTime"];
+				else if(key == "contractStartTime")
+					data["employee_contractStartTime"] = item["contractStartTime"];
+				else if(key == "graduationTime")
+					data["employee_graduationTime"] = item["graduationTime"];
+				else if(key == "dateBirth")
+					data["employee_dateBirth"] = item["dateBirth"];
+				else if(key == "personalBirthday")
+					data["employee_personalBirthday"] = item["personalBirthday"];
+				else if(key == "parentsBirthday")
+					data["employee_parentsBirthday"] = item["parentsBirthday"];
+				else if(key == "childrenBirthday")
+					data["employee_childrenBirthday"] = item["childrenBirthday"];
+				else if(key == "spouseBirthday")
+					data["employee_spouseBirthday"] = item["spouseBirthday"];
+				else if(key == "creationTime")
+					data["employee_creationTime"] = item["creationTime"];
+				else
+					data[key] = item[key];
+			}
+			
+			trace("cell.tag.index=",cell.tag.index);
+			_edit.dataSource = data;
 			_edit.title.text = "详情";
 			
 			_edit.show();
@@ -263,7 +292,32 @@ package authority
 		protected function onModifyHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
-			_edit.dataSource = _list[cell.tag.index];
+			var data:Object = new Object();
+			var item:Object = _list[cell.tag.index]  ;
+			for( var key:String in item ){
+				
+				if(key == "inductionTime")
+					data["employee_inductionTime"] = item["inductionTime"];
+				else if(key == "contractStartTime")
+					data["employee_contractStartTime"] = item["contractStartTime"];
+				else if(key == "graduationTime")
+					data["employee_graduationTime"] = item["graduationTime"];
+				else if(key == "dateBirth")
+					data["employee_dateBirth"] = item["dateBirth"];
+				else if(key == "personalBirthday")
+					data["employee_personalBirthday"] = item["personalBirthday"];
+				else if(key == "parentsBirthday")
+					data["employee_parentsBirthday"] = item["parentsBirthday"];
+				else if(key == "childrenBirthday")
+					data["employee_childrenBirthday"] = item["childrenBirthday"];
+				else if(key == "spouseBirthday")
+					data["employee_spouseBirthday"] = item["spouseBirthday"];
+				else if(key == "creationTime")
+					data["employee_creationTime"] = item["creationTime"];
+				else
+					data[key] = item[key];
+			}
+			_edit.dataSource = data;
 			_edit.title.text = "修改";
 			
 			_edit.show();
