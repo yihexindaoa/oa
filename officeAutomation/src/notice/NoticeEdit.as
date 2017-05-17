@@ -90,6 +90,7 @@ package notice
 						trace("新增JavaScript says: " + value + "\n");
 						_edit.close();
 						popu(value);
+						dispatchEvent(new Event("saveNotice"));
 					});
 					/*
 					 * $.ajax({type:"POST",
@@ -106,6 +107,7 @@ package notice
 						trace("编辑JavaScript says: " + value + "\n");
 						_edit.close();
 						popu(value);
+						dispatchEvent(new Event("modifyNotice"));
 					});
 					break;
 				default:

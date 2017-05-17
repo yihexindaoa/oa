@@ -397,7 +397,7 @@ package trade
 		}
 		//--------------------------------------form----------------------------------------------
 		//-----------------------------------富文本编辑器--------------------------------------------
-		protected var layaIndex:int ;
+		protected static var layaIndex:int ;
 		protected function initFullEdit():void{
 			/*[IF-SCRIPT-BEGIN]
 			

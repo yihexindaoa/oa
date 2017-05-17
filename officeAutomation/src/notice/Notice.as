@@ -67,6 +67,8 @@ package notice
 			noticeReq = new NoticeListReq();
 			calendar = new Calendar(_notice);
 			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler);
+			edit.addEventListener("saveNotice", queryNotice);
+			edit.addEventListener("modifyNotice", queryNotice);
 		}
 		
 		/*日历选择事件*/
@@ -96,7 +98,7 @@ package notice
 			edit.showAdd();
 		}		
 		
-		protected function queryNotice():void{
+		protected function queryNotice(e:Event = null):void{
 			noticeReq.pageNum = _page.currentPage;
 			noticeReq.pageSize = _page.pageSize;
 			/*_notice.table.array=[{

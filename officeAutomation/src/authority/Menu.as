@@ -91,9 +91,10 @@ package authority
 		protected function onDeleteHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
+			
 			popuConfirm("确定删除“"+(cell.getChildByName("meunName") as Label).text+"”菜单！", function():void{
 				var req:Object = new Object();
-				req.id = edit.id.text;
+				req.id = (cell.getChildByName("id") as Label).text;
 				req.delFlag = 0;
 				send("levelMenu/update", req, function(data:Object):void{
 					if(data.status == 200){

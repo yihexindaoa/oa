@@ -30,6 +30,7 @@ package home
 		protected var agencyBusiness:Box;
 		protected var homeLeft:HomeLeft;
 		protected var detail:NoticeDetail;//显示通知详情
+		protected var tip:Array = ["公司通知","惩罚通知","奖励通知"];
 		/**
 		 *首页 
 		 * @param container
@@ -104,7 +105,7 @@ package home
 				for( var i:int = 0, m:int = list.length ; i < m ;i++){
 					if(i>5)break;//一般显示五条数据
 					var item:Object = list[i];
-					var button:Button  = new Button(null,item.typeName+"-"+item.title);
+					var button:Button  = new Button(null,tip[item.signType]+"-"+item.title);
 					button.buttonMode = true;
 					button.x = 10;
 					button.y = 40+i*20;
