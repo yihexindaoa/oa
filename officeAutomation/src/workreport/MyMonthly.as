@@ -14,7 +14,7 @@ package workreport
 	import trade.Trade;
 	
 	/**
-	 * 提交工作日报
+	 * 提交工作月报
 	 */
 	public class MyMonthly extends Trade
 	{

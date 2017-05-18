@@ -39,8 +39,8 @@ package game.ui.workReport {
 			      <TextInput skin="png.comp.textinput" x="-1" y="2" width="591" height="137" editable="false"/>
 			      <Label text="姓名：" x="10" y="8"/>
 			      <Label text="label" x="53" y="8" width="127" height="21" name="userName"/>
-			      <Label text="时间：" x="337" y="4"/>
-			      <Label text="label" x="375" y="5" width="179" height="22" name="sendTime"/>
+			      <Label text="时间：" x="337" y="4" />
+			      <Label text="label" x="375" y="5" width="179" height="22" name="sendTime" isDate="true"/>
 			      <TextArea text="TextArea" skin="png.comp.textarea" x="-1" y="36" width="591" height="103" name="noticeContent" editable="false"/>
 			    </Box>
 			  </List>

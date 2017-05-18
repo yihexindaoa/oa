@@ -23,7 +23,7 @@ package game.ui.workReport {
 			      <Image skin="png.comp.blank" x="26" y="178" width="569" height="1"/>
 			      <Label text="小雷" x="67" y="155" size="14" width="32" height="20" name="userName"/>
 			      <Label text="2017/3/21日报" x="151" y="154" size="14" width="112" height="20" name="reportName"/>
-			      <Label text="2017/3/21 21:21:00" x="273" y="154" size="14" name="sendTime" width="128" height="20"/>
+			      <Label text="2017/3/21 21:21:00" x="273" y="154" size="14" name="sendTime" width="128" height="20"  isDate="true"/>
 			      <Label text="未读" x="427" y="154" size="14" name="readState"/>
 			      <Label text="id" x="604" y="156" visible="false" width="14" height="19" name="id"/>
 			      <Button label="详情" x="486" y="153" width="47" height="23" name="details" labelColors="0x0000ff, 0x32556b, 0x32"/>
@@ -48,7 +48,7 @@ package game.ui.workReport {
 			  <Image skin="png.comp.blank" x="595" y="116" width="1" height="34"/>
 			  <Label text="姓名" x="66" y="124" size="14"/>
 			  <Label text="报表名称" x="178" y="122" size="14"/>
-			  <Label text="提交时间" x="302" y="124" size="14" width="60" height="20"/>
+			  <Label text="提交时间" x="302" y="124" size="14" width="60" height="20" />
 			  <Label text="状态" x="427" y="124" size="14"/>
 			  <Label text="操作" x="524" y="125" size="14"/>
 			  <TextInput skin="png.comp.textinput" x="301" y="70" width="246" height="27" var="queryTxt" toolTip="请输入姓名搜索"/>

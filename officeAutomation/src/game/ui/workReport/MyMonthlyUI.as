@@ -9,8 +9,8 @@ package game.ui.workReport {
 		protected static var uiXML:XML =
 			<View width="991" height="859">
 			  <Image skin="png.comp.bg" x="-1" y="-1" width="993" height="862" sizeGrid="50,50,10,10"/>
-			  <Label text="我的工作日报" x="44" y="32" size="14"/>
-			  <Label text="我的工作周报" x="172" y="32" size="14"/>
+			  <Label text="我的工作日报" x="44" y="32" size="14" />
+			  <Label text="我的工作周报" x="172" y="32" size="14" />
 			  <Image skin="png.comp.blank_blue" x="314" y="51" width="90" height="2"/>
 			  <Label text="日期" x="55" y="75" size="14"/>
 			  <ComboBox labels="2017,2016" skin="png.comp.combobox" x="43" y="100" width="70" height="23" selectedIndex="0"/>
