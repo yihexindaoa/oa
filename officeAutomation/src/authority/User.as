@@ -69,9 +69,10 @@ package authority
 				if(data.status == 200){
 					if(data.data.length > 0){
 						_user.table.array = data.data;
+						_user.table.repeatY = data.data.length;
 					}
 					
-					_page.y = _user.table.y+_user.table.height;
+					_page.y = _user.table.y+data.data.length*38;
 					_page.totalPage = data.total;
 				}else{
 					popu(data.msg);
@@ -89,8 +90,8 @@ package authority
 			req.userName = _edit.nmeTxt.text ;
 			req.password = _edit.password.text;
 			req.workNumber = _edit.workNumber.text;
-			req.positionInformation = _edit.positionInformation.selectedLabel;
-			req.officeId = _edit.officeId.selectedIndex+1;
+			req.positionId = _edit.positionInformation.selectedIndex;
+			req.officeId = _edit.officeId.selectedIndex;
 			
 			if(_edit.title.text == "新增用户"){
 				req.loginName = _edit.accountTxt.text ;
@@ -103,7 +104,7 @@ package authority
 								if(d.data[i].loginName == req.loginName){
 									//添加用户对应角色
 									var userRoleReq:Object = new Object();
-									userRoleReq.roleId = _edit.positionInformation.selectedIndex+1;
+									userRoleReq.roleId = _edit.positionInformation.key;
 									userRoleReq.userId = d.data[i].id;
 									send("userRole/save", userRoleReq , function(data:Object):void{
 										if(data.status == 200){
@@ -139,7 +140,7 @@ package authority
 								if(d.data[i].loginName == _edit.accountTxt.text){
 									//添加用户对应角色
 									var userRoleReq:Object = new Object();
-									userRoleReq.roleId = _edit.positionInformation.selectedIndex+1;
+									userRoleReq.roleId = _edit.positionInformation.key;
 									userRoleReq.userId = d.data[i].id;
 									send("userRole/update", userRoleReq , function(data:Object):void{
 										if(data.status == 200){
@@ -173,12 +174,32 @@ package authority
 			send("user/findByUser",req, function(data:Object):void{
 				if(data.status == 200){
 					if(data.data.length > 0){
-						_user.table.array = data.data;
+						
+						
+						var ids:Object = {};
+						
+						send("role/findAllRole", {}, function(dat:Object):void{
+							
+							if(dat.data.length>0){
+								
+								for(var i:int ,m:int =  dat.data.length;i < m ; i++){
+									ids[dat.data[i].id] = dat.data[i].roleNumber;
+								}
+								
+							}
+							for(var j:int ,n:int =  data.data.length;j < n ; j++){
+								data.data[j].positionInformation=ids[data.data[j].positionId ];
+							}
+							_user.table.array = data.data;
+							_user.table.repeatY = data.data.length;
+						}, function(v:String):void{
+							
+						},"POST");
 						
 					}
 					if(func)
 					func(data);
-					_page.y = _user.table.y+_user.table.height;
+					_page.y = _user.table.y+data.data.length*38;
 					_page.totalPage = data.total;
 				}else{
 					popu(data.msg);
@@ -252,6 +273,8 @@ package authority
 		
 		protected function onEditHandler(e:MouseEvent):void
 		{
+			
+			
 			_edit.title.text = "编辑用户";
 			var cell:Box = e.target.parent as Box;
 			_edit.accountTxt.text = (cell.getChildByName("loginName") as Label).text;
@@ -259,11 +282,39 @@ package authority
 			_edit.accountTxt.editable = false;
 			_edit.nmeTxt.editable = false;
 			_edit.workNumber.text = (cell.getChildByName("workNumber") as Label).text;
-			_edit.positionInformation.selectedLabel = (cell.getChildByName("positionInformation") as Label).text;
+			
 			_edit.officeId.selectedLabel = (cell.getChildByName("officeId") as ComboBox).selectedLabel;
 			_edit.id.text = (cell.getChildByName("id") as Label).text;
 //			_edit.accountTxt.text = (cell.getChildByName("loginName") as Label).text;
 //			_edit.accountTxt.text = (cell.getChildByName("loginName") as Label).text;
+			queryRole();
+			/**查询所有角色**/
+			function queryRole():void{
+				var req:Object = new Object();
+				
+				send("role/findAllRole", req, function(data:Object):void{
+					var ids:String = "";
+					var labels:String = "";
+					if(data.data.length>0){
+						
+						for(var i:int ,m:int =  data.data.length;i < m ; i++){
+							if(i<m-1){
+								ids+=data.data[i].id+",";
+								labels+=data.data[i].roleNumber+",";
+							}else{
+								ids+=data.data[i].id;
+								labels+=data.data[i].roleNumber;
+							}
+						}
+						_edit.positionInformation.keys = ids;
+						_edit.positionInformation.labels = labels;
+						_edit.positionInformation.selectedLabel = (cell.getChildByName("positionInformation") as Label).text;
+					}
+					
+				}, function(v:String):void{
+					
+				},"POST");
+			};
 			_edit.show();
 		}
 	}

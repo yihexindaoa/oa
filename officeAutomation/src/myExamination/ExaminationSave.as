@@ -293,6 +293,7 @@ package myExamination
 		
 		private function getSubmitInfoOnComplete(data:Object):void
 		{
+			if(data.data){
 			exam.submitName_qj.text=data.data.userName;
 			exam.submitName_bx.text=data.data.userName;
 			exam.submitName_jb.text=data.data.userName;
@@ -302,7 +303,7 @@ package myExamination
 			exam.officeName_bx.text=data.data.officeName;
 			exam.officeName_bm.text=data.data.officeName;
 			exam.inductionTime.text=data.data.inductionTime;
-			
+			}
 		}
 		
 		protected function onChandeHandler(e:Event):void

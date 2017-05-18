@@ -9,6 +9,7 @@ package morn.core.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.text.TextFormat;
+	
 	import morn.core.handlers.Handler;
 	import morn.core.utils.ObjectUtils;
 	import morn.core.utils.StringUtils;
@@ -34,7 +35,7 @@ package morn.core.components {
 		protected var _selectHandler:Handler;
 		protected var _itemHeight:Number;
 		protected var _listHeight:Number;
-		
+		protected var _keys:Array = [];
 		public function ComboBox(skin:String = null, labels:String = null) {
 			this.skin = skin;
 			this.labels = labels;
@@ -158,6 +159,16 @@ package morn.core.components {
 				_labels.length = 0;
 			}
 			callLater(changeItem);
+		}
+		
+		
+		public function set keys(value:String):void{
+			_keys = value.split(",");
+		}
+		
+		
+		public function get key():String{
+			return _keys[selectedIndex];
 		}
 		
 		protected function changeItem():void {
