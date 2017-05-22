@@ -62,6 +62,7 @@ package notice
 //			_notice.editBtn.addEventListener(MouseEvent.CLICK,onEditHandler);
 			_notice.dateBtn.addEventListener(MouseEvent.CLICK,onDateHandler);
 			_notice.table.renderHandler = new Handler(listRender);
+			_notice.table.overWidth = 916;
 			edit = new NoticeEdit(_container);
 			detail = new NoticeDetail(_container);
 			noticeReq = new NoticeListReq();
@@ -186,10 +187,10 @@ package notice
 				edit.addEventListener(MouseEvent.CLICK,onEditHandler);
 				var deleteBtn:Button = cell.getChildByName("delete") as Button;
 				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteHandler);
-				cell.graphics.beginFill(0x55ccee,0.5);
-				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
-				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
-				cell.addEventListener(MouseEvent.MOUSE_OUT, onOutHandler);
+//				cell.graphics.beginFill(0x55ccee,0.5);
+//				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
+//				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
+//				cell.addEventListener(MouseEvent.MOUSE_OUT, onOutHandler);
 			}
 		}
 		
@@ -223,7 +224,7 @@ package notice
 			
 		}
 		
-		protected function onOutHandler(e:MouseEvent):void
+		/*protected function onOutHandler(e:MouseEvent):void
 		{
 			var cell:Box;
 			if(e.target is Box){
@@ -252,6 +253,6 @@ package notice
 				cell.graphics.lineStyle(6,0x0cc,0.9);
 				cell.graphics.drawRect(-41,-3,895,cell.height+13);
 			}
-		}
+		}*/
 	}
 }

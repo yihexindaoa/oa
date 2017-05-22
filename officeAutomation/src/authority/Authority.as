@@ -43,6 +43,7 @@ package authority
 			edit = new RoleEditUI(); 
 			edit.confirmBtn.addEventListener(MouseEvent.CLICK, onAddAndEditHandler);
 			role.table.renderHandler = new Handler(listRender);
+			role.table.overWidth = 523;
 			role.addBtn.addEventListener(MouseEvent.CLICK, onAddHandler);
 			son_menu = new Object();
 //			role.table.array=[{roleId:"111",roleCode:"222",roleNme:"习近平"},{roleId:"112",roleCode:"223",roleNme:"李克强"}];
@@ -143,10 +144,10 @@ package authority
 				var setBtn:Button = cell.getChildByName("setBtn") as Button;
 				setBtn.addEventListener(MouseEvent.CLICK, onSetBtnHandler);
 //				label.text = "这里是:" + index;
-				cell.graphics.beginFill(0x55ccee,0.5);
-				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
-				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
-				cell.addEventListener(MouseEvent.MOUSE_OUT, onOutHandler);
+//				cell.graphics.beginFill(0x55ccee,0.5);
+//				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
+//				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
+//				cell.addEventListener(MouseEvent.MOUSE_OUT, onOutHandler);
 			}
 		}
 		
@@ -238,7 +239,7 @@ package authority
 		}
 		
 		/**/
-		protected function onOutHandler(e:MouseEvent):void
+		/*protected function onOutHandler(e:MouseEvent):void
 		{
 			var cell:Box;
 			if(e.target is Box){
@@ -252,10 +253,10 @@ package authority
 				cell.graphics.beginFill(0x55ccee,0.5);
 				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
 			}
-		}
+		}*/
 		
 		/**/
-		protected function onOverHandler(e:MouseEvent):void
+		/*protected function onOverHandler(e:MouseEvent):void
 		{
 			var cell:Box;
 			if(e.target is Box){
@@ -268,7 +269,7 @@ package authority
 				cell.graphics.lineStyle(6,0x0cc,0.9);
 				cell.graphics.drawRect(-5,-3,cell.width+10,cell.height+13);
 			}
-		}
+		}*/
 		
 		protected function onEditHandler(e:MouseEvent):void
 		{

@@ -44,6 +44,11 @@ package morn.core.components {
 		protected var _selectEnable:Boolean = true;
 		protected var _isVerticalLayout:Boolean = true;
 		protected var _cellSize:Number = 20;
+		/**
+		 * 是否显示鼠标在行上的效果
+		 */		
+		protected var _isMouse:Boolean;//是否显示鼠标在行上的效果
+		protected var _overWidth:Number;//鼠标在行上的效果的宽度
 		
 		public function List() {
 		}
@@ -410,7 +415,14 @@ package morn.core.components {
 		protected function renderItem(cell:Box, index:int):void {
 			if (index < _array.length) {
 				cell.visible = true;
+				if(_isMouse){
+					cell.addEventListener(MouseEvent.MOUSE_OVER, onMouseOverHandler);
+					cell.addEventListener(MouseEvent.MOUSE_OUT, onMouseOutHandler);
+					cell.graphics.beginFill(0x55ccee,0.5);
+					cell.graphics.drawRect(0,0,_overWidth,cell.height+5);
+				}
 				cell.dataSource = _array[index];
+				
 			} else {
 				cell.visible = false;
 				cell.dataSource = null;
@@ -418,6 +430,39 @@ package morn.core.components {
 			sendEvent(UIEvent.ITEM_RENDER, [cell, index]);
 			if (_renderHandler != null) {
 				_renderHandler.executeWith([cell, index]);
+			}
+		}
+		
+		protected function onMouseOutHandler(e:MouseEvent):void
+		{
+			var cell:Box;
+			if(e.target is Box){
+				cell = e.target as Box;
+				
+			}else{
+				cell = e.target.parent as Box;
+			}
+			if(cell){
+				cell.graphics.clear();
+				cell.graphics.beginFill(0x55ccee,0.5);
+				cell.graphics.drawRect(0,0,_overWidth,cell.height+5);
+			}
+			
+		}
+		
+		/**鼠标在摸个表格上**/
+		protected function onMouseOverHandler(e:MouseEvent):void
+		{
+			var cell:Box;
+			if(e.target is Box){
+				cell = e.target as Box;
+				
+			}else{
+				cell = e.target.parent as Box;
+			}
+			if(cell){
+				cell.graphics.lineStyle(6,0x0cc,0.9);
+				cell.graphics.drawRect(-5,-3,_overWidth,cell.height+13);
 			}
 		}
 		
@@ -601,5 +646,21 @@ package morn.core.components {
 			}
 			return -1;
 		}
+
+		/**
+		 * 鼠标在行上的效果的宽度
+		 */
+		public function get overWidth():Number
+		{
+			return _overWidth;
+		}
+
+		public function set overWidth(value:Number):void
+		{
+			_isMouse = true;
+			_overWidth = value;
+		}
+
+
 	}
 }

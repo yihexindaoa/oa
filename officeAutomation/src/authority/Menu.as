@@ -45,6 +45,7 @@ package authority
 			edit.confirmBtn.addEventListener(MouseEvent.CLICK, onConfirmHandler);
 			edit.menuSeries.addEventListener(Event.CHANGE,onChangeHandler);
 			menu.table.renderHandler = new Handler(renderHandler);
+			menu.table.overWidth = 563;
 			menu.queryBtn.addEventListener(MouseEvent.CLICK, onQueryHandler);
 			son_menu = new Object();
 		}

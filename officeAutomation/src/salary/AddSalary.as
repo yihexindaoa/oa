@@ -61,6 +61,7 @@ package salary
 			_salary.dateTime.addEventListener(MouseEvent.CLICK, onShowCalendar1);
 			_salary.year.addEventListener(MouseEvent.CLICK, onShowCalendar2);
 			_salary.table.repeatY = _page.pageSize;
+			_salary.table.overWidth = 887;
 			req = new Object();
 			_salary.item.visible = true;
 			_salary.item1.visible = true;

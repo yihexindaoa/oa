@@ -49,9 +49,9 @@ package workreport
 			otherSatement.x = 161;
 			_container.addChild(otherSatement);
 			_page = new PageFlip();
-			_page.x = 20;
+			_page.x = 47;
 			_page.y = 317;
-			_page.setWidth(600);
+			_page.setWidth(590);
 			_page.pageSize = 10;
 			_page.pageNum = 1;
 			_page.addEventListener(PageEvent.CURRENT_PAGE, queryTableHandler);
@@ -61,6 +61,7 @@ package workreport
 			req = new Object();
 			otherSatement.search.addEventListener(MouseEvent.CLICK,onTabHandler);
 			otherSatement.table.renderHandler = new Handler(tableRenderHnadler);
+			otherSatement.table.overWidth = 580;
 			calendar = new Calendar(otherSatement);
 			calendar.addEventListener(CalendarEvent.DATE, onCalendarHandler);
 			delectPop = new DelectPopUI();
@@ -220,7 +221,7 @@ package workreport
 					otherSatement.table.array = data.data;
 					otherSatement.table.repeatY = data.data.length;
 					_page.totalPage = data.total;
-					_page.y = otherSatement.table.y +otherSatement.table.height;//*_page.pageSize;
+					_page.y = otherSatement.table.y +data.data.length*37;//*_page.pageSize;
 				}else{
 					otherSatement.table.array= null;
 				}
@@ -252,14 +253,17 @@ package workreport
 		//如果查询成功则渲染数据
 		private function onCompleteHandler(data:Object):void
 		{
-			_page.totalPage = data.total;
-			
-			_page.y = 450;
+//			_page.totalPage = data.total;
+//			
+//			_page.y = 450;
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
+					
 					otherSatement.table.array = data.data;
 					otherSatement.table.repeatY = data.data.length;
+					_page.totalPage = data.total;
+					_page.y = otherSatement.table.y +data.data.length*37;//otherSatement.table.height;//*_page.pageSize;
 				}else{
 					otherSatement.table.array= null;	
 				}
