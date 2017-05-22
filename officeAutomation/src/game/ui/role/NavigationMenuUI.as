@@ -2,6 +2,7 @@
 package game.ui.role {
 	import morn.core.components.*;
 	public class NavigationMenuUI extends View {
+		public var person:Label = null;
 		public var syspageBox:Box = null;
 		public var syspageBtn:Button = null;
 		public var authorityBox:Box = null;
@@ -29,7 +30,7 @@ package game.ui.role {
 			<View width="160" buttonMode="true" height="900" visible="true">
 			  <Image skin="png.comp.bg" x="0" y="0" sizeGrid="50,50,10,10" width="160" height="900"/>
 			  <Image x="30" y="31" width="95" height="105"/>
-			  <Label text="小雷   产品经理" x="34" width="92" height="18" font="黑体" y="139"/>
+			  <Label text="小雷   产品经理" x="34" width="92" height="18" font="黑体" y="139" var="person"/>
 			  <Box name="render" left="0" right="0" x="0" y="158" var="syspageBox" visible="false">
 			    <Clip skin="png.comp.clip_timg" clipY="4" autoPlay="false" height="32" clipX="4" index="0" x="0" y="0" width="31"/>
 			    <Button label="系统首页" skin="png.comp.button" x="31" y="0" width="123" height="32" var="syspageBtn"/>

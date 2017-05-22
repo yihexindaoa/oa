@@ -107,7 +107,7 @@ package login
 				trace(data);
 				_container.removeChild(loginUI);
 				loginUI = null;
-				var nav:Navigation = new Navigation(_container);
+				var nav:Navigation = new Navigation(_container, data.data.userName);
 			},function(v:String):void{
 				trace("=======",v);
 				popu("登陆出错!");

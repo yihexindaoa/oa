@@ -15,7 +15,7 @@ package game.ui.workReport {
 		public var dateBeginTxt:TextInput = null;
 		protected static var uiXML:XML =
 			<View width="806" height="877">
-			  <Image skin="png.comp.bg" x="-1" y="-10" width="1000" sizeGrid="50,50,10,10" height="900"/>
+			  <Image skin="png.comp.bg" x="-4" y="-9" width="1000" sizeGrid="50,50,10,10" height="900"/>
 			  <Label text="我的工作日报" x="36" y="12" width="90" height="23" size="14" bold="false"/>
 			  <Label text="我的工作周报" x="160" y="12" width="115" height="21" size="14"/>
 			  <Image skin="png.comp.blank_blue" x="33" y="32" width="93" height="3"/>
@@ -39,9 +39,11 @@ package game.ui.workReport {
 			      <TextInput skin="png.comp.textinput" x="-1" y="2" width="591" height="137" editable="false"/>
 			      <Label text="姓名：" x="10" y="8"/>
 			      <Label text="label" x="53" y="8" width="127" height="21" name="userName"/>
-			      <Label text="时间：" x="337" y="4" />
-			      <Label text="label" x="375" y="5" width="179" height="22" name="sendTime" isDate="true"/>
+			      <Label text="时间：" x="337" y="4"/>
+			      <Label text="label" x="374" y="6" width="179" height="22" name="sendTime" isDate="true"/>
 			      <TextArea text="TextArea" skin="png.comp.textarea" x="-1" y="36" width="591" height="103" name="noticeContent" editable="false"/>
+			      <Button label="修改" skin="png.comp.button" x="531" y="7" width="50" height="21" name="modfiy"/>
+				  <Label  text="id" styleSkin="png.comp.label" x="271" y="7" name="id" visible="false"/>
 			    </Box>
 			  </List>
 			  <Label text="至" x="204" y="67" size="14" visible="false"/>

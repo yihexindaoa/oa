@@ -3,12 +3,16 @@ package workreport
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import flashx.textLayout.events.ModelChange;
+	
 	import game.ui.workReport.PersonMsgUI;
 	import game.ui.workReport.myDailyUI;
 	
 	import morn.core.components.Box;
+	import morn.core.components.Button;
 	import morn.core.components.CheckBox;
 	import morn.core.components.Label;
+	import morn.core.components.TextArea;
 	import morn.core.handlers.Handler;
 	
 	import trade.Trade;
@@ -20,10 +24,11 @@ package workreport
 	{
 		protected var _container:Sprite;
 		protected var myDaily:myDailyUI;
-		protected var req:Object;
+//		protected var req:Object;
 		protected var personMsg:PersonMsgUI;
 		protected var _personList:Array;//保存要发送的人员
 		protected var recipientId:String = "";//发送人的id值
+		protected var currentId:int ;//目前修改的id
 		public function WorkReport(container:Sprite)
 		{
 			_container = container;
@@ -38,12 +43,30 @@ package workreport
 			myDaily = new myDailyUI();
 			myDaily.x = 161;
 			_container.addChild(myDaily);
-			req = new Object();
+			
 			myDaily.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
 			myDaily.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
+			myDaily.table.renderHandler = new Handler(renderHandler);
 			personMsg = new PersonMsgUI();
 			personMsg.table.renderHandler = new Handler(listRender);
 			personMsg.submit.addEventListener(MouseEvent.CLICK,onAddPersonMsgHandler);
+		}
+		
+		private function renderHandler(cell:Box,index:int):void
+		{
+			if( myDaily.table.length >0 ){
+				var modfiy:Button = cell.getChildByName("modfiy") as Button;
+				modfiy.addEventListener(MouseEvent.CLICK, onModfiyhandler);
+			}
+		}
+		
+		protected function onModfiyhandler(e:MouseEvent):void
+		{
+			var cell:Box = e.target.parent;
+			myDaily.submit.label = "修改发送";
+			myDaily.submit.visible = true;
+			myDaily.noticeContent.text = (cell.getChildByName("noticeContent") as TextArea).text;
+			currentId = parseInt((cell.getChildByName("id") as Label).text);
 		}
 		
 		//查询接受人
@@ -126,12 +149,23 @@ package workreport
 		//添加日报
 		protected function onSubmitHandler(event:MouseEvent):void
 		{
+			var req:Object = new Object();
 			req.noticeContent = myDaily.noticeContent.text;
 			//发送人Id
 //			req.senderId = 
 			//接收人Id
 			req.recipientId = recipientId;
-			send("daily/save",req,onComp,onError,"POST");
+			if(myDaily.submit.label == "提交"){
+				send("daily/save",req,onComp,onError,"POST");
+			}else if(myDaily.submit.label == "修改发送"){
+				req.id = currentId;
+				send("daily/update",req,function(data:Object):void{
+					if(data.status==200){
+						
+						querySatement();
+					}
+				},onError,"POST");
+			}
 		}
 		
 		private function onError(e:String):void
@@ -142,13 +176,14 @@ package workreport
 		private function onComp(data:Object):void
 		{
 			if(data.status==200){
-				
+				querySatement();
 			}
 		}
 		
 		//查询页面加载今昨两天的日报
 		private function querySatement():void
 		{
+			var req:Object = new Object();
 			var today:Date = new Date();
 			var yeasterday:Date = new Date();
 			yeasterday.setDate(today.getDate()-1);
@@ -164,7 +199,20 @@ package workreport
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
+					var toady:Date = new Date();
 					myDaily.table.array = data.data;
+					for(var i:int,m:int= data.data.length ;i<m;i++){
+						var item:Object = data.data[i];
+						
+						var date:Date = new Date();
+						date.setTime(item.sendTime);
+						if(toady.getFullYear()==date.getFullYear()&&toady.getMonth() == date.getMonth()&&toady.getDate()==date.getDate()){
+							myDaily.submit.label = "请点选下面的修改按钮进行修改";
+							myDaily.submit.visible = false;
+							break;
+						}
+					}
+					
 				}else{
 					myDaily.table.array= null;	
 				}

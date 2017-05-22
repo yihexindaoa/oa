@@ -71,21 +71,22 @@ package navigation
 		protected var bar:Array = [[],["角色管理","菜单管理","用户管理","信息表管理"],["通知告示统计表"],["工作报表统计"],[],["工资统计表","调薪记录","我的工资单"]];
 		protected var mainMenu:Array = [];//主菜单
 		protected var subMenu:Array = [];
-		public function Navigation(container:Sprite)
+		public function Navigation(container:Sprite, msg:String)
 		{
 			_container = container;
-			initNav();
+			initNav(msg);
 			super.initPopu(container);
 			findUserRole();
 		}
 		
-		protected function initNav():void
+		protected function initNav(msg:String):void
 		{
 			btnList = new Array();
 			boxList = new Array();
 			childList = new Array(10);
 			nav = new NavigationMenuUI();
 			_container.addChild(nav);
+			nav.person.text = msg;
 			//系统首页,权限管理
 			btnList.push(nav.syspageBtn,nav.authorityBtn,nav.noticeBtn,nav.reportBtn,nav.attendanceBtn,nav.wageBtn,nav.projectBtn,nav.contractBtn,nav.approvalBtn,nav.statisticsBtn);
 			boxList.push(nav.syspageBox,nav.authorityBox,nav.noticeBox,nav.reportBox,nav.attendanceBox,nav.wageBox,nav.projectBox,nav.contractBox,nav.approvalBox,nav.statisticsBox);

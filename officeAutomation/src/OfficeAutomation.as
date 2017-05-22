@@ -1,11 +1,14 @@
 package
 {
+	import com.greensock.TweenLite;
+	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -26,6 +29,8 @@ package
 		private var box:Sprite;
 		private var content:Bitmap;
 		protected var jsonload:URLLoader;//配置文件的加载
+		private var welcome:Bitmap;
+		private var welcomeContainer:Sprite;
 		public function OfficeAutomation()
 		{
 			
@@ -69,6 +74,7 @@ package
 			jsonload.addEventListener(Event.COMPLETE,jsonComplete);
 			jsonload.addEventListener(ProgressEvent.PROGRESS , imgProgress );
 			jsonload.load(new URLRequest(encodeURI("data/config.json")));
+			welcomeContainer = new Sprite();
 		}
 		
 		protected function imgProgress(e:ProgressEvent):void
@@ -92,6 +98,9 @@ package
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
 			loader.load(new URLRequest("image/bg.jpg"));
+			var wloader:Loader = new Loader();
+			wloader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadwComplete);
+			wloader.load(new URLRequest("image/welcome.jpg"));
 		}
 		private function loadComplete(event:Event):void
 		{
@@ -102,7 +111,24 @@ package
 			addChild(content);
 			stage.addEventListener(Event.RESIZE, onResize);
 		}
+		private function loadwComplete(event:Event):void
+		{
+			welcome = event.target.content;
+//			welcome.scaleX = stage.stageWidth/1024;
+//			welcome.scaleY = stage.stageHeight/640;
+			
+			welcomeContainer.addChild(welcome);
+			welcomeContainer.alpha = 0.3;
+			welcomeContainer.x = stage.stageWidth/2-welcomeContainer.width/2;
+			welcomeContainer.y = -100;
+			TweenLite.to(welcomeContainer,1,{y:0});
+			welcomeContainer.addEventListener(MouseEvent.CLICK, onCloseWelcomeHandler);
+		}
 		
+		protected function onCloseWelcomeHandler(event:MouseEvent):void
+		{
+			removeChild(welcomeContainer);
+		}
 		protected function onResize(event:Event):void
 		{
 			if(content){
@@ -121,6 +147,7 @@ package
 			box.x = (stage.stageWidth-1200)/2;
 			box.graphics.lineStyle(1,0xff0000,0.2);
 			box.graphics.drawRect(0,0,1200,1000);
+			addChild(welcomeContainer);
 			addChild(box);
 			var lo:Login = new Login(box);
 			
