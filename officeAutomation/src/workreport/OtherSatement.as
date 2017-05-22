@@ -126,11 +126,11 @@ package workreport
 				if(otherSatement.table.length>0){
 				//详情
 				var  details:Button = cell.getChildByName("details") as Button;
-				details.labelColors
+//				details.labelColors
 				details.addEventListener(MouseEvent.CLICK, onDetailsHandler);
 				//删除
 				var  delect:Button = cell.getChildByName("delect") as Button;
-				delect.labelColors
+//				delect.labelColors
 				delect.addEventListener(MouseEvent.CLICK, onDetailsDelectHandler);
 				}
 		} 
@@ -213,13 +213,14 @@ package workreport
 		
 		private function onCompleteSearchHandler(data:Object):void
 		{
-			_page.totalPage = data.total;
-			otherSatement.table.repeatY = _page.pageSize;
-			_page.y = otherSatement.table.y +otherSatement.table.height*_page.pageSize;
+			
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
 					otherSatement.table.array = data.data;
+					otherSatement.table.repeatY = data.data.length;
+					_page.totalPage = data.total;
+					_page.y = otherSatement.table.y +otherSatement.table.height;//*_page.pageSize;
 				}else{
 					otherSatement.table.array= null;
 				}
@@ -252,12 +253,13 @@ package workreport
 		private function onCompleteHandler(data:Object):void
 		{
 			_page.totalPage = data.total;
-			otherSatement.table.repeatY = _page.pageSize;
+			
 			_page.y = 450;
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
 					otherSatement.table.array = data.data;
+					otherSatement.table.repeatY = data.data.length;
 				}else{
 					otherSatement.table.array= null;	
 				}
