@@ -12,7 +12,7 @@ package game.ui.salary {
 		public var outputExcel:Button = null;
 		public var dateTime:TextInput = null;
 		public var table:List = null;
-		public var SerialNumber:Label = null;
+//		public var SerialNumber:Label = null;
 		public var find:Image = null;
 		public var item2:Box = null;
 		public var outputExcelSample:Button = null;
@@ -74,7 +74,7 @@ package game.ui.salary {
 			      <Label text="剩余" x="858" y="98"/>
 			      <List x="37" y="135" spaceY="10" width="901" height="27" repeatY="10" var="table">
 			        <Box name="render" width="867" height="15" x="0" y="0">
-			          <Label text="01" x="0" y="0" width="34" height="18" name="SerialNumber" var="SerialNumber"/>
+			          <Label text="01" x="0" y="0" width="34" height="18" name="SerialNumber" />
 			          <Label text="label" x="36" y="-2" name="name"/>
 			          <Label text="label" x="99" y="-1" name="attendanceDays"/>
 			          <Label text="label" x="156" y="-2" name="actualAttendanceDays"/>
@@ -168,30 +168,7 @@ package game.ui.salary {
 			      <Label text="调薪月份" x="744" y="203" width="66" height="20" size="13"/>
 			      <Label text="操作" x="831" y="200" width="32" height="18"/>
 			      <List x="77" y="163" spaceY="10" width="901" height="45" repeatY="10" var="table2">
-			        <Box name="render" width="867" height="17" x="0" y="-1">
-			          <Image skin="png.comp.blank" x="8" y="102" width="828" height="2"/>
-			          <Image skin="png.comp.blank" x="326" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="833" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="738" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="651" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="534" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="418" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="234" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="5" y="76" width="2" height="28"/>
-			          <Image skin="png.comp.blank" x="105" y="74" width="2" height="30"/>
-			          <Image skin="png.comp.blank" x="49" y="74" width="2" height="30"/>
-			          <Label text="label" x="10" y="79" name="SerialNumber1" var="SerialNumber1" width="37" height="18"/>
-			          <Label text="label" x="56" y="80" name="name" width="43" height="18"/>
-			          <Label text="label" x="108" y="80" name="position" width="125" height="18"/>
-			          <Label text="label" x="245" y="79" width="78" height="18" name="workingTime"/>
-			          <Label text="label" x="330" y="80" width="83" height="18" name="originalBasicSalary"/>
-			          <Label text="label" x="424" y="78" width="109" height="18" name="salaryBasicWage"/>
-			          <Label text="label" x="541" y="78" width="102" height="20" name="salaryIncreaseReason"/>
-			          <Label text="label" x="660" y="79" width="73" height="18" name="salaryIncrease"/>
-			          <Label text="id" x="843" y="79" width="43" height="18" name="id" visible="false"/>
-			          <Button label="编辑" skin="png.comp.button" x="745" y="74" width="36" height="23" name="edit"/>
-			          <Button label="删除" skin="png.comp.button" x="786" y="74" width="37" height="23" name="delete"/>
-			        </Box>
+			        
 			      </List>
 			    </Box>
 			    <Box x="27" y="-151" visible="false" var="item6" width="367" height="128">

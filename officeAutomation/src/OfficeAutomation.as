@@ -149,6 +149,17 @@ package
 			box.graphics.drawRect(0,0,1200,1000);
 			addChild(welcomeContainer);
 			addChild(box);
+			var w:int = 0;
+			var h:int = 0;
+			__JS__('w = Laya.window.innerWidth;');
+			__JS__('h = Laya.window.innerHeight;');
+			/*[IF-SCRIPT-BEGIN]
+			
+			[IF-SCRIPT-END]*/ 
+			
+			/*[IF-FLASH-BEGIN]*/
+			
+			/*[IF-FLASH-END]*/ 
 			var lo:Login = new Login(box);
 			
 		}
@@ -167,6 +178,7 @@ package
 			if (w > 0)
 			{
 				IFlash.setSize(w, h);
+				
 			}
 		}
 	}

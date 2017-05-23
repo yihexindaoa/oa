@@ -39,8 +39,8 @@ package salary
 			initSalary();
 			super.initPopu(container,_salary);
 			//页面加载时加载页面数据
-			//			queryNotice();
-			onPayrollRecord();
+						queryNotice();
+//			onPayrollRecord();
 		}
 		
 		//初始化
@@ -61,7 +61,7 @@ package salary
 			_salary.dateTime.addEventListener(MouseEvent.CLICK, onShowCalendar1);
 			_salary.year.addEventListener(MouseEvent.CLICK, onShowCalendar2);
 			_salary.table.repeatY = _page.pageSize;
-			_salary.table.overWidth = 887;
+			_salary.table.overWidth = 877;
 			req = new Object();
 			_salary.item.visible = true;
 			_salary.item1.visible = true;

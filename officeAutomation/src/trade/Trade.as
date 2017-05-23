@@ -438,7 +438,7 @@ package trade
 		 */			
 		protected function getLayaText():String{
 			var layaText:String="";
-			__JS__('layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(layaIndex)})');
+			__JS__('layui.use("layedit", function(){var layedit = layui.layedit;layaText = layedit.getText(this.layaIndex)})');
 			/*[IF-FLASH-BEGIN]*/
 			layaText = _JS__AS_('as_getLayaText',null,null,layaIndex);
 			/*[IF-FLASH-END]*/ 
