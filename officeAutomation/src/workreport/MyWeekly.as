@@ -7,8 +7,10 @@ package workreport
 	import game.ui.workReport.PersonMsgUI;
 	
 	import morn.core.components.Box;
+	import morn.core.components.Button;
 	import morn.core.components.CheckBox;
 	import morn.core.components.Label;
+	import morn.core.components.TextArea;
 	import morn.core.handlers.Handler;
 	
 	import trade.Trade;
@@ -20,8 +22,11 @@ package workreport
 	{
 		protected var _container:Sprite;
 		protected var myWeekly:MyWeeklyUI;
-		protected var req:Object;
+//		protected var req:Object;
 		protected var personMsg:PersonMsgUI;
+		protected var _personList:Array;//保存要发送的人员
+		protected var recipientId:String = "";//发送人的id值
+		protected var currentId:int ;//目前修改的id
 		public function MyWeekly(container:Sprite)
 		{
 			_container = container;
@@ -32,12 +37,33 @@ package workreport
 		
 		private function initWork():void
 		{
+			_personList = new Array();
 			myWeekly = new MyWeeklyUI();
 			myWeekly.x = 161;
 			_container.addChild(myWeekly);
-			req = new Object();
 			myWeekly.submit.addEventListener(MouseEvent.CLICK,onSubmitHandler);
 			myWeekly.addBtn.addEventListener(MouseEvent.CLICK,onShowPersonHandler);
+			myWeekly.table.renderHandler = new Handler(renderHandler);
+			personMsg = new PersonMsgUI();
+			personMsg.table.renderHandler = new Handler(listRender);
+			personMsg.submit.addEventListener(MouseEvent.CLICK,onAddPersonMsgHandler);
+		}
+		
+		private function renderHandler(cell:Box,index:int):void
+		{
+			if( myWeekly.table.length >0 ){
+				var modfiy:Button = cell.getChildByName("modfiy") as Button;
+				modfiy.addEventListener(MouseEvent.CLICK, onModfiyhandler);
+			}
+		}
+		
+		protected function onModfiyhandler(e:MouseEvent):void
+		{
+			var cell:Box = e.target.parent;
+			myWeekly.submit.label = "修改发送";
+			myWeekly.submit.visible = true;
+			myWeekly.weeklyContent.text = (cell.getChildByName("noticeContent") as TextArea).text;
+			currentId = parseInt((cell.getChildByName("id") as Label).text);
 		}
 		
 		//查询接受人
@@ -51,14 +77,7 @@ package workreport
 		{
 			if(data.status==200){
 				//如果返回值等于200，弹出操作框
-				if(!personMsg){
-					personMsg = new PersonMsgUI();
-					personMsg.table.renderHandler = new Handler(listRender);
-					personMsg.submit.addEventListener(MouseEvent.CLICK,onAddPersonMsgHandler);
-					personMsg.show();
-				}else{
-					personMsg.show();
-				}
+				personMsg.show();
 				var list:Array = data.data;
 				personMsg.table.array = list;
 			}else{
@@ -74,6 +93,13 @@ package workreport
 		{
 			personMsg.close();
 			var pos:int = 0;
+			for( var j:int = 0;j< _personList.length; j++){
+				var lable:Label = _personList[j];
+				myWeekly.removeChild(lable);
+				lable = null;
+			}
+			_personList = [];
+			recipientId = "";
 			for(var i=0;i< personMsg.table.length;i++){
 				
 				var cell:Box = personMsg.table.getCell(i);
@@ -85,6 +111,10 @@ package workreport
 					lable.text = userName.text;
 					lable.x = pos * 50+100;
 					lable.y = 347;
+					if(i<personMsg.table.length-1)
+						recipientId+=id.text + ",";
+					else
+						recipientId+=id.text;
 					myWeekly.addChild(lable);
 					pos++;
 				}
@@ -108,8 +138,21 @@ package workreport
 		//添加周报
 		protected function onSubmitHandler(event:MouseEvent):void
 		{
+			var req:Object = new Object();
 			req.noticeContent = myWeekly.weeklyContent.text;
-			send("weekly/save",req,onComp,onError,"POST");
+			//接收人Id
+			req.recipientId = recipientId;
+			if(myWeekly.submit.label == "提交"){
+				send("weekly/save",req,onComp,onError,"POST");
+			}else if(myWeekly.submit.label == "修改发送"){
+				req.id = currentId;
+				send("weekly/update",req,function(data:Object):void{
+					if(data.status==200){
+						
+						querySatement();
+					}
+				},onError,"POST");
+			}
 		}
 		
 		private function onError(e:String):void
@@ -120,13 +163,15 @@ package workreport
 		private function onComp(data:Object):void
 		{
 			if(data.status==200){
-				
+				popu(data.msg);
+				querySatement();
 			}
 		}
 		
 		//查询页面加载周报
 		private function querySatement():void
 		{
+			var req:Object = new Object();
 			send("weekly/findAllMyWeekly",req,onCompleteHandler,onError,"POST");
 			
 		}

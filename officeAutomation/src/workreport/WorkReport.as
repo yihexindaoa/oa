@@ -176,6 +176,7 @@ package workreport
 		private function onComp(data:Object):void
 		{
 			if(data.status==200){
+				popu(data.msg);
 				querySatement();
 			}
 		}
@@ -199,10 +200,26 @@ package workreport
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
+					
+					var list:Array = new Array();
+					for(var j:int = 0,n:int= data.data.length ;j<n;j++){
+						var item:Object = data.data[j];
+						var isSame:Boolean = false;
+						for(var z:int = 0;z<list.length ;z++){
+							if(item.sendTime == list[z].sendTime){
+								isSame = true;
+								break;
+							}
+						}
+						if(isSame)continue;
+						list.push(item);
+					}
+					
+					
 					var toady:Date = new Date();
-					myDaily.table.array = data.data;
-					for(var i:int,m:int= data.data.length ;i<m;i++){
-						var item:Object = data.data[i];
+					myDaily.table.array = list;
+					for(var i:int = 0,m:int= list.length ;i<m;i++){
+						var item:Object = list[i];
 						
 						var date:Date = new Date();
 						date.setTime(item.sendTime);

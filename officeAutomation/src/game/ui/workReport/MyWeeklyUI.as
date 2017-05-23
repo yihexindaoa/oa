@@ -55,9 +55,11 @@ package game.ui.workReport {
 			      <Label text="姓名：" x="10" y="8"/>
 			      <Label text="label" x="53" y="8" width="127" height="21" name="userName"/>
 			      <Label text="时间：" x="337" y="4"/>
-			      <Label text="label" x="375" y="5" width="179" height="22" name="sendTime"/>
+			      <Label text="label" x="375" y="5" width="179" height="22" name="sendTime" isDate="true"/>
 			      <TextArea text="TextArea" skin="png.comp.textarea" x="-1" y="36" width="591" height="103" name="weeklyContent" editable="false"/>
+			      <Button label="修改" skin="png.comp.button" x="521" y="6" name="modfiy" width="54" height="23"/>
 			    </Box>
+			    <Label text="id" x="259" y="9" name="id" visible="false"/>
 			  </List>
 			  <Label text="我的工作月报" x="316" y="31" width="115" height="21" size="14"/>
 			  <Image skin="png.comp.blank" x="151" y="66" width="1" height="771"/>
