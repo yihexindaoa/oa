@@ -343,17 +343,17 @@ package trade
 			}
 			/*[IF-SCRIPT-BEGIN]
 			__JS__('
-			var 	layaIndexH;
+			
 			
 			$("#newUpload2").append(f);
-			as_sendFromFile(this.layaIndex,this._path+url);
+			as_sendFromFile(3,this._path+url);
 			function as_sendFromFile(layaIndex ,url){
 				$("#userForm2").attr("action", url);
 				if(fullid){
 					var layaText;
 					layui.use("layedit", function(){
-						var layedit = layui.layedit;layaText = layedit.getContent(layaIndexH);
-						$("#"+fullid).val(layaText);console.log("sendfile",layaIndexH,layaText);
+						var layedit = layui.layedit;layaText = layedit.getContent(layaIndex);
+						$("#"+fullid).val(layaText);console.log("sendfile",layaIndex,layaText);
 						isNull = false;
 						uptDogProInfo();
 					});
