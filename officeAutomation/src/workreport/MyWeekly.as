@@ -80,6 +80,7 @@ package workreport
 				personMsg.show();
 				var list:Array = data.data;
 				personMsg.table.array = list;
+				personMsg.table.repeatY = list.length;
 			}else{
 				var date:Object;
 				popu(date.msg+"");
@@ -109,13 +110,14 @@ package workreport
 				if(check.selected){
 					var lable:Label = new Label();
 					lable.text = userName.text;
-					lable.x = pos * 50+100;
+					lable.x = pos * 50+200;
 					lable.y = 347;
 					if(i<personMsg.table.length-1)
 						recipientId+=id.text + ",";
 					else
 						recipientId+=id.text;
 					myWeekly.addChild(lable);
+					_personList.push(lable);
 					pos++;
 				}
 			}
@@ -139,7 +141,7 @@ package workreport
 		protected function onSubmitHandler(event:MouseEvent):void
 		{
 			var req:Object = new Object();
-			req.noticeContent = myWeekly.weeklyContent.text;
+			req.weeklyContent = myWeekly.weeklyContent.text;
 			//接收人Id
 			req.recipientId = recipientId;
 			if(myWeekly.submit.label == "提交"){
@@ -182,7 +184,36 @@ package workreport
 			if(data.status==200){
 				//数据渲染进入列表
 				if(data.data!=null && data.data.length >0  ){
-					myWeekly.table.array = data.data;
+					
+					var list:Array = new Array();
+					for(var j:int = 0,n:int= data.data.length ;j<n;j++){
+						var item:Object = data.data[j];
+						var isSame:Boolean = false;
+						for(var z:int = 0;z<list.length ;z++){
+							if(item.sendTime == list[z].sendTime){
+								isSame = true;
+								break;
+							}
+						}
+						if(isSame)continue;
+						list.push(item);
+					}
+					
+					
+					
+					var toady:Date = new Date();
+					myWeekly.table.array = list;
+					for(var i:int = 0,m:int= list.length ;i<m;i++){
+						var item:Object = list[i];
+						
+						var date:Date = new Date();
+						date.setTime(item.sendTime);
+						if(toady.getFullYear()==date.getFullYear()&&toady.getMonth() == date.getMonth()&&toady.getDate()==date.getDate()){
+							myWeekly.submit.label = "请点选下面的修改按钮进行修改";
+							myWeekly.submit.visible = false;
+							break;
+						}
+					}
 				}else{
 					myWeekly.table.array= null;	
 				}

@@ -104,10 +104,15 @@ package login
 			
 			[IF-SCRIPT-END]*/ 
 			send("login/userLogin",{"loginName":loginUI.account.text,"password":loginUI.password.text},function(data:Object):void{
-				trace(data);
-				_container.removeChild(loginUI);
-				loginUI = null;
-				var nav:Navigation = new Navigation(_container, data.data.userName);
+				trace("登陆数据data=",data);
+				if(data.status == 200){
+					_container.removeChild(loginUI);
+					loginUI = null;
+					var nav:Navigation = new Navigation(_container, data.data.userName);
+				}else{
+					popu("登陆出错!");
+				}
+				
 			},function(v:String):void{
 				trace("=======",v);
 				popu("登陆出错!");

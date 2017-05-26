@@ -141,7 +141,7 @@ package workreport
 		{
 			var cell:Box = (e.target).parent;
 			var reportType:Label = cell.getChildByName("reportType") as Label;
-			if(reportType.text=="1"){
+			if(reportType.text=="1"||reportType.text=="2"||reportType.text=="3"){
 				var noticeContent:Label = cell.getChildByName("noticeContent") as Label;
 				var userName:Label = cell.getChildByName("userName") as Label;
 				var sendTime:Label = cell.getChildByName("sendTime") as Label;
@@ -149,7 +149,7 @@ package workreport
 				reportDetails.dateTime.text = sendTime.text;
 				reportDetails.content.text = noticeContent.text;
 				reportDetails.show();
-			}else if(reportType.text=="2"){
+			}/*else if(reportType.text=="2"){
 				var weeklyContent:Label = cell.getChildByName("weeklyContent") as Label;
 				var userName:Label = cell.getChildByName("userName") as Label;
 				var sendTime:Label = cell.getChildByName("sendTime") as Label;
@@ -165,7 +165,7 @@ package workreport
 				reportDetails.dateTime.text = sendTime.text;
 				reportDetails.content.text = monthlyContent.text;
 				reportDetails.show();
-			}else{
+			}*/else{
 				popu("没有此报表内容");
 			}
 			

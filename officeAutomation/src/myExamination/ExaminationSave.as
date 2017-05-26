@@ -270,7 +270,7 @@ package myExamination
 			}
 			
 //			send("examination/saveExamination",req, saveExaminationOnComplete, onError,URLRequestMethod.POST);
-			sendFormFile(req,"examination/saveExamination",function(v:String):void{
+			sendFormFile(req,null,"examination/saveExamination",function(v:String):void{
 				exam.close();
 				hideForm();
 				popu("添加成功");

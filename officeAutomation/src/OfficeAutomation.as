@@ -14,12 +14,15 @@ package
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	
+	import game.ui.homePage.ScrollUI;
 	import game.ui.login.LoginUI;
 	
 	import iflash.method.importJS;
 	
 	import login.Login;
 	
+	import morn.core.components.ScrollBar;
+	import morn.core.components.VScrollBar;
 	import morn.core.handlers.Handler;
 	
 	import unitl.date.Calendar;
@@ -31,6 +34,7 @@ package
 		protected var jsonload:URLLoader;//配置文件的加载
 		private var welcome:Bitmap;
 		private var welcomeContainer:Sprite;
+		protected var scroll:VScrollBar;//滚动条
 		public function OfficeAutomation()
 		{
 			
@@ -109,6 +113,7 @@ package
 			content.scaleX = stage.stageWidth/1024;
 			content.scaleY = stage.stageHeight/640;
 			addChild(content);
+			
 			stage.addEventListener(Event.RESIZE, onResize);
 		}
 		private function loadwComplete(event:Event):void
@@ -123,6 +128,9 @@ package
 			welcomeContainer.y = -100;
 			TweenLite.to(welcomeContainer,1,{y:0});
 			welcomeContainer.addEventListener(MouseEvent.CLICK, onCloseWelcomeHandler);
+			
+			
+			
 		}
 		
 		protected function onCloseWelcomeHandler(event:MouseEvent):void
@@ -134,6 +142,24 @@ package
 			if(content){
 				content.scaleX = stage.stageWidth/1024;
 				content.scaleY = stage.stageHeight/640;
+			}
+			if(scroll){
+				
+				/*[IF-SCRIPT-BEGIN]
+				scroll.height = Laya.window.innerHeight;
+				scroll.x = Laya.window.innerWidth-scroll.width;
+				if(!scroll.visible){
+					scroll.visible = Laya.window.innerHeight>1000;
+				}
+				[IF-SCRIPT-END]*/ 
+				
+				/*[IF-FLASH-BEGIN]*/
+				scroll.height = stage.stageHeight;
+				scroll.x = stage.stageWidth-scroll.width;
+				if(!scroll.visible){
+					scroll.visible = stage.stageHeight>1000;
+				}
+				/*[IF-FLASH-END]*/ 
 			}
 			if(box){
 				box.x = (stage.stageWidth-1200)/2;
@@ -149,10 +175,10 @@ package
 			box.graphics.drawRect(0,0,1200,1000);
 			addChild(welcomeContainer);
 			addChild(box);
-			var w:int = 0;
-			var h:int = 0;
-			__JS__('w = Laya.window.innerWidth;');
-			__JS__('h = Laya.window.innerHeight;');
+//			var w:int = 0;
+//			var h:int = 0;
+//			__JS__('w = Laya.window.innerWidth;');
+//			__JS__('h = Laya.window.innerHeight;');
 			/*[IF-SCRIPT-BEGIN]
 			
 			[IF-SCRIPT-END]*/ 
@@ -160,6 +186,30 @@ package
 			/*[IF-FLASH-BEGIN]*/
 			
 			/*[IF-FLASH-END]*/ 
+			/*[IF-FLASH-BEGIN]*/
+			if(stage.stageHeight<1000){
+				scroll = new VScrollBar("png.comp.vscroll");
+				scroll.height = stage.stageHeight;
+				scroll.x = stage.stageWidth-scroll.width;
+				addChild(scroll);
+			}else{
+				if(scroll){
+					scroll.visible = false;
+				}
+			}
+			/*[IF-FLASH-END]*/ 
+			/*[IF-SCRIPT-BEGIN]
+			if( Laya.window.innerHeight < 1000 ){
+				scroll = new VScrollBar("png.comp.vscroll");//new ScrollUI()vscrollbar
+				scroll.height = Laya.window.innerHeight;
+				scroll.x = Laya.window.innerWidth-scroll.width;
+				addChild(scroll);
+			}else {
+				if(scroll){
+					scroll.visible = false;
+				}
+			}
+			[IF-SCRIPT-END]*/ 
 			var lo:Login = new Login(box);
 			
 		}

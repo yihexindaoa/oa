@@ -12,6 +12,7 @@ package authority
 	import morn.core.components.Button;
 	import morn.core.components.Clip;
 	import morn.core.components.Label;
+	import morn.core.components.ScrollBar;
 	import morn.core.handlers.Handler;
 	
 	import trade.Trade;
@@ -130,10 +131,11 @@ package authority
 			send("levelMenu/findAllMenu", {}, function(data:Object):void{
 				if(data.status == 200){
 					if(data.data.length>0){ 
-//						var list:Array = new Array();
+						var list:Array = new Array();
 						menu.table.repeatY = data.data.length;
 //						menu.table.array = data.data;
 						menu.table.array = [];
+						
 						parent_menu = sortOn( "menuOrder", separatorArray("menuSeries",data.data, 1));
 						for(var c:int = 0;c<parent_menu.length;c++){
 //							trace("parent_menu[c].meunName=",parent_menu[c].meunName);
@@ -172,8 +174,9 @@ package authority
 								}
 							}
 						}
-						
 						edit.parentMenu.labels = str;
+//						menu.table.scrollBar = new ScrollBar();
+//						menu.table.vScrollBarSkin = "png.comp.vscroll";
 					}
 						
 						

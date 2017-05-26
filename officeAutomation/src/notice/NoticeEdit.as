@@ -86,7 +86,7 @@ package notice
 					/*[IF-FLASH-BEGIN]*/
 //						sendFileAndMessage("notice/saveNotice",request,onComplete, onError);
 					/*[IF-FLASH-END]*/ 
-					sendFormFile(request, "notice/saveNotice",function(value:String):void{
+					sendFormFile(request, "content","notice/saveNotice",function(value:String):void{
 						trace("新增JavaScript says: " + value + "\n");
 						_edit.close();
 						popu(value);
@@ -103,7 +103,7 @@ package notice
 					break;
 				case "编辑":
 					request.id = _id;
-					sendFormFile(request, "notice/modifyNotice",function(value:String):void{
+					sendFormFile(request,"content", "notice/modifyNotice",function(value:String):void{
 						trace("编辑JavaScript says: " + value + "\n");
 						_edit.close();
 						popu(value);

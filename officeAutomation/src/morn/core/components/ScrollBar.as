@@ -120,8 +120,16 @@ package morn.core.components {
 			_upButton.visible = _showButtons;
 			_downButton.visible = _showButtons;
 			if (_showButtons) {
+				
+				/*[IF-SCRIPT-BEGIN]
+				_upButton.skin = "assets/comp/vscroll$up.png";
+				_downButton.skin = "assets/comp/vscroll$down.png";
+				[IF-SCRIPT-END]*/ 
+				
+				/*[IF-FLASH-BEGIN]*/
 				_upButton.skin = _skin + "$up";
 				_downButton.skin = _skin + "$down";
+				/*[IF-FLASH-END]*/ 
 			}
 			if (_slider.direction == VERTICAL) {
 				_slider.y = _upButton.height;

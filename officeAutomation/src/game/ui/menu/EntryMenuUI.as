@@ -5,13 +5,14 @@ package game.ui.menu {
 		public var entryBtn:Button = null;
 		public var panelTable:Panel = null;
 		public var table:List = null;
+		public var tableList:List = null;
 		public var queryBtn:Button = null;
 		protected static var uiXML:XML =
 			<View width="800" height="900">
 			  <Image skin="png.comp.bg" x="0" y="0" width="800" height="900" sizeGrid="50,50,10,10"/>
 			  <Button label="录入菜单" skin="png.comp.button" x="151" y="67" var="entryBtn"/>
-			  <Panel x="153" y="139" width="613" height="800" vScrollBarSkin="png.comp.vscroll" var="panelTable">
-			    <List x="0" y="0" spaceY="10" width="454" height="142" repeatX="1" repeatY="4" var="table">
+			  <Panel x="153" y="139" width="613" height="800" vScrollBarSkin="png.comp.vscroll" var="panelTable" >
+			    <List x="0" y="0" spaceY="10" width="613" height="142" repeatX="1" repeatY="4" var="table" >
 			      <Box name="render" width="513" height="27" x="1" y="0">
 			        <Label x="423" y="0" width="135" height="34" background="true" backgroundColor="0xcccccc"/>
 			        <Button label="编辑" skin="png.comp.button" x="453" y="3" width="30" height="23" labelColors="0x0000ff" name="edit"/>
@@ -26,6 +27,7 @@ package game.ui.menu {
 			      </Box>
 			    </List>
 			  </Panel>
+
 			  <Box name="render" left="386" x="282" y="647" width="271" height="190" visible="false">
 			    <Image skin="png.comp.bg" y="8" width="238" height="185" sizeGrid="50,50,10,10" x="0"/>
 			    <Label text="编辑菜单" x="87" y="9" width="62" height="18"/>

@@ -357,7 +357,7 @@ package myExamination
 			}
 			
 //			send("examination/saveExamination",req, saveExaminationOnComplete, onError,URLRequestMethod.POST);
-			sendFormFile(req,"examination/modifyExamination");
+			sendFormFile(req,null,"examination/modifyExamination");
 			initForm();
 			hideForm();
 		}
