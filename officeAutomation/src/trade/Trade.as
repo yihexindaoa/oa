@@ -35,6 +35,7 @@ package trade
 		protected var _maskList:Array;
 		protected var _byteArray:ByteArray;
 		protected var _path:String = Config.PATH;//"http://192.168.1.115:8080/oa_system/";
+		protected static var isInit:Boolean ;//保证富文本框只被初始化一次
 		/**
 		 *加载完二进制的回调 
 		 */		
@@ -307,6 +308,7 @@ package trade
 			return _byteArray;
 		}
 
+			
 		/**
 		 *路径 
 		 */
@@ -346,7 +348,7 @@ package trade
 			
 			
 			$("#newUpload2").append(f);
-			as_sendFromFile(3,this._path+url);
+			as_sendFromFile(1,this._path+url);
 			function as_sendFromFile(layaIndex ,url){
 				$("#userForm2").attr("action", url);
 				if(fullid){
@@ -434,6 +436,8 @@ package trade
 		//-----------------------------------富文本编辑器--------------------------------------------
 		protected  var layaIndex:int ;
 		protected function initFullEdit():void{
+			if(isInit)return;
+			isInit = true;
 			/*[IF-SCRIPT-BEGIN]
 			
 			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit; console.log('layedit=',layedit);	layedit.set({  uploadImage: {	url: Config.PATH+'file/fileImgUpload',  	type: 'post' ,success: function(res){   console.log('上传图片成功',res);   }}});this.layaIndex = layedit.build('demo'); });");
@@ -605,7 +609,7 @@ package trade
 		 * 
 		 */		
 		protected function setContent(content:String,indexcontent:int):void{
-			__JS__('$("#LAY_layedit_"+3).contents().find("body").html(content)');
+			__JS__('$("#LAY_layedit_"+1).contents().find("body").html(content)');
 			_JS__AS_("as_setContentText",null,null,content,indexcontent);
 		}
 		
