@@ -1,9 +1,17 @@
 package home
 {
+	import com.greensock.TweenLite;
+	
+	import flash.display.Bitmap;
+	import flash.display.Loader;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	import game.ui.homePage.HomeEvent;
 	import game.ui.homePage.HomePageUI;
@@ -29,6 +37,8 @@ package home
 		protected var noticeManager:Box;
 		protected var agencyBusiness:Box;
 		protected var homeLeft:HomeLeft;
+		private var content:Bitmap;
+		private var welcomeContainer:Sprite;
 		protected var detail:NoticeDetail;//显示通知详情
 		protected var tip:Array = ["公司通知","惩罚通知","奖励通知"];
 		/**
@@ -52,6 +62,40 @@ package home
 			homeLeft = new HomeLeft(_container);
 			generateNotificationManagement();
 			generateAgencyBusiness();
+			welcomeContainer = new Sprite();
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadComplete);
+			loader.load(new URLRequest("image/cloud.jpg"));
+		}
+		
+		private function loadComplete(event:Event):void
+		{
+			trace("laya image is loaded.");
+			content = event.target.content;
+			content.scaleX = _container.stage.stageWidth/1024;
+			content.scaleY = _container.stage.stageHeight/640;
+			welcomeContainer.addChild(content);
+			welcomeContainer.alpha = 0.3;
+			_container.addChild(welcomeContainer);
+			welcomeContainer.addEventListener(MouseEvent.CLICK, onCloseWelcomeHandler);
+			var text:TextField = new TextField();
+			var format:TextFormat = new TextFormat();
+			format.size = 30;
+			format.color = 0xff0000;
+			text.defaultTextFormat = format;
+			text.width = 500;
+			text.height = 700;
+			text.wordWrap = true;
+			text.multiline = true;
+			text.htmlText="<p>热烈祝贺</p><p>义合信达oa系统第一期正式上线</p>";
+			text.x = _container.stage.stageWidth/4;
+			text.y = _container.stage.stageHeight/2;
+			welcomeContainer.addChild(text);
+		}
+		
+		protected function onCloseWelcomeHandler(event:MouseEvent):void
+		{
+			_container.removeChild(welcomeContainer);
 		}
 		
 		/**生成通知告示管理模块**/

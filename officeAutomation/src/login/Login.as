@@ -108,7 +108,7 @@ package login
 				if(data.status == 200){
 					_container.removeChild(loginUI);
 					loginUI = null;
-					var nav:Navigation = new Navigation(_container, data.data.userName);
+					var nav:Navigation = new Navigation(_container, data.data[0].userName);
 				}else{
 					popu("登陆出错!");
 				}

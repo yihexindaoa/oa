@@ -117,7 +117,7 @@ package game.ui.myExamination {
 			  <ComboBox labels="请假,报销,加班,项目奖金" skin="png.comp.combobox" x="141" y="74" selectedIndex="0" selectedLabel="请假" var="applicationNumber" name="applicationNumber"/>
 			  <Button skin="png.comp.btn_close" x="848" y="2" name="close"/>
 			  <Image skin="png.comp.blank" x="3" y="2" width="842" height="23" name="drag"/>
-			  <Button label="提交" skin="png.comp.button" x="632" y="704" width="75" height="23" var="approvalSubmitBtn"/>
+			  <Button label="提交" skin="png.comp.button" x="632" y="654" width="75" height="23" var="approvalSubmitBtn"/>
 			</Dialog>;
 		public function ExaminationLeaveSaveUI(){}
 		override protected function createChildren():void {

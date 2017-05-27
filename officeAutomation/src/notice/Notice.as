@@ -187,6 +187,10 @@ package notice
 				edit.addEventListener(MouseEvent.CLICK,onEditHandler);
 				var deleteBtn:Button = cell.getChildByName("delete") as Button;
 				deleteBtn.addEventListener(MouseEvent.CLICK,onDeleteHandler);
+				var auditBtn:Button = cell.getChildByName("auditBtn") as Button;
+				auditBtn.addEventListener(MouseEvent.CLICK,onAuditHandler);
+				var noBtn:Button = cell.getChildByName("noBtn") as Button;
+				noBtn.addEventListener(MouseEvent.CLICK,onNoBtnHandler);
 //				cell.graphics.beginFill(0x55ccee,0.5);
 //				cell.graphics.drawRect(0,0,cell.width+5,cell.height+5);
 //				cell.addEventListener(MouseEvent.MOUSE_OVER, onOverHandler);
@@ -194,20 +198,35 @@ package notice
 			}
 		}
 		
+		protected function onNoBtnHandler(e:MouseEvent):void
+		{
+			popu("后期再加此功能!");
+		}
+		
+		protected function onAuditHandler(e:MouseEvent):void
+		{
+			popu("暂无此功能!");
+		}
+		
 		/**删除**/
 		protected function onDeleteHandler(e:MouseEvent):void
 		{
 			var cell:Box = e.target.parent as Box;
-			var id:int = parseInt((cell.getChildByName("id") as Label).text);
-			send("notice/deleteNoticeByid",{"ids":[id]},function(data:Object):void{
-				popu(data.msg);
-				if(data.status == 200){
-					queryNotice();
-				}
+			popuConfirm("确定删除"+(cell.getChildByName("title") as Label).text+"吗？",function():void{
+				var id:int = parseInt((cell.getChildByName("id") as Label).text);
+				send("notice/deleteNoticeByid",{"ids":[id]},function(data:Object):void{
+					popu(data.msg);
+					if(data.status == 200){
+						queryNotice();
+					}
+					
+				},function(v:String):void{
+					popu(v);
+				},"POST");
 				
-			},function(v:String):void{
-				popu(v);
-			},"POST");
+			});
+			
+			
 		}
 		
 		/*查看详情*/

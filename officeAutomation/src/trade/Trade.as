@@ -334,7 +334,7 @@ package trade
 		 * @param callback
 		 * 
 		 */			
-		protected function sendFormFile(req:Object ,fullid:String = null, url:String,callback:Function = null ):void{
+		protected function sendFormFile(req:Object ,fullid:String = null, url:String=null,callback:Function = null ):void{
 			
 			
 			var f:String = "";
