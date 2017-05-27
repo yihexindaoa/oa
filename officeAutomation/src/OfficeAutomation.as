@@ -143,24 +143,44 @@ package
 				content.scaleX = stage.stageWidth/1024;
 				content.scaleY = stage.stageHeight/640;
 			}
-			if(scroll){
-				
-				/*[IF-SCRIPT-BEGIN]
-				scroll.height = Laya.window.innerHeight;
-				scroll.x = Laya.window.innerWidth-scroll.width;
-				if(!scroll.visible){
-					scroll.visible = Laya.window.innerHeight>1000;
-				}
-				[IF-SCRIPT-END]*/ 
-				
-				/*[IF-FLASH-BEGIN]*/
-				scroll.height = stage.stageHeight;
-				scroll.x = stage.stageWidth-scroll.width;
-				if(!scroll.visible){
-					scroll.visible = stage.stageHeight>1000;
-				}
-				/*[IF-FLASH-END]*/ 
+//			if(scroll){
+//				
+//				/*[IF-SCRIPT-BEGIN]
+//				scroll.height = Laya.window.innerHeight;
+//				scroll.x = Laya.window.innerWidth-scroll.width;
+//				if(!scroll.visible){
+//					scroll.visible = Laya.window.innerHeight>1000;
+//				}
+//				[IF-SCRIPT-END]*/ 
+//				
+//				/*[IF-FLASH-BEGIN]*/
+//				scroll.height = stage.stageHeight;
+//				scroll.x = stage.stageWidth-scroll.width;
+//				if(!scroll.visible){
+//					scroll.visible = stage.stageHeight>1000;
+//				}
+//				/*[IF-FLASH-END]*/ 
+//			}
+			/*[IF-FLASH-BEGIN]*/
+			if(stage.stageHeight<1000){
+				addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+			}else{
+				removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+				if(box.y<-10)
+				TweenLite.to(box, 1,{y:0});
 			}
+			/*[IF-FLASH-END]*/ 
+			/*[IF-SCRIPT-BEGIN]
+			if( Laya.window.innerHeight < 1000 ){
+				addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+			}else{
+				removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
+				if(box.y<-10)
+				TweenLite.to(box, 1,{y:0});
+			}
+			
+			[IF-SCRIPT-END]*/ 
+			
 			if(box){
 				box.x = (stage.stageWidth-1200)/2;
 			}
@@ -188,33 +208,71 @@ package
 			/*[IF-FLASH-END]*/ 
 			/*[IF-FLASH-BEGIN]*/
 			if(stage.stageHeight<1000){
-				scroll = new VScrollBar("png.comp.vscroll");
+				/*scroll = new VScrollBar("png.comp.vscroll");
 				scroll.height = stage.stageHeight;
 				scroll.x = stage.stageWidth-scroll.width;
-				addChild(scroll);
+				addChild(scroll);*/
+				addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 			}else{
-				if(scroll){
+				/*if(scroll){
 					scroll.visible = false;
-				}
+				}*/
+				
 			}
 			/*[IF-FLASH-END]*/ 
 			/*[IF-SCRIPT-BEGIN]
 			if( Laya.window.innerHeight < 1000 ){
-				scroll = new VScrollBar("png.comp.vscroll");//new ScrollUI()vscrollbar
-				scroll.height = Laya.window.innerHeight;
-				scroll.x = Laya.window.innerWidth-scroll.width;
-				addChild(scroll);
+//				scroll = new VScrollBar("png.comp.vscroll");//new ScrollUI()vscrollbar
+//				scroll.height = Laya.window.innerHeight;
+//				scroll.x = Laya.window.innerWidth-scroll.width;
+//				scroll.thumbPercent = Laya.window.innerHeight/1000;
+//				scroll.setScroll(0,1,0.5);
+//				addChild(scroll);
+			addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 			}else {
 				if(scroll){
 					scroll.visible = false;
 				}
 			}
 			[IF-SCRIPT-END]*/ 
+			/*if(scroll){
+				scroll.changeHandler = new Handler(function(value:Number){
+					
+					
+				});
+				
+			}*/
+			
 			var lo:Login = new Login(box);
 			
 		}
 		
-		private function loadProgress(value:Number):void {
+		protected function onMouseMoveHandler(e:MouseEvent):void
+		{
+			
+			/*[IF-SCRIPT-BEGIN]
+			if(e.stageY > Laya.window.innerHeight - 50){
+				TweenLite.to(box, 1,{y:Laya.window.innerHeight - 1000});
+			}else if( e.stageY < 50 ){
+				TweenLite.to(box, 1,{y:0});
+			}
+			[IF-SCRIPT-END]*/ 
+			
+			/*[IF-FLASH-BEGIN]*/
+			if(e.stageY > stage.stageHeight - 50){
+				TweenLite.to(box, 1,{y:stage.stageHeight-1000});
+			}else if( e.stageY < 50 ){
+				TweenLite.to(box, 1,{y:0});
+			}
+			/*[IF-FLASH-END]*/ 
+		}
+		
+		protected function onSliderChange(e:Event):void
+		{
+			
+		}
+		
+		private function loadProgress(value:Number):void { 
 			//加载进度
 			//trace("loaded", value);
 		}
