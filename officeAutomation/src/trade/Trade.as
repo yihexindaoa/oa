@@ -440,7 +440,7 @@ package trade
 			isInit = true;
 			/*[IF-SCRIPT-BEGIN]
 			
-			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit; console.log('layedit=',layedit);	layedit.set({  uploadImage: {	url: Config.PATH+'file/fileImgUpload',  	type: 'post' ,success: function(res){   console.log('上传图片成功',res);   }}});this.layaIndex = layedit.build('demo'); });");
+			__JS__(" layui.use('layedit', function(){	var layedit = layui.layedit; console.log('layedit=',layedit);	layedit.set({  uploadImage: {	url: Config.PATH+'file/fileImgUpload',  	type: 'post' ,success: function(res){   console.log('上传图片成功',res);   }}});this.layaIndex = layedit.build('demo', {height: 157 }); });");
 			
 			[IF-SCRIPT-END]*/ 
 			/*[IF-FLASH-BEGIN]*/
